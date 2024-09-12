@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I gusti di vava</title>
+    <style>
+        .album img, .game img, .movie img {
+            width: 100px;
+            height: 100px;
+        }
+        .first_color {
+            color: goldenrod;
+        }
+        .second_color {
+            color: #0793f7;
+        }
+		.third_color {
+			color: #e3e3e3;
+		}
+		
+.select-left {
+	position: absolute;
+    top: 20px; 
+    left: 27%; 
+}
+
+.select-right {
+    position: absolute;
+    top: 20px; 
+    right: 27%; 
+}
+
+.grid-container {
+	margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 10px; /* Gap between grid items */
+}
+  
+.grid-wrapper {
+    display: flex;
+    justify-content: center; /* Center the grid horizontally */
+    padding: 0 20px; /* Add padding to create blank space on both sides */
+}
+
+.album {
+    border: 1px solid #240b0b;
+    padding: 10px;
+    text-align: center;
+	font-size: 14px;
+    height: 250px; /* Fixed height for grid items */
+	width: 150px;
+    overflow: hidden; /* Hide overflow content */
+}
+
+
+.album img {
+    width: auto; 
+    height: auto; /* Maintain aspect ratio */
+    max-height: 140px; /* Limit the maximum height of the image */
+  }
+  
+@media (max-width: 767px) {
+    .grid-wrapper {
+      padding: 0; /* Remove padding on smaller screens */
+    }
+    .grid-container {
+      grid-template-columns: repeat(2, 1fr); /* Single column layout for phones */
+    }
+  }
+ }
+
+  });
+    </style>
+</head>
+<body style="background-color:#242323;" onload="populate()"> 
+
+<div class="select-left">
+  <select id="media-select" onchange="changeMedia()">
+    <option value="albums">Album</option>
+    <option value="games">Giochi</option>
+    <option value="movies">Film</option>
+  </select>
+</div>
+
+<div class="select-right">
+    <select id="filters" onchange="filtering()"> </select>
+</div>
+
+<div class="grid-wrapper" style="font-family: Arial">
+  <div class="grid-container" id="grid">
+    <!-- Media items will be dynamically added here -->
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        updateOptions();
+        populate();
+    });
+
+    let counter = 0;
+    let originalAlbums = [];
+    let originalGames = [];
+    let originalMovies = [];
+
+	function resetFilter() {
+        const filterSelect = document.getElementById('filters');
+        filterSelect.selectedIndex = 0;
+    }
+
+    function resetMedia() {
+        const media = document.getElementById("media-select").value;
+
+        if (media === "albums") {
+            albums = [...originalAlbums];
+        } else if (media === "games") {
+            games = [...originalGames];
+        } else if (media === "movies") {
+            movies = [...originalMovies];
+        }
+    }
+
+    function sortArtist(a, b) {
+        if (a.artist < b.artist) return -1;
+        if (a.artist > b.artist) return 1;
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return 1;
+        return 0;
+    }
+
+    function sortRankAlbums(a, b) {
+        if (a.rank !== b.rank) return a.rank - b.rank;
+		const mmrA = a.mmr !== undefined ? a.mmr : -Infinity;
+		const mmrB = b.mmr !== undefined ? b.mmr : -Infinity;
+
+		return mmrB - mmrA;
+       // return a.name.localeCompare(b.name);
+    }
+	
+    function changeMedia() {
+        updateOptions();
+        resetFilter();
+        resetMedia();
+        populate();
+    }
+
+    function updateOptions() {
+        const category = document.getElementById('media-select').value;
+        const details = document.getElementById('filters');
+        let options = [];
+
+        switch (category) {
+            case 'albums':
+                options = [
+					{ value: 'OriginalAlbums', text: '-----' },
+                    { value: 'AlbumsArtists', text: 'Artista' },
+                    { value: 'AlbumsAlbumName', text: 'Album' },
+                    { value: 'AlbumsRating', text: 'Rating' },
+                ];
+                break;
+            case 'games':
+                options = [
+					{ value: 'OriginalGames', text: '-----' },
+                    { value: 'GamesTitle', text: 'Titolo' },
+                    { value: 'GamesRating', text: 'Rating' }
+                ];
+                break;
+            case 'movies':
+                options = [
+					{ value: 'OriginalMovies', text: '-----' },
+                    { value: 'MoviesTitle', text: 'Titolo' },
+                    { value: 'MoviesRating', text: 'Rating' }
+                ];
+                break;
+            default:
+                options = [];
+        }
+
+        // Clear existing options
+        details.innerHTML = "";
+
+        // Populate new options
+        options.forEach(option => {
+            const opt = document.createElement('option');
+            opt.value = option.value;
+            opt.textContent = option.text;
+            details.appendChild(opt);
+        });
+    }
+
+    function filtering() {
+        const filter = document.getElementById("filters").value;
+        const media = document.getElementById('media-select').value;
+
+        if (media === "albums") {
+			if (filter === "OriginalAlbums"){
+				albums=[...originalAlbums]
+			} else if (filter === "AlbumsArtists") {
+                albums.sort(sortArtist);
+            } else if (filter === "AlbumsAlbumName") {
+                albums.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (filter === "AlbumsRating") {
+                albums.sort(sortRankAlbums);
+            }
+        } else if (media === "games") {
+			if (filter === "OriginalGames"){
+				games=[...originalGames]
+			} else if (filter === "GamesTitle") {
+                games.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (filter === "GamesRating") {
+                games.sort(sortRankAlbums);
+            }
+        } else if (media === "movies") {
+			if (filter === "OriginalMovies"){
+				movies=[...originalMovies]
+			} else if (filter === "MoviesTitle") {
+                movies.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (filter === "MoviesRating") {
+                movies.sort(sortRankAlbums);
+            }
+        }
+
+        populate();
+    }
+
+    function populate() {
+        const media = document.getElementById("media-select").value;
+        const gridContainer = document.getElementById('grid');
+        gridContainer.innerHTML = '';
+
+        if (media === "albums") {
+            albums.forEach(album => {
+                const gridDiv = document.createElement('div');
+                gridDiv.classList.add('album');
+				if (album.rank === "3") {
+                    gridDiv.classList.add('third_color');
+                }
+                if (album.rank === "2") {
+                    gridDiv.classList.add('second_color');
+                }
+                if (album.rank === "1") {
+                    gridDiv.classList.add('first_color');
+                }
+                gridDiv.innerHTML = `
+                    <img src="${album.image}" alt="${album.name}">
+                    <h3>${album.name}</h3>
+                    <p>${album.artist}</p>`;
+                gridContainer.appendChild(gridDiv);
+            });
+        } else if (media === "games") {
+            games.forEach(game => {
+                const gridDiv = document.createElement('div');
+                gridDiv.classList.add('album');
+				if (game.rank === "3") {
+                    gridDiv.classList.add('third_color');
+                }
+                if (game.rank === "2") {
+                    gridDiv.classList.add('second_color');
+                }
+                if (game.rank === "1") {
+                    gridDiv.classList.add('first_color');
+                }
+                gridDiv.innerHTML = `
+                    <img src="${game.image}" alt="${game.name}">
+                    <h3>${game.name}</h3>`;
+			
+                gridContainer.appendChild(gridDiv);
+            });
+        } else if (media === "movies") {
+            movies.forEach(movie => {
+                const gridDiv = document.createElement('div');
+                gridDiv.classList.add('album');
+				if (movie.rank === "3") {
+                    gridDiv.classList.add('third_color');
+                }
+                if (movie.rank === "2") {
+                    gridDiv.classList.add('second_color');
+                }
+                if (movie.rank === "1") {
+                    gridDiv.classList.add('first_color');
+                }
+                gridDiv.innerHTML = `
+                    <img src="${movie.image}" alt="${movie.name}">
+                    <h3>${movie.name}</h3>`;
+                gridContainer.appendChild(gridDiv);
+            });
+        }
+
+        if (counter === 0) {
+            originalAlbums = [...albums];
+            originalGames = [...games];
+            originalMovies = [...movies];
+            counter++;
+        }
+    }
+	
+let albums = [
+{ mmr: "3.77", name: "Breakfast in America", artist: "Supertramp", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/43/25/10/4325100c-4848-5959-cfb3-2ff08731f417/10UMGIM21526.rgb.jpg/600x600bb.jpg", rank: "1" },
+{ mmr: "70", name: "Compro", artist: "Skee Mask", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/7e/d5/6d/7ed56dcb-9373-ab2e-525d-1a513e51d135/4044693796792.jpg/600x600bb.jpg" , rank: "3"},
+{ mmr: "3.65", name: "Brothers in Arms", artist: "Dire Straits", image: "https://upload.wikimedia.org/wikipedia/en/6/67/DS_Brothers_in_Arms.jpg", rank: "1"},
+{ mmr: "25", name: "Enema Of The State", artist: "blink-182", image: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/d0/54/b8/d054b82b-981e-6834-6d47-09d00faad533/16UMGIM35659.rgb.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "135", name: "Endtroducing.....", artist: "Dj Shadow", image: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/0d/14/6d/0d146d5c-44c5-22e2-c596-2242180f4774/5400863103361_cover.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "155", name: "Ten", artist: "Pearl Jam", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/5e/91/c1/5e91c1ba-53cb-c5c8-15f1-d3c81f3b3592/dj.psrqglcw.jpg/600x600bb.jpg", rank: "2"  },
+{ mmr: "62", name: "Bury The Hatchet", artist: "The Cranberries", image: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/aa/df/6f/aadf6f21-49e4-64e5-da92-58a71fa7e28d/06UMGIM03109.rgb.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "140", name: "Black on Both Sides", artist: "Mos Def", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/89/20/70/89207018-b8f3-4935-b812-dc94a5504df1/00602547873125.rgb.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "40", name: "Dirt", artist: "Alice in Chains", image: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/54/26/62/5426627b-4707-7867-acc0-ce616d250381/074645247526.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "77", name: "Octavarium", artist: "Dream Theater", image: "https://is1-ssl.mzstatic.com/image/thumb/Music/y2005/m05/d25/h10/s05.uwlzforq.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "160", name: "Escapology", artist: "Robbie Williams", image: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Escapology_cover.png/220px-Escapology_cover.png", rank: "2" },
+{ mmr: "3.86", name: "Hefty Fine", artist: "Bloodhound Gang", image: "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/cb/9c/f5/cb9cf5d6-49a0-bf68-8b71-06e2c845beba/00602498868850.rgb.jpg/600x600bb.jpg", rank: "1" },
+{ mmr: "3.66", name: "Mezmerize", artist: "System Of A Down", image: "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/65/6d/43/656d432b-e59c-361a-c3ad-2e6cccbf4b2d/827969064825.jpg/600x600bb.jpg", rank: "1" },
+{ mmr: "61", name: "Everybody Else Is Doing It, So Why Can't We?", artist: "The Cranberries", image: "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/ce/3c/68/ce3c684e-b147-d580-b2ea-8655a854ebce/06UMGIM00853.rgb.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "57", name: "Nevermind", artist: "Nirvana", image:"https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/95/fd/b9/95fdb9b2-6d2b-92a6-97f2-51c1a6d77f1a/00602527874609.rgb.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "63", name: "Rebel Yell", artist: "Billy Idol", image: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/18/05/fe/1805fea9-58d8-502a-573b-5711473bd5e4/13UABIM74015.rgb.jpg/600x600bb.jpg" , rank: "3"},
+{ mmr: "35", name: "blink-182", artist: "blink-182", image: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/e3/9d/c5/e39dc58d-faa8-e707-8f94-42840aaa7a0c/16UMGIM35665.rgb.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "133", name: "Rotten Apples", artist: "The Smashing Pumpkins", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/61/a5/ac/61a5ac46-0fd4-3fa0-7b3a-2993b2390b76/13UABIM56696.rgb.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "83", name: "Salad Days", artist: "Mac DeMarco", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/4b/5c/83/4b5c833d-2160-bc68-0905-5b91d2b6732a/817949019495.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "85", name: "Settle", artist: "Disclosure", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/c3/eb/3e/c3eb3efb-bc90-d5ac-c7c3-a047b08af582/13UMGIM46983.rgb.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "65", name: "Skream!", artist: "Skream", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/2f/84/79/2f8479f8-5476-da67-85c3-fe3670df9693/800071006259.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "125", name: "The Sound of Perseverance", artist: "Death", image: "https://is1-ssl.mzstatic.com/image/thumb/Music/28/be/58/mzi.fqvqitcf.jpg/600x600bb.jpg" , rank: "2"},
+{ mmr: "143", name: "Sub Focus", artist: "Sub Focus", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/a4/80/f9/a480f96b-af92-3b88-6de3-a84a33cae148/5024441884086.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "56", name: "Telefone", artist: "Noname", image: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/5a/44/ae/5a44ae2c-3033-9723-82b1-3dbc1d422abd/859718078043.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "123", name: "This Old Dog", artist: "Mac DeMarco", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e6/d6/ed/e6d6eda8-501c-4e26-6973-ba50ac5a4878/817949013172.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "3.42", name: "Toxicity", artist: "System Of A Down", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/82/51/52/825152b4-9423-b23b-c036-cc67ead732d4/888888046775.jpg/600x600bb.jpg", rank: "1" },
+{ mmr: "38", name: "(What's the Story) Morning Glory?", artist: "Oasis", image: "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/04/92/e0/0492e08b-cbcc-9969-9ad6-8f5a0888068c/5051961007107.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "86", name: "Wish You Were Here", artist: "Pink Floyd", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/49/ab/fe/49abfef6-0cd9-aa1f-05c3-3eb85d3fe3f5/886445635843.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "55", name: "Fuyü-Kükan", artist: "Tomoko Aran", image: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/0d/38/c4/0d38c4e1-38e4-1178-bb5d-b952539b12bc/190296236655.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "2.94", name: "The Fat of the Land", artist: "The Prodigy", image: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/96/8b/08/968b08e4-cb2b-54c2-32bb-dba77ad1c2ca/634904912161.png/600x600bb.jpg", rank: "1" },
+{ mmr: "64", name: "Cold Water Music", artist: "Aim", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bb/31/5f/bb315f4c-a743-080b-7423-83c264be69d2/mzi.frnvohrt.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "87", name: "L'Amour Toujours", artist: "Gigi D'Agostino", image: "https://is1-ssl.mzstatic.com/image/thumb/Features124/v4/b8/5b/0f/b85b0ffe-c176-e059-ac32-7916f1b4bcf3/dj.rlatclib.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "88", name: "good kid,m.A.A.d. city", artist: "Kendrick Lamar", image: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/9f/30/10/9f30103e-73e4-4d7c-02a4-ade3da9ce53b/12UMGIM52989.rgb.jpg/600x600bb.jpg", rank:"3"},
+{ mmr: "2.54", name: "Very Mercenary", artist: "The Herbaliser", image: "https://upload.wikimedia.org/wikipedia/en/1/13/Herbaliser_VeryMercenary_albumcover.jpg", rank: "1" },
+{ mmr: "37", name: "Symbolic", artist: "Death", image: "https://is1-ssl.mzstatic.com/image/thumb/Music/da/91/91/mzi.mjxeohne.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "27", name: "Moment of Truth", artist: "Gang Starr", image: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/65/0a/ed/650aedac-0397-9739-28ab-d2331726b1aa/13ULAIM48797.rgb.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "43", name: "A Funk Odyssey", artist: "Jamiroquai", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/93/11/41/9311418f-b406-1dce-c2f4-d1175fe9ae45/696998595422.jpg/600x600bb.jpg" , rank: "3"},
+{ mmr: "84", name: "Californication", artist: "Red Hot Chili Peppers", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/04/8e/ff/048effa0-da05-a993-f2e0-172cd0613377/093624931942.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "50", name: "III", artist: "BADBADNOTGOOD", image: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/22/ed/ac/22edacd7-3f23-aa34-8f12-385744085a48/196626352569.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "80", name: "The Eminem Show", artist: "Eminem", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/b4/13/e9/b413e91d-40aa-a1a8-b8e3-2bacc3b3e222/00606949329020.rgb.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "132", name: "Late Night Tales:<br> BADBADNOTGOOD", artist: "", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/37/fe/23/37fe2327-120a-bd9f-ca3a-b4f91290e573/5060391091174_cover.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "63", name: "Morning View", artist: "Incubus", image: "https://i.discogs.com/bJHIuVJG2D-o88Tfi32O1he_n8bLSXWA9v7csh-rrQI/rs:fit/g:sm/q:90/h:600/w:595/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NDcz/MjAtMTQ0Mjg3NzY1/Ni0xNzgyLmpwZWc.jpeg", rank: "3" },
+{ mmr: "127", name: "Record Collection", artist: "Mark Ronson", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/62/e9/dc/62e9dc5c-c245-a619-4c1f-3576e35e8ddd/mzi.cgkrcdrh.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "15", name: "Transplants", artist: "Transplants", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ef/7a/d8/ef7ad884-633e-707f-ebd8-2f87dd930f7a/0045778044863.png/600x600bb.jpg", rank: "3" },
+{ mmr: "23", name: "Straight Outta Compton", artist: "N.W.A.", image: "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/4c/b1/32/4cb13290-7d01-1949-57e9-a8a1874e60a2/19UMGIM79184.rgb.jpg/600x600bb.jpg" , rank: "3"},
+{ mmr: "70", name: "Life", artist: "Jinsang", image: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/85/d6/6c/85d66c42-4338-762b-abab-d0dfc26c278c/cover.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "3.06", name: "Little Dark Age", artist: "MGMT", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/5e/12/58/5e1258b2-fa55-279f-5116-a0c897491f51/886446696393.jpg/600x600bb.jpg", rank: "1" },
+{ mmr: "43", name: "Demon Days", artist: "Gorillaz", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/1c/0f/81/1c0f818a-e458-dd84-6f1b-ccbdf5fe14d6/825646291045.jpg/600x600bb.jpg" , rank: "3"},
+{ mmr: "60", name: "Solitude.", artist: "Jinsang", image: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/cc/e7/f1/cce7f124-fd18-a5fd-d8a7-0f453361cd16/cover.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "145", name: "Billion Dollar Gravy", artist: "London Elektricity", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/19/6d/52/196d525c-951f-bfe6-338c-4bfcfe521eec/s05.amcpvrgy.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "4.2",  name: "La Voce Del Padrone", artist: "Franco Battiato", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/1f/1b/f6/1f1bf6f5-0263-b3fc-67d3-25e914620f2d/21UMGIM34153.rgb.jpg/600x600bb.jpg", rank: "1" },
+{ mmr: "43", name: "Peccati di Gioventù", artist: "Fabrizio De André", image: "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/45/db/09/45db099f-765b-2e70-7d9b-f688e32bacb0/00731454292726.rgb.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "161", name: "The Waiter", artist: "Dani Faiv", image: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/8c/ec/a4/8ceca4b7-efd7-8d31-d5f2-0e92f936ccff/886446475264.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "126", name: "Hellvisback", artist: "Salmo", image: "https://is1-ssl.mzstatic.com/image/thumb/Music69/v4/51/96/14/5196146c-2616-9741-dac6-55431334fa5c/886445655001.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "89", name: "Hyp3r", artist: "Nerone", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/3f/06/bd/3f06bde4-4b59-6942-31c1-3a97ca150893/cover.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "137", name: "Mattoni", artist: "Night Skinny", image: "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/64/41/c0/6441c035-707c-cbbf-013a-077ae976a135/19UMGIM74102.rgb.jpg/600x600bb.jpg" , rank: "2"},
+{ mmr: "88", name: "Madreperla", artist: "Guè", image: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/b2/b1/7f/b2b17fd3-2419-7570-2772-2bcd76555489/23UMGIM00485.rgb.jpg/600x600bb.jpg" , rank: "3"},
+{ mmr: "30", name: "Fast Life 4", artist: "Guè", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/0a/85/00/0a850056-1f2a-0219-5f32-6a2a75180ec8/21UMGIM18107.rgb.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "147", name: "Turbe Giovanili", artist: "Fabri Fibra", image: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/70/5f/8a/705f8af4-0c29-2eac-1278-b74cb8533371/22UMGIM50644.rgb.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "68", name: "Illmatic", artist: "NAS", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e8/13/50/e813500d-51cd-6c37-c405-53a668cbde97/886444072496.jpg/600x600bb.jpg" , rank: "3"},
+{ mmr: "3.39", name: "Vicious Delicious", artist: "Infected Mushroom", image: "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/b0/58/65/b058657d-24f3-e5ec-c0f8-b9a0d392e64a/885686156292.jpg/600x600bb.jpg", rank: "1" },
+{ mmr: "185", name: "ATLiens", artist: "Outkast", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/a6/f1/08/a6f1080e-cdd7-30c4-1d2d-13ac9b59efdd/730082602921.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "28", name: "Bizarre Ride II", artist: "The Pharacyde", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/b0/15/65/b0156584-a2ef-0891-87e3-9978859f3b6b/00669910400050.rgb.jpg/600x600bb.jpg" , rank: "3"},
+{ mmr: "117", name: "大理石のファンタジー", artist: "Haircuts for Men", image: "https://i.scdn.co/image/ab67616d0000b273b43307ea08d3123479501f75", rank: "2" },
+{ mmr: "114", name: "Midnight Marauders", artist: "A Tribe Called Quest", image: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/d1/90/11/d1901153-4595-7f2f-12d2-661be9eef883/012414149022.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "42", name: "All Eyez On Me", artist: "2Pac", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/33/84/fc/3384fc51-1eeb-e78f-2770-14844fcdd3b5/21UM1IM16262.rgb.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "76", name: "2012-2017", artist: "Against All Logic", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/d1/61/e3/d161e34a-2b11-129e-93cf-65492c49b32e/5054526083370_1.jpg/600x600bb.jpg" , rank: "3"},
+{ mmr: "39", name: "Operation:<br> Doomsday", artist: "MF DOOM", image: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/39/99/25/399925ca-1b3d-d4b8-8a77-b9946edb5d20/36768.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "170", name: "Voulez-Vous", artist: "ABBA", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/9d/47/d2/9d47d24b-c35d-5db2-0fe7-3a07670adc44/14UMGIM07612.rgb.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "3.16", name: "One Fierce<br>Beer Coaster", artist: "Bloodhound Gang", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/81/38/f4/8138f4f9-0be0-c2d3-7961-2a1b0e244383/00720642512425.rgb.jpg/600x600bb.jpg", rank: "1"},
+{ mmr: "90", name: "Hyper 2", artist: "Nerone", image: "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/4c/d1/60/4cd16054-6b33-991d-5fce-730e67703f55/cover.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "67", name: "Relapse", artist: "Eminem", image: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/cc/f0/df/ccf0dff7-a38f-caa0-79a3-05cb869b0380/09UMGIM08254.rgb.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "180", name: "1979", artist: "Casa del Mirto", image: "https://f4.bcbits.com/img/a4178941920_65", rank: "2" },
+{ mmr: "136", name: "Madvillainy", artist: "MF DOOM", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/1a/c2/1a/1ac21a9d-3ffd-3f80-dc96-223622b50b5f/Madvillainy.jpg/600x600bb.jpg", rank: "2"},
+{ mmr: "34", name: "The Wall", artist: "Pink Floyd", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/3c/b4/e3/3cb4e3d0-cd77-8f18-7465-d60e6949b435/886445635850.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "75", name: "Twoism", artist: "Boards of Canada", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/30/73/ae/3073ae08-9aac-f497-bef5-817b1f42adb1/mzi.sgydwbnj.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "36", name: "System Of A Down", artist: "System Of A Down", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/16/af/a1/16afa1d6-ebc7-a213-da7c-1b46076ff1b7/dj.yuooiixy.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "34", name: "The Beatles", artist: "The Beatles", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/fa/5b/89/fa5b898d-bad6-e053-4195-260e5c74f2bb/00602567725466.rgb.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "134", name: "Bohemian Beatnik", artist: "Bugseed", image: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/84/74/49/84744985-72a8-e149-44e5-318d9ad3e3a7/cover.jpg/600x600bb.jpg", rank: "2"},
+{ mmr: "29", name: "Modal Soul", artist: "Nujabes", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/79/7e/a1/797ea11f-b90c-c4c5-f874-6a6ccd2c22a7/HPD5.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "41", name: "Vertigo", artist: "Groove Armada", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/ef/0b/ea/ef0beafb-6ea2-94c9-ddb3-b8f491c27f15/mzi.lpgwugud.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "3.76", name: "Hooray for Boobies", artist: "Bloodhound Gang", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/59/f5/7e/59f57eb5-0432-d496-9dc9-6ff1ef770a7d/00602537068388.rgb.jpg/600x600bb.jpg", rank: "1" },
+{ mmr: "150", name: "Discovery", artist: "Daft Punk", image: "https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/9e/f3/19/9ef31946-26de-0a95-c771-30457c5c01ec/dj.huxlnxyy.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "120", name: "The Dark Side Of The Moon", artist: "Pink Floyd", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/3c/1b/a9/3c1ba9e1-15b1-03b3-3bfd-09dbd9f1705b/dj.mggvbaou.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "20", name: "Slipknot", artist: "Slipknot", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/75/d0/dd/75d0dd84-cd4f-4887-367b-c9204480a872/016861752545.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "27", name: "Around the Fur", artist: "Deftones", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/27/cb/b4/27cbb40e-f8c6-dede-9c69-62089a873fa9/093624919803.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "130", name: "89", artist: "Klimeks", image: "https://is1-ssl.mzstatic.com/image/thumb/Music5/v4/19/85/f4/1985f425-1985-e8aa-ad08-248987ddd040/5054316374121_cover.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "2.50", name: "Melody A.M.", artist: "Röyksopp", image: "https://upload.wikimedia.org/wikipedia/en/b/b0/Royksopp_melody_am.png", rank: "1" },
+{ mmr: "10", name: "Dead Letters", artist: "The Rasmus", image: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/e7/dc/5d/e7dc5d32-4b07-d4a0-0714-f7cab651496d/cover.jpg/600x600bb.jpg", rank: "3" },
+{ mmr: "86", name: "Aquemini", artist: "Outkast", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/09/d1/dc/09d1dccf-7ff4-02b6-9613-942a6d140452/730082605328.jpg/600x600bb.jpg" , rank: "3"},
+{ mmr: "33", name: "Music Has The Right To Children", artist: "Boards of Canada", image: "https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/b5/4c/c2/b54cc20d-03f5-f2c4-4a0d-9b51ad65af89/dj.txuslqgv.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "115", name: "Urban", artist: "A.S.I.A.", image: "https://i.scdn.co/image/ab67616d00001e02ca127181184b25349b2f69d7" , rank: "2"},
+{ mmr: "32", name: "Blizzard of Ozz", artist: "Ozzy Osbourne", image: "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/92/06/bd/9206bdb3-453a-db69-44f4-c4b5bfe33510/886448748045.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "36", name: "Hypnotize", artist: "System Of A Down", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/79/03/76/79037637-7c7e-ded5-879e-230c6aa3fe65/827969387122.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "42", name: "Life After Death", artist: "The Notorious B.I.G.", image: "https://m.media-amazon.com/images/I/A12Zf24D5AL._UF1000,1000_QL80_DpWeblab_.jpg", rank: "3"},
+{ mmr: "69", name: "Paolo Conte", artist: "Paolo Conte", image: "https://m.media-amazon.com/images/I/61DflGcrH+L._UF1000,1000_QL80_DpWeblab_.jpg", rank: "3"}, 
+{ mmr: "52", name: "OK Computer", artist: "Radiohead", image: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/07/60/ba/0760ba0f-148c-b18f-d0ff-169ee96f3af5/634904078164.png/600x600bb.jpg", rank: "3"},
+{ mmr: "39", name: "THE MOUSE<br> & THE MASK", artist: "MF DOOM,<br> Danger Mouse", image: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/a9/b1/bb/a9b1bb06-5547-5096-40ef-254524985ceb/153.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "76", name: "The 5th Exotic", artist: "Quantic", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/b9/f6/2a/b9f62a69-dbb6-5dda-365f-c4ef452be8a4/5037454734170.jpg/600x600bb.jpg", rank: "3"},
+{ mmr: "43", name: "Pino Daniele", artist: "Pino Daniele", image: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/72/de/43/72de433a-27dd-e666-9a12-f262786d4196/13UABIM01570.rgb.jpg/600x600bb.jpg" , rank: "3"}
+ ];
+ 
+let games = [
+{ mmr: "1.90", name: "Half-Life", image: "https://upload.wikimedia.org/wikipedia/en/f/fa/Half-Life_Cover_Art.jpg", rank: "1" },
+{ mmr: "1.55", name: "Hitman:<br> Codename 47", image: "https://upload.wikimedia.org/wikipedia/en/7/7a/Hitman_artwork.jpg", rank: "1" },
+{ mmr: "1.27", name: "The Longest Journey", image: "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Longest_Journey_%28game_box_art%29.jpg", rank: "2" },
+{ mmr: "111", name: "Fallout 3", image: "https://cdn1.epicgames.com/offer/fa702d34a37248ba98fb17f680c085e3/EGS_Fallout3GameoftheYearEdition_BethesdaGameStudios_S2_1200x1600-e2ba392652a1f57c4feb65d6bbd1f963", rank: "3" },
+{ mmr: "1.65", name: "Fallout 2", image: "https://www.giantbomb.com/a/uploads/scale_medium/20/201266/3572179-4717454996-EGS_Fallout2APostNuclearRolePlayingGame_BethesdaGameStudios_S2_1200x1600-d07a5a6352badc1a2111ed42a393d049.jpg", rank: "1" },
+{ mmr: "1.48", name: "The House of the Dead 2", image: "https://m.media-amazon.com/images/M/MV5BOTUzMGM5ZjctNmJhNC00MzI5LWIzOTMtNjczZjMzYjI4NGJhXkEyXkFqcGdeQXVyNjQyNTg3MjI@._V1_FMjpg_UX1000_.jpg", rank: "1" },
+{ mmr: "100.5", name: "Baldur's Gate", image: "https://www.rpgfan.com/wp-content/uploads/2020/06/Baldurs-Gate-Cover-Art.jpg", rank: "3" },
+{ mmr: "1.05", name: "Syberia", image: "https://static.wikia.nocookie.net/syberia/images/f/fb/Syberia.jpg/revision/latest?cb=20220901230347", rank: "2" },
+{ mmr: "1.37", name: "The House of the Dead 3", image: "https://m.media-amazon.com/images/M/MV5BYjgxYTAyODktYTJhOS00YWNjLTlhNGMtZDJmYTY4N2ViMmVmXkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_FMjpg_UX1000_.jpg", rank: "2" },
+{ mmr: "1.37", name: "Half-Life 2", image: "https://upload.wikimedia.org/wikipedia/en/thumb/2/25/Half-Life_2_cover.jpg/220px-Half-Life_2_cover.jpg", rank: "2" },
+{ mmr: "1.62", name: "Baldur's Gate II:<br> Shadows of Amn", image: "https://i.pinimg.com/originals/91/49/8a/91498af2ac5ea9175a3f88cda9650c84.jpg", rank: "1" },
+{ mmr: "1.24", name: "Hitman 2:<br> Silent Assassin", image: "https://upload.wikimedia.org/wikipedia/en/c/cd/Hitman_2_artwork.jpg", rank: "2" },
+{ mmr: "1.54", name: "XIII", image: "https://static.wikia.nocookie.net/xiiithegame/images/0/01/XIII_Cover.png/revision/latest?cb=20200913213602", rank: "1" },
+{ mmr: "1.59", name: "Hitman 3:<br> Contracts", image: "https://upload.wikimedia.org/wikipedia/en/e/ef/Hitman_3_artwork.jpg", rank: "1" },
+{ mmr: "1.595", name: "For The King", image: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1a/For_the_King_Cover_Art.jpg/220px-For_the_King_Cover_Art.jpg", rank: "1"},
+{ mmr: "1.83", name: "Arcanum:<br> Of Steamworks and Magick Obscura", image: "https://i.redd.it/bsphtxf2ugl31.jpg", rank: "1" },
+{ mmr: "1.335", name: "Deus Ex", image: "https://i.imgur.com/SiOLxO9.png", rank: "2" },
+{ mmr: "4", name: "Kane & Lynch:<br>Dead Men", image: "https://upload.wikimedia.org/wikipedia/pt/2/22/Kane_and_Lynch_cover_art.jpg", rank: "3"},
+{ mmr: "3.5", name: "Kane & Lynch 2:<br>Dog Days", image: "https://upload.wikimedia.org/wikipedia/en/a/a3/Kane_%26_Lynch_2_cover.jpg", rank: "3"},
+{ mmr: "6", name: "Commandos:<br>Strike Force", image:"https://m.media-amazon.com/images/M/MV5BOTg2ZWJjY2EtYTQ4ZS00ODIyLThlYjQtNGE1YWE2ZjRkNjVjXkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_.jpg", rank:"3"},
+{ mmr: "100.25", name: "The House of the Dead", image: "https://www.thewebsiteofthedead.com/wp-content/uploads/2012/04/tumblr_lxe0mhf29F1qd4q8ao1_500.jpg", rank: "3"},
+{ mmr: "1.85", name: "Grand Theft Auto III", image: "https://www.gamers-shop.dk/images/game_img/gta3.jpg", rank: "1" },
+{ mmr: "1.76", name: "Grand Theft Auto:<br> San Andreas", image: "https://i.pinimg.com/736x/9d/16/8c/9d168c470719bf04f0cf065be6a314d6.jpg", rank: "1" },
+{ mmr: "1.427", name: "Grand Theft Auto:<br> Vice City", image: "https://upload.wikimedia.org/wikipedia/en/c/ce/Vice-city-cover.jpg", rank: "2" },
+{ mmr: "1.205", name: "Grand Theft Auto<br> 2", image: "https://archive.org/download/gta2_bincue/12363-grand-theft-auto-2-windows-front-cover.jpg", rank: "2" },
+{ mmr: "90", name: "Resident Evil 4", image: "https://i.pinimg.com/originals/93/4b/c8/934bc8d95a95c2eeaa19748d9801477e.png", rank: "3" },
+{ mmr: "8", name: "FlatOut 2", image: "https://upload.wikimedia.org/wikipedia/en/4/40/Flatout2pc.jpg", rank: "3" },
+{ mmr: "1.41", name: "Wolfenstein:<br>The New Order", image: "https://upload.wikimedia.org/wikipedia/en/thumb/9/95/Wolfenstein_The_New_Order_cover.jpg/220px-Wolfenstein_The_New_Order_cover.jpg", rank: "2"},
+{ mmr: "1.82", name: "Quake II", image: "https://cdn.mobygames.com/covers/4154219-quake-ii-windows-front-cover.jpg", rank: "1" },
+{ mmr: "6.5", name: "Fahrenheit:<br>Indigo Prophecy", image: "https://upload.wikimedia.org/wikipedia/en/2/26/Fahrenheit_pc_boxart.jpg", rank: "3" },
+{ mmr: "1.39", name: "BioShock", image: "https://upload.wikimedia.org/wikipedia/en/6/6d/BioShock_cover.jpg", rank: "2" },
+{ mmr: "7.5", name: "Worms 4:<br> Mayhem", image: "https://www.giantbomb.com/a/uploads/scale_medium/8/87790/2360882-box_worms4m.png", rank: "3" },
+{ mmr: "52", name: "Call of Duty", image: "https://wholesgame.com/wp-content/uploads/Call-of-Duty-Thumb-4-x-5.jpg", rank: "3" },
+{ mmr: "51", name: "Call of Duty 2", image: "https://upload.wikimedia.org/wikipedia/en/d/d1/Call_of_Duty_2_Box.jpg", rank: "3" },
+{ mmr: "55", name: "Call of Duty:<br> World at War", image: "https://upload.wikimedia.org/wikipedia/en/6/69/WAW_Cover_Art.jpg", rank: "3" },
+{ mmr: "1.50", name: "S.T.A.L.K.E.R.<br> Shadow of Chernobyl", image: "https://upload.wikimedia.org/wikipedia/en/b/b3/Shadow_of_Chernobyl_cover.jpg", rank: "1" },
+{ mmr: "1.15", name: "S.T.A.L.K.E.R.<br> Clear Sky", image: "https://upload.wikimedia.org/wikipedia/en/b/b7/STALKER_Clear_Sky.jpg", rank: "2" },
+{ mmr: "1.36", name: "S.T.A.L.K.E.R.<br> Call of Pripyat", image: "https://assetsio.gnwcdn.com/co5pz7.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp", rank: "2" },
+{ mmr: "1.25", name: "Manhunt", image: "https://upload.wikimedia.org/wikipedia/en/2/21/Manhuntbox.jpg", rank: "2" },
+{ mmr: "100", name: "Quake", image: "https://cdn.mobygames.com/covers/4104121-quake-dos-front-cover.jpg", rank: "3" },
+{ mmr: "1.64", name: "Fallout:<br>New Vegas", image: "https://static.wikia.nocookie.net/gamingdatabase/images/1/13/Keyart_falloutnewvegas.jpg/revision/latest?cb=20200516090624", rank: "1" },
+{ mmr: "1.35", name: "UnderRail", image: "https://thumbnails.pcgamingwiki.com/7/78/Underrail_-_cover.jpg/300px-Underrail_-_cover.jpg", rank: "2"},
+{ mmr: "95", name: "DOOM", image: "https://upload.wikimedia.org/wikipedia/en/5/57/Doom_cover_art.jpg", rank: "3" },
+{ mmr: "102", name: "DOOM (2016)", image: "https://m.media-amazon.com/images/M/MV5BNmFkZjBhOGYtYjI0MC00ZTJmLTlkZDgtNTUzZWQzN2IxY2VlXkEyXkFqcGdeQXVyNTk1MjA5MjM@._V1_.jpg", rank: "3" },
+{ mmr: "1.38", name: "Obscure", image: "https://upload.wikimedia.org/wikipedia/en/e/e4/Obscure_cover.jpg", rank: "2" },
+{ mmr: "1.84", name: "Grim Fandango", image: "https://m.media-amazon.com/images/M/MV5BY2VlZmJjZTAtMTM1OS00ODUzLTkyYTktZmIwNWY4N2JmZmMxXkEyXkFqcGdeQXVyMTc5NDExNDQ4._V1_FMjpg_UX1000_.jpg", rank: "1" },
+{ mmr: "1.63", name: "Fallout", image: "https://i.redd.it/8znsa1w4uqab1.jpg", rank: "1" },
+{ mmr: "40", name: "Need for Speed:<br> Most Wanted", image: "https://preview.redd.it/jcd0799d5vd21.jpg?width=640&crop=smart&auto=webp&s=19647e92dfa193cbea3625f89262a83c84af5e8d", rank: "3" },
+{ mmr: "1.58", name: "Counter-Strike:<br>Condition Zero Deleted Scenes", image: "https://cdn.thegamesdb.net/images/original/boxart/front/70102-1.jpg", rank: "1"},
+{ mmr: "1.21", name: "Serious Sam:<br> The First Encounter", image: "https://upload.wikimedia.org/wikipedia/en/b/b4/Serious_Sam_-_The_First_Encounter.jpg", rank: "2" },
+{ mmr: "2.5", name: "The Chronicles of Riddick:<br>Escape from Butcher Bay", image: "https://m.media-amazon.com/images/M/MV5BNzQ1YjkwYmEtYzdiZC00NDFhLTg2ZDUtM2RmY2ZiMTZjNTgyXkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_.jpg", rank: "3"},
+{ mmr: "1.81", name: "DOOM 3", image: "https://upload.wikimedia.org/wikipedia/en/4/4e/Doom3box.jpg", rank: "1" },
+{ mmr: "1.03", name: "Lego Racers", image: "https://www.speedrun.com/static/game/3dxk7p1y/cover.png?v=bdd5661", rank: "2" },
+{ mmr: "1.22", name: "MotoGP 2", image: "https://thumbnails.pcgamingwiki.com/b/bf/MotoGP_2_cover.jpg/300px-MotoGP_2_cover.jpg", rank: "2" },
+{ mmr: "1.49", name: "Oni", image: "https://upload.wikimedia.org/wikipedia/en/2/2e/Oni_Coverart.jpg", rank: "1" },
+{ mmr: "45", name: "Wolfenstein II:<br>The New Colossus", image: "https://image.api.playstation.com/vulcan/ap/rnd/202009/3018/GCndMQlqdy7ZkDRa71lb8vDe.png", rank: "3"},
+{ mmr: "1.42", name: "Wolfenstein:<br>The Old Blood", image: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0d/Wolfenstein_The_Old_Blood_cover.jpg/220px-Wolfenstein_The_Old_Blood_cover.jpg", rank: "2"},
+{ mmr: "7", name: "Quake 4", image:"https://upload.wikimedia.org/wikipedia/en/thumb/6/6c/Quake4box.jpg/220px-Quake4box.jpg", rank:"3"},
+{ mmr: "47", name: "Sanitarium", image: "https://upload.wikimedia.org/wikipedia/en/a/a0/Sanitarium_Coverart.jpg", rank: "3" },
+{ mmr: "1", name: "Safari Biathlon", image: "https://images.igdb.com/igdb/image/upload/t_1080p_2x/co4b9q.jpg", rank: "2" },
+{ mmr: "1.2", name: "Heroes of Might and Magic 4", image: "https://cdn.mobygames.com/covers/3967188-heroes-of-might-and-magic-iv-windows-front-cover.jpg", rank: "2" },
+{ mmr: "1.75", name: "Beyond<br>Good & Evil", image: "https://assetsio.gnwcdn.com/co2n6b.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp", rank: "1" },
+{ mmr: "1.34", name: "Rayman 3:<br> Hoodlum Havoc", image: "https://upload.wikimedia.org/wikipedia/en/3/34/Rayman_3_Box_Art.png", rank: "2" },
+{ mmr: "48", name: "Far Cry 3", image: "https://cdn.europosters.eu/image/750/posters/far-cry-3-cover-i13147.jpg", rank: "3"},
+{ mmr: "1.47", name: "Portal", image: "https://upload.wikimedia.org/wikipedia/en/9/9f/Portal_standalonebox.jpg", rank: "1"},
+{ mmr: "1.1", name: "MotoGP 13", image: "https://thumbnails.pcgamingwiki.com/0/02/MotoGP_13_-_Cover.jpg/300px-MotoGP_13_-_Cover.jpg", rank: "2"},
+{ mmr: "1.46", name: "Portal 2", image: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/Portal2cover.jpg/220px-Portal2cover.jpg", rank: "1"},
+{ mmr: "101.5", name: "Half-Life 2:<br>Episode Two", image: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2d/Half-Life_2_Episode_Two_title.jpg/220px-Half-Life_2_Episode_Two_title.jpg", rank: "3"},
+{ mmr: "56", name: "Half-Life 2:<br>Episode One", image: "https://cdns-images.dzcdn.net/images/cover/222d065de82eec6358decaec37701f88/500x500.jpg", rank: "3"},
+{ mmr: "2", name: "Vietcong 2", image: "https://upload.wikimedia.org/wikipedia/en/3/38/Vietcong_2_Coverart.jpg", rank: "3"},
+{ mmr: "54", name: "Medal of Honor:<br>Pacific Assault", image:"https://m.media-amazon.com/images/M/MV5BZGUwMWZiMzctMWRhNy00YTNiLWIzNzAtMzM0NWE0MTYwMjg3XkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_FMjpg_UX1000_.jpg", rank:"3"},
+{ mmr: "1.26", name: "Silent Hill 2", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRytq0HsmOwtVGHzrcDHm8MwWWN8Bk7Yfbh5i9CRS6MQA&s", rank: "2" },
+{ mmr: "1.40", name: "Painkiller", image: "https://m.media-amazon.com/images/M/MV5BMDZmNzUxNDUtMzFlMC00ZDA0LWI2YTctYWU0YjcxZDk1ZjQ4XkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_.jpg", rank: "1" },
+{ mmr: "49", name: "Brothers in Arms:<br> Road to Hill 30", image: "https://static.wikia.nocookie.net/brotherinarms/images/7/77/Road_to_Hill_30_Cover.jpg/revision/latest?cb=20120114130106", rank: "3" },
+{ mmr: "48.5", name: "Brothers in Arms:<br> Earned in Blood", image: "https://m.media-amazon.com/images/M/MV5BN2U2MWM4OWMtMjdiMy00ZGI2LThjYjktZmZkMTNiMzg1YmEzXkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_.jpg", rank: "3" },
+{ mmr: "48.25", name :"Brothers in Arms:<br> Hell's Highway", image: "https://store.ubisoft.com/dw/image/v2/ABBS_PRD/on/demandware.static/-/Sites-masterCatalog/default/dw851bc971/images/large/56c4948388a7e300458b4714.jpg?sw=890&sh=501&sm=fit", rank: "3"},
+{ mmr: "1.04", name: "Call of Juarez", image: "https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Call_of_Juarez_cover.jpg/220px-Call_of_Juarez_cover.jpg", rank: "2" },
+{ mmr: "88", name: "Serious Sam 2", image: "https://static.wikia.nocookie.net/serious/images/9/96/SS2_box_art.jpg/revision/latest?cb=20200609083855", rank: "3" },
+{ mmr: "1.07", name: "Dark Messiah<br> of Might & Magic", image: "https://thumbnails.pcgamingwiki.com/4/4d/DarkMessiah-MightandMagic.jpg/300px-DarkMessiah-MightandMagic.jpg", rank: "2" },
+{ mmr: "3.352", name: "Tom Clancy's Rainbow Six: Vegas", image: "https://upload.wikimedia.org/wikipedia/en/a/a8/Tom_Clancy_Rainbow_Six_Vegas_Game_Cover.jpg", rank: "3" },
+{ mmr: "54.5", name: "Medal of Honor:<br> Airborne", image: "https://m.media-amazon.com/images/M/MV5BMmY2ODc1M2YtOTQzYy00NjhlLTg3ZjktMDBkYTRhMTczOThkXkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_.jpg", rank: "3" },
+{ mmr: "1.06", name: "Tony Hawk's<br>Pro Skater 3", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU1CIvyZP2iia2g5tPoKSbiiBoEP7f1kX0SkhfWrEcgA&s", rank: "2" },
+{ mmr: "103", name: "Resident Evil", image: "https://i.pinimg.com/originals/94/11/a3/9411a34a6382eb8c16a266c361175086.jpg", rank: "3" },
+{ mmr: "1.23", name: "Hades", image: "https://cdn.mobygames.com/covers/10377246-hades-windows-apps-front-cover.jpg", rank: "2" },
+{ mmr: "1.43", name: "Desperados:<br>Wanted Dead or Alive", image: "https://i.playground.ru/e/RzbwMX45eG1HyJa8i4fUiw.jpeg?414x574", rank: "1"},
+{ mmr: "3.1", name: "Shadow Man", image: "https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_ShadowManRemastered_NightdiveStudiosAcclaimStudiosTeesside_S2_1200x1600-0c259212b90cd3e2fce7d2a4e37614c3", rank: "3"},
+{ mmr: "3", name: "Freedom Fighters", image: "https://upload.wikimedia.org/wikipedia/en/5/5f/Freedom_Fighters_%28video_game_cover_art%29.jpg", rank: "3"},
+{ mmr: "1.38", name: "Half-Life:<br> Blue Shift", image: "https://static.wikia.nocookie.net/half-life/images/8/8a/Blue_Shift_Steam_library_cover.jpg/revision/latest?cb=20191010104226&path-prefix=en", rank: "2" },
+{ mmr: "1.40", name: "Half-Life:<br> Opposing Force", image: "https://upload.wikimedia.org/wikipedia/en/a/a9/Half-Life_Opposing_Force_box.jpg", rank: "2" },
+{ mmr: "3.25", name: "Psi-Ops:<br>The Mindgate Conspiracy", image: "https://assets.altarofgaming.com/wp-content/uploads/2022/04/psi-ops-the-mindgate-conspiracy-game-poster-altar-of-gaming-726x1024.jpg", rank: "3"},
+{ mmr: "1.60", name: "Max Payne", image: "https://upload.wikimedia.org/wikipedia/en/4/4c/Maxpaynebox.jpg", rank: "1" },
+{ mmr: "1.33", name: "Max Payne 2:<br> The Fall of Max Payne", image: "https://upload.wikimedia.org/wikipedia/en/thumb/2/21/Max_Payne_2.jpg/220px-Max_Payne_2.jpg", rank: "2" },
+{ mmr: "99", name: "Battlefield 3", image: "https://static.posters.cz/image/750/poster/battlefield-3-cover-i11404.jpg", rank: "3"},
+{ mmr: "87", name: "Disco Elysium", image: "https://miro.medium.com/v2/resize:fit:600/1*0rtcr-D9i7yoYNKpoBO-rQ.jpeg", rank: "3" },
+{ mmr: "1", name: "Men of Valor", image: "https://images.gog-statics.com/e335f4a32382185f1147cec1cdff76096259bc003aab804b11162dc54d14df80.jpg", rank: "3"},
+{ mmr: "1.425", name: "Divinity:<br> Original Sin 2", image: "https://upload.wikimedia.org/wikipedia/ru/4/48/Divinity_Original_Sin_2_cover_art.jpg", rank: "2" },
+{ mmr: "1.375", name: "Vampire:<br> The Masquerade <br> Bloodlines", image: "https://upload.wikimedia.org/wikipedia/en/9/96/Vampire_-_The_Masquerade_%E2%80%93_Bloodlines_Coverart.png", rank: "2" },
+{ mmr: "1.372", name: "The Elder Scrolls V:<br>Skyrim", image: "https://upload.wikimedia.org/wikipedia/en/1/15/The_Elder_Scrolls_V_Skyrim_cover.png", rank: "2" },
+{ mmr: "87", name: "Duke Nukem: Manhattan Project", image: "https://i.pinimg.com/736x/cd/2e/45/cd2e452049dc1f8d5647a7627a33459c.jpg", rank: "3" },
+{ mmr: "86", name: "Hitman:<br>Blood Money", image: "https://upload.wikimedia.org/wikipedia/en/b/ba/Hitman_4_artwork.jpg", rank: "3"},
+{ mmr: "0", name: "UberSoldier", image: "https://upload.wikimedia.org/wikipedia/en/thumb/4/46/UberSoldier_packshot.jpeg/220px-UberSoldier_packshot.jpeg", rank: "3"}
+];
+
+let movies = [
+{ mmr: "88", name: "Pulp Fiction", image: "https://static.posters.cz/image/750/poster/pulp-fiction-cover-i1288.jpg", rank: "1"},
+{ mmr: "1", name: "Shrek", image: "https://image.tmdb.org/t/p/original/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg", rank: "1"},
+{ mmr: "16", name: "Donnie Darko", image: "https://i.ebayimg.com/images/g/flwAAOSw8gVYACEq/s-l500.jpg", rank: "2"},
+{ mmr: "100", name: "The Silence of the Lambs", image: "https://i.ebayimg.com/images/g/j0cAAOSw8d9Utk3s/s-l1600.jpg", rank: "3"},
+{ mmr: "4", name: "Fight Club", image: "https://i.etsystatic.com/18242346/r/il/c9908e/2412674268/il_570xN.2412674268_1sgm.jpg", rank: "2"},
+{ mmr: "5.5", name: "Heat", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRTpmN0-S0VOJzr83LRCha6E7stRnC49d9_El98LZ6Gg&s", rank: "2"},
+{ mmr: "10", name: "The Truman Show", image: "https://m.media-amazon.com/images/I/91wHwEdt0zL._AC_UF1000,1000_QL80_DpWeblab_.jpg", rank: "2"},
+{ mmr: "4", name: "The Untouchables", image: "https://m.media-amazon.com/images/I/51+RH8+tAcL._AC_UF894,1000_QL80_.jpg", rank: "3"},
+{ mmr: "10", name: "Donnie Brasco", image: "https://m.media-amazon.com/images/I/51XWyUN7RxL._AC_UF894,1000_QL80_.jpg", rank: "1"},
+{ mmr: "86", name: "Casino", image: "https://m.media-amazon.com/images/I/61lub6FAASL._AC_UF1000,1000_QL80_.jpg", rank: "1"},
+{ mmr: "87", name: "Goodfellas", image: "https://m.media-amazon.com/images/I/61UUgNGYEqL._AC_UF1000,1000_QL80_.jpg", rank: "1"},
+{ mmr: "9", name: "The Godfather", image: "https://m.media-amazon.com/images/I/81B3U3Rv+hL._AC_UF1000,1000_QL80_.jpg", rank: "1"},
+{ mmr: "75",name: "Men in Black II", image: "https://m.media-amazon.com/images/M/MV5BMTMxNDA0NTMxMV5BMl5BanBnXkFtZTYwMDE2NzY2._V1_.jpg", rank: "3"},
+{ mmr: "85",  name: "Scarface", image: "https://i.ebayimg.com/images/g/XAoAAOSwGIZcT~Qo/s-l1600.jpg", rank: "1"},
+{ mmr: "5.75", name: "The Matrix", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0XcKlA2HepDSvp_Pe_ZFBiOk6_oHuJ_Q3ndcL3t1Ckw&s", rank: "2"},
+{ mmr: "7", name: "Menace II Society", image: "https://m.media-amazon.com/images/M/MV5BNGE3MGI0MzItNjJjNC00ZTUzLTlmZTctOGUyMDllMWM2OTcxXkEyXkFqcGdeQXVyMjQ1MjYzOTQ@._V1_FMjpg_UX1000_.jpg", rank: "2"},
+{ mmr: "100", name: "One Flew Over the Cuckoo's Nest", image: "https://image.tmdb.org/t/p/original/yMgm27NWJsNblsE6Y0px7NtUBl8.jpg", rank: "1"},
+{ mmr: "8.5", name: "Fargo", image: "https://filmartgallery.com/cdn/shop/products/Fargo-Vintage-Movie-Poster-Original-1-Sheet-27x41-7182_5000x.jpg?v=1650949481", rank: "2"},
+{ mmr: "85", name: "Carlito's Way", image: "https://m.media-amazon.com/images/M/MV5BYzBhY2E0OWYtYzRmNC00ZGY3LTllODYtNTExM2FmYTFkMGUwXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_.jpg", rank: "3"},
+{ mmr: "15", name: "Reservoir Dogs", image: "https://i.ebayimg.com/images/g/Z5kAAOSwrglfokTv/s-l1600.jpg", rank: "2"},
+{ mmr: "76", name: "Boyz n the Hood", image: "https://filmartgallery.com/cdn/shop/files/Boyz-N-the-Hood-Vintage-Movie-Poster-Original-1-Sheet-27x41_2569x.jpg?v=1702530108", rank: "3"},
+{ mmr: "9", name: "Do the Right Thing", image: "https://i.etsystatic.com/18242346/r/il/144e99/2458211731/il_570xN.2458211731_11kj.jpg", rank: "2"},
+{ mmr: "90",name: "American Gangster", image: "https://image.tmdb.org/t/p/original/2uXctwFXqL1qV3Twvzz9DB1vEkZ.jpg", rank: "3"},
+{ mmr: "90", name: "Trainspotting", image: "https://i.ebayimg.com/images/g/8c0AAOSwuMNd5k86/s-l1600.jpg", rank: "1"},
+{ mmr: "85", name: "American Psycho", image: "https://i.ebayimg.com/images/g/UBkAAOSwXNdca1Jw/s-l1600.jpg", rank: "1"},
+{ mmr: "7.1", name: "L.A. Confidential", image: "https://m.media-amazon.com/images/I/51qhtGGaPSL._AC_UF894,1000_QL80_.jpg", rank: "2"},
+{ mmr: "2", name: "The Big Lebowski", image: "https://i.ebayimg.com/images/g/zyYAAOSwARZXnMY8/s-l1600.jpg", rank: "3"},
+{ mmr: "0", name: "American Pie", image: "https://m.media-amazon.com/images/I/71wKN0k7nHL._AC_UF1000,1000_QL80_.jpg", rank: "3"},
+{ mmr: "50", name: "V for Vendetta", image: "https://i.etsystatic.com/16821137/r/il/625705/2873711084/il_570xN.2873711084_byyq.jpg", rank: "3"},
+{ mmr: "0", name: "Galline in fuga", image: "https://static.screenweek.it/movie/2592/poster/ita/big.jpg?1470937597", rank: "2"},
+{ mmr: "7", name: "Taxi Driver", image: "https://i.ebayimg.com/images/g/4D0AAOSwj3VkSGCx/s-l1600.jpg", rank: "1"},
+{ mmr: "1", name: "Shrek 2", image: "https://i.ebayimg.com/images/g/6EEAAOxyIYhSVe1e/s-l1600.jpg", rank: "2"},
+{ mmr: "80", name: "Smetto quando voglio", image: "https://pad.mymovies.it/filmclub/2013/12/076/locandina.jpg", rank: "3"},
+{ mmr: "108", name: "New Jack City", image: "https://m.media-amazon.com/images/S/pv-target-images/79d9180ae501833e11c002b5abf23a68b888acf53afd0dad228ea1a6133b1f65.jpg", rank: "3"},
+{ mmr: "1", name: "La spada magica<br>Alla ricerca di Camelot", image: "https://www.stardust.it/uploads/img/movie/poster/f2ad02cdd6e086f7f1996b3168d973991508755831-1000w.jpg", rank: "3"},
+{ mmr: "110", name: "Apocalypse Now", image: "https://i.ebayimg.com/images/g/n5UAAOSw-uhahQIf/s-l1600.jpg", rank: "3"},
+{ mmr: "2", name: "La leggenda di<br>Al, John e Jack", image: "https://upload.wikimedia.org/wikipedia/en/7/74/The_Legend_of_Al%2C_John_and_Jack_poster.jpg", rank: "2"},
+{ mmr: "5", name: "Chiedimi se sono felice", image: "https://www.movietele.it/wp-content/uploads/2011/04/chiedimi-se-sono-felice-5700-ac2.jpg", rank: "1"},
+{ mmr: "73", name: "Johnny English", image: "https://m.media-amazon.com/images/M/MV5BNDkxODhlNmItYjhiMC00ZjNmLWE2YmMtOTQ3NmQxM2YzOGFiXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_.jpg", rank: "3"},
+{ mmr: "8", name: "The Usual Suspects", image: "https://limelightmovieart.com/wp-content/uploads/2022/10/Usual-Suspects-The-US-1S-1995-scaled.jpg", rank: "1"},
+{ mmr: "5", name: "Withnail and I", image: "https://limelightmovieart.com/wp-content/uploads/2021/10/Withnail-and-I-US-Intl.-1S-1986-scaled.jpg", rank: "2"},
+{ mmr: "4.05", name: "Enemy of the State", image: "https://m.media-amazon.com/images/I/81D1ZlXuU3L._AC_UF894,1000_QL80_.jpg", rank: "3"},
+{ mmr: "5", name: "The Naked Gun", image: "https://filmartgallery.com/cdn/shop/products/The-Naked-Gun-Vintage-Movie-Poster-Original-1-Sheet-27x41_1898x.jpg?v=1673038984", rank: "3"},
+{ mmr: "12", name: "Dog Day Afternoon", image: "https://i.ebayimg.com/images/g/mRUAAOSwWPRhmMw6/s-l1600.jpg", rank: "2"},
+{ mmr: "7", name: "Juice", image: "https://filmartgallery.com/cdn/shop/products/Juice-Vintage-Movie-Poster-Original-1-Sheet-27x41_018855d4-4cb8-4a8c-a647-8fc43809b714_5000x.jpg?v=1642561438", rank: "2"},
+{ mmr: "11", name: "Falling Down", image: "https://m.media-amazon.com/images/I/81MyqIRpxZL._AC_UF894,1000_QL80_.jpg", rank: "2"},
+{ mmr: "8", name: "Jackie Brown", image: "https://m.media-amazon.com/images/I/61xE5GM-KvL._AC_UF1000,1000_QL80_.jpg", rank: "2"},
+{ mmr: "6", name: "Paid in Full", image: "https://i.etsystatic.com/23402008/r/il/e5885c/2547342025/il_570xN.2547342025_6dqd.jpg", rank: "2"},
+{ mmr: "14", name: "Men in Black", image: "https://m.media-amazon.com/images/M/MV5BOTlhYTVkMDktYzIyNC00NzlkLTlmN2ItOGEyMWQ4OTA2NDdmXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg", rank: "2"},
+{ mmr: "3", name: "È già ieri", image: "https://pad.mymovies.it/filmclub/2004/01/008/imm.jpg", rank: "2"},
+{ mmr: "6", name: "Being John Malkovich", image: "https://m.media-amazon.com/images/I/51pfE9T+y5L._AC_.jpg", rank: "1"},
+{ mmr: "3", name: "Borat", image: "https://i.ebayimg.com/images/g/nT8AAOSwtPReAcwf/s-l1600.jpg", rank: "3"},
+{ mmr: "70", name: "Se7en", image: "https://m.media-amazon.com/images/I/71ivyTtPwoL._AC_UF1000,1000_QL80_.jpg", rank: "3"},
+{ mmr: "70", name: "L'inquilino del terzo piano", image: "https://upload.wikimedia.org/wikipedia/en/a/a6/Locataire.jpg", rank: "1"},
+{ mmr: "109", name: "King of New York", image:"https://media.themoviedb.org/t/p/w500/1MyH4MJAJZJbb6wDVeOc2bTECtK.jpg", rank: "3"},
+{ mmr: "4.1 ",name: "Io sono leggenda", image:"https://m.media-amazon.com/images/S/pv-target-images/6ae254816e760e93d99a6531e2fd804eeff7ac1aef4b67d9ade75d18faf31bc8.jpg", rank: "3"},
+{ mmr: "1.51", name: "Ocean's Eleven", image:"https://image.tmdb.org/t/p/original/stP3V8n4HHRA57s2Id8LyljWZzl.jpg", rank: "2"},
+{ mmr: "8.51", name:"12 Angry Men", image:"https://upload.wikimedia.org/wikipedia/commons/b/b5/12_Angry_Men_%281957_film_poster%29.jpg", rank:"2"},
+{ mmr: "6.1", name:"Mean Streets", image:"https://m.media-amazon.com/images/I/81jarKvRo6L._AC_UF1000,1000_QL80_.jpg", rank:"1"},
+{ mmr: "1.5", name: "Snatch", image: "https://www.picclickimg.com/iYAAAOSwjftilviq/Snatch-Lo-Strappo-Film-2000-Poster-Locandina.webp", rank: "2"}
+ ];
+	 
+</script>
+
+</body>
+</html>
