@@ -264,7 +264,7 @@
                 }
                 gridDiv.innerHTML = `
                     <img src="${game.image}" alt="${game.name}">
-                    <h3>${game.name}</h3>`;
+                    <h3>${game.mmr}</h3>`;
 			
                 gridContainer.appendChild(gridDiv);
             });
@@ -304,7 +304,7 @@ let albums = [
 { mmr: "135", name: "Endtroducing.....", artist: "Dj Shadow", image: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/0d/14/6d/0d146d5c-44c5-22e2-c596-2242180f4774/5400863103361_cover.jpg/600x600bb.jpg", rank: "2" },
 { mmr: "155", name: "Ten", artist: "Pearl Jam", image: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/5e/91/c1/5e91c1ba-53cb-c5c8-15f1-d3c81f3b3592/dj.psrqglcw.jpg/600x600bb.jpg", rank: "2"  },
 { mmr: "62", name: "Bury The Hatchet", artist: "The Cranberries", image: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/aa/df/6f/aadf6f21-49e4-64e5-da92-58a71fa7e28d/06UMGIM03109.rgb.jpg/600x600bb.jpg", rank: "3" },
-{ mmr: "140", name: "Black on Both Sides", artist: "Mos Def", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/89/20/70/89207018-b8f3-4935-b812-dc94a5504df1/00602547873125.rgb.jpg/600x600bb.jpg", rank: "2" },
+{ mmr: "2", name: "Black on Both Sides", artist: "Mos Def", image: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/89/20/70/89207018-b8f3-4935-b812-dc94a5504df1/00602547873125.rgb.jpg/600x600bb.jpg", rank: "1" },
 { mmr: "40", name: "Dirt", artist: "Alice in Chains", image: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/54/26/62/5426627b-4707-7867-acc0-ce616d250381/074645247526.jpg/600x600bb.jpg", rank: "3" },
 { mmr: "77", name: "Octavarium", artist: "Dream Theater", image: "https://is1-ssl.mzstatic.com/image/thumb/Music/y2005/m05/d25/h10/s05.uwlzforq.jpg/600x600bb.jpg", rank: "3"},
 { mmr: "160", name: "Escapology", artist: "Robbie Williams", image: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Escapology_cover.png/220px-Escapology_cover.png", rank: "2" },
@@ -409,7 +409,7 @@ let games = [
 { mmr: "100.5", name: "Baldur's Gate", image: "https://www.rpgfan.com/wp-content/uploads/2020/06/Baldurs-Gate-Cover-Art.jpg", rank: "3" },
 { mmr: "1.05", name: "Syberia", image: "https://static.wikia.nocookie.net/syberia/images/f/fb/Syberia.jpg/revision/latest?cb=20220901230347", rank: "2" },
 { mmr: "1.37", name: "The House of the Dead 3", image: "https://m.media-amazon.com/images/M/MV5BYjgxYTAyODktYTJhOS00YWNjLTlhNGMtZDJmYTY4N2ViMmVmXkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_FMjpg_UX1000_.jpg", rank: "2" },
-{ mmr: "1.37", name: "Half-Life 2", image: "https://upload.wikimedia.org/wikipedia/en/thumb/2/25/Half-Life_2_cover.jpg/220px-Half-Life_2_cover.jpg", rank: "2" },
+{ mmr: "1.28", name: "Half-Life 2", image: "https://upload.wikimedia.org/wikipedia/en/thumb/2/25/Half-Life_2_cover.jpg/220px-Half-Life_2_cover.jpg", rank: "2" },
 { mmr: "1.62", name: "Baldur's Gate II:<br> Shadows of Amn", image: "https://i.pinimg.com/originals/91/49/8a/91498af2ac5ea9175a3f88cda9650c84.jpg", rank: "1" },
 { mmr: "1.24", name: "Hitman 2:<br> Silent Assassin", image: "https://upload.wikimedia.org/wikipedia/en/c/cd/Hitman_2_artwork.jpg", rank: "2" },
 { mmr: "1.54", name: "XIII", image: "https://howlongtobeat.com/games/11413_XIII.jpg", rank: "1" },
@@ -441,7 +441,7 @@ let games = [
 { mmr: "1.25", name: "Manhunt", image: "https://upload.wikimedia.org/wikipedia/en/2/21/Manhuntbox.jpg", rank: "2" },
 { mmr: "100", name: "Quake", image: "https://cdn.mobygames.com/covers/4104121-quake-dos-front-cover.jpg", rank: "3" },
 { mmr: "1.64", name: "Fallout:<br>New Vegas", image: "https://cdn.cdkeys.com/700x700/media/catalog/product/a/f/affeaf_10_16_18_.jpg", rank: "1" },
-{ mmr: "1.35", name: "UnderRail", image: "https://stygiansoftware.com/wiki/images/8/89/Soundtrack_underrail.jpg", rank: "2"},
+{ mmr: "1.35", name: "UnderRail", image: "https://m.media-amazon.com/images/M/MV5BNjkyZTkxY2ItY2IwYy00ZGQxLWI5YWYtNTU1YTM4OGI5ZWFhXkEyXkFqcGdeQXVyMTI0MzA4NTgw._V1_.jpg", rank: "2"},
 { mmr: "95", name: "DOOM", image: "https://upload.wikimedia.org/wikipedia/en/5/57/Doom_cover_art.jpg", rank: "3" },
 { mmr: "102", name: "DOOM (2016)", image: "https://m.media-amazon.com/images/M/MV5BNmFkZjBhOGYtYjI0MC00ZTJmLTlkZDgtNTUzZWQzN2IxY2VlXkEyXkFqcGdeQXVyNTk1MjA5MjM@._V1_.jpg", rank: "3" },
 { mmr: "1.38", name: "Obscure", image: "https://upload.wikimedia.org/wikipedia/en/e/e4/Obscure_cover.jpg", rank: "2" },
