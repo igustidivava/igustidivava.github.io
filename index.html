@@ -49,7 +49,7 @@
     padding: 10px;
     text-align: center;
 	font-size: 14px;
-    height: 250px; /* Fixed height for grid items */
+    height: 270px; /* Fixed height for grid items */
 	width: 150px;
     overflow: hidden; /* Hide overflow content */
 }
@@ -295,6 +295,7 @@
     }
 	
 let albums = [
+{ mmr: "128", name: "Mellon Collie<br>and the<br>Infinite Sadness", artist: "The Smashing Pumpkins", image: "img/album/mellon_collie.webp", rank:"2"},
 { mmr: "3.655", name: "Wish You Were Here", artist: "Pink Floyd", image: "img/album/wish_you_were_here.webp", rank: "1" },
 { mmr: "81", name: "Symbolic", artist: "Death", image: "img/album/symbolic.webp", rank: "3" },
 { mmr: "68", name: "Tragic Kingdom", artist: "No Doubt", image: "img/album/tragic_kingdom.webp", rank: "3"},
@@ -412,9 +413,10 @@ let games = [
 { mmr: "1.42", name: "Wolfenstein:<br>The Old Blood", image: "img/games/wolfenstein__br_the_old_blood.webp", rank: "2" },
 { mmr: "1.41", name: "Wolfenstein:<br>The New Order", image: "img/games/wolfenstein__br_the_new_order.webp", rank: "2" },
 { mmr: "1.595", name: "For The King", image: "img/games/for_the_king.webp", rank: "1" },
+{ mmr: "1.27", name: "The Longest Journey", image: "img/games/the_longest_journey.webp", rank: "2" },
+{ mmr: "6.5", name: "Fahrenheit:<br>Indigo Prophecy", image: "img/games/fahrenheit__br_indigo_prophecy.webp", rank: "3" },
 { mmr: "1.90", name: "Half-Life", image: "img/games/half_life.webp", rank: "1" },
 { mmr: "1.55", name: "Hitman:<br> Codename 47", image: "img/games/hitman__br__codename_47.webp", rank: "1" },
-{ mmr: "1.27", name: "The Longest Journey", image: "img/games/the_longest_journey.webp", rank: "2" },
 { mmr: "111", name: "Fallout 3", image: "img/games/fallout_3.webp", rank: "3" },
 { mmr: "1.65", name: "Fallout 2", image: "img/games/fallout_2.webp", rank: "1" },
 { mmr: "1.48", name: "The House of the Dead 2", image: "img/games/the_house_of_the_dead_2.webp", rank: "1" },
@@ -439,7 +441,6 @@ let games = [
 { mmr: "90", name: "Resident Evil 4", image: "img/games/resident_evil_4.webp", rank: "3" },
 { mmr: "8", name: "FlatOut 2", image: "img/games/flatout_2.webp", rank: "3" },
 { mmr: "1.82", name: "Quake II", image: "img/games/quake_ii.webp", rank: "1" },
-{ mmr: "6.5", name: "Fahrenheit:<br>Indigo Prophecy", image: "img/games/fahrenheit__br_indigo_prophecy.webp", rank: "3" },
 { mmr: "1.39", name: "BioShock", image: "img/games/bioshock.webp", rank: "2" },
 { mmr: "7.5", name: "Worms 4:<br> Mayhem", image: "img/games/worms_4__br__mayhem.webp", rank: "3" },
 { mmr: "52", name: "Call of Duty", image: "img/games/call_of_duty.webp", rank: "3" },
@@ -513,7 +514,15 @@ let games = [
 ];
 
 let movies = [
+{ mmr: "8.25", name: "Moneyball", image: "img/movies/moneyball.webp", rank:"2"},
 { mmr: "17", name: "Parasite", image: "img/movies/parasite.webp", rank: "2"},
+{ mmr: "75", name: "Men in Black II", image: "img/movies/men_in_black_ii.webp", rank: "3" },
+{ mmr: "14", name: "Men in Black", image: "img/movies/men_in_black.webp", rank: "2" },
+{ mmr: "108", name: "New Jack City", image: "img/movies/new_jack_city.webp", rank: "3" },
+{ mmr: "70", name: "L'inquilino del terzo piano", image: "img/movies/l_inquilino_del_terzo_piano.webp", rank: "1" },
+{ mmr: "12", name: "Dog Day Afternoon", image: "img/movies/dog_day_afternoon.webp", rank: "2" },
+{ mmr: "6.1", name: "Mean Streets", image: "img/movies/mean_streets.webp", rank: "1" },
+{ mmr: "80", name: "Smetto quando voglio", image: "img/movies/smetto_quando_voglio.webp", rank: "3" },
 { mmr: "88", name: "Pulp Fiction", image: "img/movies/pulp_fiction.webp", rank: "1" },
 { mmr: "1", name: "Shrek", image: "img/movies/shrek.webp", rank: "1" },
 { mmr: "16", name: "Donnie Darko", image: "img/movies/donnie_darko.webp", rank: "2" },
@@ -526,7 +535,6 @@ let movies = [
 { mmr: "86", name: "Casino", image: "img/movies/casino.webp", rank: "1" },
 { mmr: "87", name: "Goodfellas", image: "img/movies/goodfellas.webp", rank: "1" },
 { mmr: "9", name: "The Godfather", image: "img/movies/the_godfather.webp", rank: "1" },
-{ mmr: "75", name: "Men in Black II", image: "img/movies/men_in_black_ii.webp", rank: "3" },
 { mmr: "85", name: "Scarface", image: "img/movies/scarface.webp", rank: "1" },
 { mmr: "5.75", name: "The Matrix", image: "img/movies/the_matrix.webp", rank: "2" },
 { mmr: "7", name: "Menace II Society", image: "img/movies/menace_ii_society.webp", rank: "2" },
@@ -546,8 +554,6 @@ let movies = [
 { mmr: "0", name: "Galline in fuga", image: "img/movies/galline_in_fuga.webp", rank: "2" },
 { mmr: "7", name: "Taxi Driver", image: "img/movies/taxi_driver.webp", rank: "1" },
 { mmr: "1", name: "Shrek 2", image: "img/movies/shrek_2.webp", rank: "2" },
-{ mmr: "80", name: "Smetto quando voglio", image: "img/movies/smetto_quando_voglio.webp", rank: "3" },
-{ mmr: "108", name: "New Jack City", image: "img/movies/new_jack_city.webp", rank: "3" },
 { mmr: "1", name: "La spada magica<br>Alla ricerca di Camelot", image: "img/movies/la_spada_magica_br_alla_ricerca_di_camelot.webp", rank: "3" },
 { mmr: "110", name: "Apocalypse Now", image: "img/movies/apocalypse_now.webp", rank: "3" },
 { mmr: "2", name: "La leggenda di<br>Al, John e Jack", image: "img/movies/la_leggenda_di_br_al__john_e_jack.webp", rank: "2" },
@@ -557,22 +563,18 @@ let movies = [
 { mmr: "5", name: "Withnail and I", image: "img/movies/withnail_and_i.webp", rank: "2" },
 { mmr: "4.05", name: "Enemy of the State", image: "img/movies/enemy_of_the_state.webp", rank: "3" },
 { mmr: "5", name: "The Naked Gun", image: "img/movies/the_naked_gun.webp", rank: "3" },
-{ mmr: "12", name: "Dog Day Afternoon", image: "img/movies/dog_day_afternoon.webp", rank: "2" },
 { mmr: "7", name: "Juice", image: "img/movies/juice.webp", rank: "2" },
 { mmr: "11", name: "Falling Down", image: "img/movies/falling_down.webp", rank: "2" },
 { mmr: "8", name: "Jackie Brown", image: "img/movies/jackie_brown.webp", rank: "2" },
 { mmr: "6", name: "Paid in Full", image: "img/movies/paid_in_full.webp", rank: "2" },
-{ mmr: "14", name: "Men in Black", image: "img/movies/men_in_black.webp", rank: "2" },
 { mmr: "3", name: "È già ieri", image: "img/movies/__gi__ieri.webp", rank: "2" },
 { mmr: "6", name: "Being John Malkovich", image: "img/movies/being_john_malkovich.webp", rank: "1" },
 { mmr: "3", name: "Borat", image: "img/movies/borat.webp", rank: "3" },
 { mmr: "70", name: "Se7en", image: "img/movies/se7en.webp", rank: "3" },
-{ mmr: "70", name: "L'inquilino del terzo piano", image: "img/movies/l_inquilino_del_terzo_piano.webp", rank: "1" },
 { mmr: "109", name: "King of New York", image: "img/movies/king_of_new_york.webp", rank: "3" },
 { mmr: "4.1 ", name: "Io sono leggenda", image: "img/movies/io_sono_leggenda.webp", rank: "3" },
 { mmr: "1.51", name: "Ocean's Eleven", image: "img/movies/ocean_s_eleven.webp", rank: "2" },
 { mmr: "8.51", name: "12 Angry Men", image: "img/movies/12_angry_men.webp", rank: "2" },
-{ mmr: "6.1", name: "Mean Streets", image: "img/movies/mean_streets.webp", rank: "1" },
 { mmr: "1.5", name: "Snatch", image: "img/movies/snatch.webp", rank: "2" }
  ];
 	 
