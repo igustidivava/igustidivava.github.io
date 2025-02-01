@@ -206,7 +206,7 @@
 			} else if (filter === "AlbumsArtists") {
                 albums.sort(sortArtist);
             } else if (filter === "AlbumsAlbumName") {
-                albums.sort((a, b) => a.name.localeCompare(b.name));
+                albums.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
             } else if (filter === "AlbumsRating") {
                 albums.sort(sortRankAlbums);
             }
@@ -214,7 +214,7 @@
 			if (filter === "OriginalGames"){
 				games=[...originalGames]
 			} else if (filter === "GamesTitle") {
-                games.sort((a, b) => a.name.localeCompare(b.name));
+                games.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
             } else if (filter === "GamesRating") {
                 games.sort(sortRankAlbums);
             }
@@ -222,7 +222,7 @@
 			if (filter === "OriginalMovies"){
 				movies=[...originalMovies]
 			} else if (filter === "MoviesTitle") {
-                movies.sort((a, b) => a.name.localeCompare(b.name));
+                movies.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
             } else if (filter === "MoviesRating") {
                 movies.sort(sortRankAlbums);
             }
