@@ -252,7 +252,6 @@
                 gridDiv.innerHTML = `
                     <img src="${album.image}" alt="${album.name}">
                     <h3>${album.name}</h3>
-                        
                     <p>${album.artist}</p>`;
                 gridContainer.appendChild(gridDiv);
             });
@@ -427,8 +426,8 @@ let albums = [
     ];
     
 let games = [
-    {mmr: "41", name: "Silent Hill 3", image: "img/games/sh3.webp", rank: "3"},
-    {mmr: "1.21", name: "Midnight Club 2", image: "img/games/midnight_club2.webp", rank: "2"},
+    { mmr: "41", name: "Silent Hill 3", image: "img/games/sh3.webp", rank: "3"},
+    { mmr: "1.21", name: "Midnight Club 2", image: "img/games/midnight_club2.webp", rank: "2"},
     { mmr: "1.12", name: "Grand Theft Auto<br>IV", image: "img/games/gtaiv.webp", rank: "2"},
     { mmr: "1.42", name: "Wolfenstein:<br>The Old Blood", image: "img/games/wolfenstein__br_the_old_blood.webp", rank: "2" },
     { mmr: "1.41", name: "Wolfenstein:<br>The New Order", image: "img/games/wolfenstein__br_the_new_order.webp", rank: "2" },
@@ -535,6 +534,7 @@ let games = [
 ];
 
 let movies = [
+    { mmr: "0", name: "Gridlock'd", image:"img/movies/gridlockd.webp", rank:"2"},
     { mmr: "8.25", name: "Moneyball", image: "img/movies/moneyball.webp", rank:"2"},
     { mmr: "17", name: "Parasite", image: "img/movies/parasite.webp", rank: "2"},
     { mmr: "75", name: "Men in Black II", image: "img/movies/men_in_black_ii.webp", rank: "3" },
@@ -572,9 +572,9 @@ let movies = [
     { mmr: "2", name: "The Big Lebowski", image: "img/movies/the_big_lebowski.webp", rank: "3" },
     { mmr: "0", name: "American Pie", image: "img/movies/american_pie.webp", rank: "3" },
     { mmr: "50", name: "V for Vendetta", image: "img/movies/v_for_vendetta.webp", rank: "3" },
-    { mmr: "0", name: "Galline in fuga", image: "img/movies/galline_in_fuga.webp", rank: "2" },
+    { mmr: "1", name: "Galline in fuga", image: "img/movies/galline_in_fuga.webp", rank: "2" },
     { mmr: "7", name: "Taxi Driver", image: "img/movies/taxi_driver.webp", rank: "1" },
-    { mmr: "1", name: "Shrek 2", image: "img/movies/shrek_2.webp", rank: "2" },
+    { mmr: "1.25", name: "Shrek 2", image: "img/movies/shrek_2.webp", rank: "2" },
     { mmr: "1", name: "La spada magica<br>Alla ricerca di Camelot", image: "img/movies/la_spada_magica_br_alla_ricerca_di_camelot.webp", rank: "3" },
     { mmr: "110", name: "Apocalypse Now", image: "img/movies/apocalypse_now.webp", rank: "3" },
     { mmr: "2", name: "La leggenda di<br>Al, John e Jack", image: "img/movies/la_leggenda_di_br_al__john_e_jack.webp", rank: "2" },
