@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I gusti di vava</title>
     <style>
-        
-        
-        
+    
         .album img, .game img, .movie img {
             width: 100px;
             height: 100px;
@@ -23,16 +21,51 @@
 		}
 
 		
+select {
+  appearance: none; /* Remove default OS styling */
+  -webkit-appearance: none; /* For Safari */
+  width: 100px; /* Adjust width as needed */
+  height: 40px;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #e3e3e3; /* Text color */
+  background-color: #2c2c2c; /* Background color */
+  border: 1px solid #383838;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Style the dropdown arrow */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23e3e3e3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}
+
+/* Hover/focus states */
+select:hover, select:focus {
+  border-color: #0793f7; /* Your blue accent color */
+}
+
+/* Style options dropdown (limited customization) */
+select option {
+  background: #333; /* Match select background */
+  color: #e3e3e3;
+}
+
+.select-left, .select-right {
+  position: absolute;
+  top: 20px;
+}
+
 .select-left {
-	position: absolute;
-    top: 20px; 
-    left: 27%; 
+  left: 27%;
 }
 
 .select-right {
-    position: absolute;
-    top: 20px; 
-    right: 27%; 
+  right: 27%;
 }
 
 .grid-container {
@@ -46,6 +79,7 @@
     display: flex;
     justify-content: center; /* Center the grid horizontally */
     padding: 0 20px; /* Add padding to create blank space on both sides */
+    margin-top: 30px; 
 }
 
 .album {
@@ -72,7 +106,56 @@
     .grid-container {
       grid-template-columns: repeat(2, 1fr); /* Single column layout for phones */
     }
+    .select-left {
+    left: 20%;
+    }
+    .select-right {
+    right: 20%;
+    }
   }
+
+
+.album, .game, .movie {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    height: 270px;
+    width: 150px;
+    overflow: hidden;
+    background-color: #333; /* Default background */
+    border-radius: 8px; /* Optional: rounded corners */
+    transition: all 0.2s ease; /* Smooth hover effect */
+}
+
+/* Rank-based backgrounds */
+.album.first_color, .game.first_color, .movie.first_color {
+    background-color: rgba(0, 0, 0, 0.1);
+   
+}
+.album.second_color, .game.second_color, .movie.second_color {
+    background-color: rgba(0, 0, 0, 0.1);
+   
+}
+.album.third_color, .game.third_color, .movie.third_color {
+    background-color: rgba(0, 0, 0, 0.1);
+    
+}
+
+
+
+/*
+ Hover effect 
+.album:hover, .game:hover, .movie:hover {
+    background-color: #3a3a3a;
+    transform: scale(1.02);
+}
+*/
+
+
+
+
+
+
     </style>
 </head>
 <body style="background-color:#242323;" onload="populate()"> 
