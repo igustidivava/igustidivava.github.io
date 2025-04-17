@@ -6,10 +6,10 @@
     <title>I gusti di vava</title>
     <style>
         .first_color {
-            color: goldenrod;
+            color: black;
         }
         .second_color {
-            color: #0793f7;
+            color: #5eb8f8;
         }
 		.third_color {
 			color: #e3e3e3;
@@ -91,6 +91,7 @@ select option {
     width: auto; 
     height: auto; /* Maintain aspect ratio */
     max-height: 140px; /* Limit the maximum height of the image */
+    border: 1px solid rgb(0, 0, 0);  
   }
 
 
@@ -110,16 +111,26 @@ select option {
 }
 /* Rank-based backgrounds */
 .album.first_color, .game.first_color, .movie.first_color {
-    border-radius: 10px;
-    border-color: goldenrod;   
+    border-radius: 10px;  
+ 
+    /* background-color: rgba(231, 183, 26, 0.993); */
+    background-image: linear-gradient(30deg, rgb(100, 85, 1) , rgb(233, 170, 34));
 }
 .album.second_color, .game.second_color, .movie.second_color {
     border-color: #0793f7; 
+    background-color: rgba(6, 106, 255, 0.6); /* 80% opacity on hover */
 }
 .album.third_color, .game.third_color, .movie.third_color { 
-    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.04); 
 }
 
+.album.first_color h3,.album.first_color p {
+  background: linear-gradient(30deg, rgb(236, 214, 17), rgb(226, 174, 2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block; /* Required for gradients on text */
+}
 
 @media (max-width: 767px) {
     .grid-wrapper {
@@ -664,7 +675,7 @@ let movies = [
     { mmr: "3", name: "È già ieri", image: "img/movies/e_gia_ieri.webp", rank: "2" },
     { mmr: "6", name: "Being John Malkovich", image: "img/movies/being_john_malkovich.webp", rank: "1" },
     { mmr: "3", name: "Borat", image: "img/movies/borat.webp", rank: "3" },
-    { mmr: "70", name: "Se7en", image: "img/movies/se7en.webp", rank: "3" },
+    { mmr: "70", name: "Seven", image: "img/movies/se7en.webp", rank: "3" },
     { mmr: "109", name: "King of New York", image: "img/movies/king_of_new_york.webp", rank: "3" },
     { mmr: "4.1 ", name: "Io sono leggenda", image: "img/movies/io_sono_leggenda.webp", rank: "3" },
     { mmr: "1.51", name: "Ocean's Eleven", image: "img/movies/ocean_s_eleven.webp", rank: "2" },
