@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
     <title>I gusti di vava</title>
     <style>
         .first_color {
@@ -125,7 +126,7 @@ select option {
 }
 
 .album.first_color h3,.album.first_color p {
-  background: linear-gradient(30deg, rgb(236, 214, 17), rgb(226, 174, 2));
+  background: linear-gradient(30deg, rgb(236, 214, 17), rgb(226, 174, 2)); 
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -147,6 +148,20 @@ select option {
     }
   }
 
+:root {
+  color-scheme: only light; /* Blocks system dark mode */
+}
+body {
+  background-color: #242323 !important; /* Your dark background */
+  color: #e3e3e3 !important; /* Your text color */
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #242323 !important; 
+    filter: none !important; /* Disables Chrome's auto-dark filter */
+  }
+}
     </style>
 </head>
 <body style="background-color:#242323;" onload="populate()"> 
