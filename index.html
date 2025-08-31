@@ -332,7 +332,7 @@ body {
                 gridDiv.innerHTML = `
                     <img src="${album.image}" alt="${album.name}">
                     <h3>${album.name}</h3>
-                    <p>${album.artist}</p>`;
+                    <p>${album.mmr}</p>`;
                 gridContainer.appendChild(gridDiv);
             });
         } else if (media === "games") {
@@ -383,6 +383,8 @@ body {
     }
 	
 let albums = [
+    { mmr: "70.55", name: "Hold Your Color", artist: "Pendulum", image: "img/album/holdyourc.webp", rank: "2"},
+    { mmr: "70.4", name: "The Score", artist: "Fugees", image: "img/album/thescore.webp", rank: "2"},
     { mmr: "100", name: "Zeroin", artist: "Dope Smoker", image: "img/album/zeroin.webp", rank: "3"},
     { mmr: "147", name: "Mezzanotte", artist: "Ghemon", image: "img/album/mezzanotte.webp", rank: "2"},
     { mmr: "25.56", name: "Loud Rocks", artist: "Various Artists", image: "img/album/loud_rocks.webp", rank: "3" },
@@ -438,7 +440,7 @@ let albums = [
     { mmr: "60", name: "Revival", artist: "Eminem", image: "img/album/revival.webp", rank: "2" },
     { mmr: "5.8", name: "The Sound of Perseverance", artist: "Death", image: "img/album/the_sound_of_perseverance.webp", rank: "1" },
     { mmr: "16", name: "Unknown Death 2002", artist: "Yung Lean", image: "img/album/unknown_death_2002.webp", rank: "3" },
-    { mmr: "143", name: "Sub Focus", artist: "Sub Focus", image: "img/album/sub_focus.webp", rank: "2" },
+    { mmr: "70.16", name: "Sub Focus", artist: "Sub Focus", image: "img/album/sub_focus.webp", rank: "2" },
     { mmr: "56", name: "Telefone", artist: "Noname", image: "img/album/telefone.webp", rank: "3" },
     { mmr: "123", name: "This Old Dog", artist: "Mac DeMarco", image: "img/album/this_old_dog.webp", rank: "2" },
     { mmr: "6.9", name: "Toxicity", artist: "System Of A Down", image: "img/album/toxicity.webp", rank: "1" },
