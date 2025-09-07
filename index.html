@@ -125,18 +125,61 @@ select option {
 
 @media (max-width: 767px) {
     .grid-wrapper {
-      padding: 0; /* Remove padding on smaller screens */
+        padding: 0 10px; /* Add some padding to prevent touching screen edges */
+        margin-top: 70px; /* Reduce top margin on mobile */
     }
+    
     .grid-container {
-      grid-template-columns: repeat(2, 1fr); /* Single column layout for phones */
+        grid-template-columns: repeat(3, 1fr); /* Keep 2 columns but make them flexible */
+        gap: 8px; /* Reduce gap on smaller screens */
+        width: 100%; /* Ensure grid takes full width */
     }
+    
+    .album {
+        width: 100%; /* Make items responsive to container */
+        max-width: none; /* Remove any max-width constraints */
+        padding: 8px; /* Reduce padding on mobile */
+        font-size: 12px; /* Slightly smaller font on mobile */
+        box-sizing: border-box; /* Include padding in width calculation */
+    }
+    
+    .album img {
+        max-height: 120px; /* Slightly smaller images on mobile */
+        width: auto; /* Maintain aspect ratio */
+        max-width: 100%; /* Ensure images don't overflow */
+    }
+    
     .select-left {
-    left: 20%;
+        left: 10%;
     }
+    
     .select-right {
-    right: 20%;
+        right: 10%;
     }
-  }
+
+        .album h3, .album p, 
+    .game h3, .movie h3 {
+        margin: 4px 0; /* Reduced from 10px */
+        line-height: 1.2; /* Tighter line spacing */
+    }
+    
+    .album {
+        padding: 6px; /* Reduced from 10px */
+        font-size: 12px; /* Slightly smaller font */
+    }
+    
+    .album img {
+        max-height: 120px; /* Reduced from 140px */
+    }
+    
+    /* Adjust select elements for mobile */
+    select {
+        width: 90px;
+        height: 35px;
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+}
 
 :root {
   color-scheme: light only; /* Blocks system dark mode */
