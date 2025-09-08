@@ -142,6 +142,18 @@ select option {
         font-size: 12px; /* Slightly smaller font on mobile */
         box-sizing: border-box; /* Include padding in width calculation */
     }
+
+     .album h3 {
+        font-size: 0.9em; /* Slightly smaller font */
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+    }
+    
+    /* For extremely long names */
+    .album h3.long-name {
+        font-size: 0.8em;
+    }
     
     .album img {
         max-height: 120px; /* Slightly smaller images on mobile */
