@@ -103,9 +103,10 @@ select option {
 }
 /* Rank-based backgrounds */
 .album.first_color, .game.first_color, .movie.first_color {
-    border-radius: 10px;  
+    /* border-radius: 10px; */  
     /* background-color: rgba(231, 183, 26, 0.993); */
-    background-image: linear-gradient(30deg, rgb(97, 77, 21) , rgb(233, 170, 34));
+    /* background-image: linear-gradient(30deg, rgb(97, 77, 21) , rgb(233, 170, 34)); */
+     background-image: linear-gradient(30deg, rgb(255, 187, 0) , rgb(255, 255, 255));
 }
 .album.second_color, .game.second_color, .movie.second_color {
     border-color: #07679e; 
@@ -116,7 +117,9 @@ select option {
 }
 
 .album.first_color h3,.album.first_color p {
-  background: linear-gradient(30deg, rgb(255, 196, 0), rgb(255,235,0)); 
+    /*background: linear-gradient(30deg, rgb(255, 196, 0), rgb(255,235,0)); */
+  background: linear-gradient(30deg, rgb(0, 0, 0), rgb(65, 65, 65));  
+  /* background:#2c2c2c; */
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -442,7 +445,7 @@ let albums = [
     { mmr: "70.55", name: "Hold Your Color", artist: "Pendulum", image: "img/album/holdyourc.webp", rank: "2"},
     { mmr: "70.4", name: "The Score", artist: "Fugees", image: "img/album/thescore.webp", rank: "2"},
     { mmr: "100", name: "Zeroin", artist: "Dope Smoker", image: "img/album/zeroin.webp", rank: "3"},
-    { mmr: "147", name: "Mezzanotte", artist: "Ghemon", image: "img/album/mezzanotte.webp", rank: "2"},
+    { mmr: "57", name: "Mezzanotte", artist: "Ghemon", image: "img/album/mezzanotte.webp", rank: "2"},
     { mmr: "25.56", name: "Loud Rocks", artist: "Various Artists", image: "img/album/loud_rocks.webp", rank: "3" },
     { mmr: "62", name: "Steal This Album!", artist: "System of A Down", image: "img/album/steal_this_album.webp", rank: "2" },
     { mmr: "35.4", name: "Sour Soul", artist: "Ghostface Killah", image: "img/album/soursoul.webp", rank: "3" },
@@ -451,12 +454,12 @@ let albums = [
     { mmr: "91", name: "Rimini", artist: "Fabrizio De André", image: "img/album/rimini.webp", rank: "2" },
     { mmr: "29.2", name: "Jar of Flies", artist: "Alice in Chains", image: "img/album/jarofflies.webp", rank: "3"},
     { mmr: "35.6", name: "Individual Thought Patterns", artist: "Death", image: "img/album/individual.webp", rank: "3"},
-    { mmr: "25.55", name: "Enter The Wu-Tang<br>(36 Chambers)", artist: "Wu-Tang Clan", image: "img/album/36chambers.webp", rank:"3"},
+    { mmr: "25.55", name: "Enter <br>The<br> Wu-Tang<br>(36 Chambers)", artist: "Wu-Tang Clan", image: "img/album/36chambers.webp", rank:"3"},
     { mmr: "35.1", name: "Blow Your Headphones", artist: "The Herbaliser", image: "img/album/blow_your_headphones.webp", rank: "3"},
     { mmr: "30", name: "Nibbles", artist: "Klimeks", image: "img/album/nibbles.webp", rank: "3"},
     { mmr: "118", name: "w w w <br>. d e e p d i v e <br>. c o m", artist: "Webinar™", image: "img/album/deepdive.webp", rank: "2"},
     { mmr: "100", name: "Stato di necessità", artist: "Carmen Consoli", image: "img/album/stato_di_nec.webp", rank: "2" },
-    { mmr: "6.5", name: "Storia di un impiegato", artist: "Fabrizio De André", image: "img/album/storia_impiegato.webp", rank: "1" },
+    { mmr: "115", name: "Storia di un impiegato", artist: "Fabrizio De André", image: "img/album/storia_impiegato.webp", rank: "2" },
     { mmr: "24", name: "Snap Your Neck Back", artist: "Gasoline", image: "img/album/snap_neck.webp", rank: "2" },
     { mmr: "144", name: "Bread 'n' Butter", artist: "OMA", image: "img/album/bnb.webp", rank: "2" },
     { mmr: "57.5", name: "Filosofem", artist: "Burzum", image: "img/album/filosofem.webp", rank: "3" },
@@ -466,11 +469,11 @@ let albums = [
     { mmr: "82", name: "The Bends", artist: "Radiohead", image: "img/album/the_bends.webp", rank: "2" },
     { mmr: "21", name: "The Ecstatic", artist:"Mos Def", image:"img/album/the_ecstatic.webp", rank:"3" },
     { mmr: "7", name: "Mellon Collie<br>and the<br>Infinite Sadness", artist: "The Smashing Pumpkins", image: "img/album/mellon_collie.webp", rank:"1"},
-    { mmr: "182", name: "Wish You Were Here", artist: "Pink Floyd", image: "img/album/wish_you_were_here.webp", rank: "2" },
+    { mmr: "119", name: "Wish You Were Here", artist: "Pink Floyd", image: "img/album/wish_you_were_here.webp", rank: "2" },
     { mmr: "81", name: "Symbolic", artist: "Death", image: "img/album/symbolic.webp", rank: "3" },
     { mmr: "35.3", name: "Tragic Kingdom", artist: "No Doubt", image: "img/album/tragic_kingdom.webp", rank: "3"},
     { mmr: "58.5", name: "Rust In Peace", artist: "Megadeth", image :"img/album/rust_in_peace.webp", rank: "3"},
-    { mmr: "146", name: "Billion Dollar Remixes", artist: "London Elektricity", image: "img/album/bd_remixes.webp", rank: "2" },
+    /* { mmr: "146", name: "Billion Dollar Remixes", artist: "London Elektricity", image: "img/album/bd_remixes.webp", rank: "2" }, */
     { mmr: "27.5", name: "Journey Into Abstract Hip Hop", artist: "Gasoline", image: "img/album/journey_into_abstract.webp", rank: "3"},
     { mmr: "40", name: "Senior", artist: "Röyksopp", image: "img/album/senior.webp", rank: "3" },
     { mmr: "4.6", name: "Brothers in Arms", artist: "Dire Straits", image: "img/album/brothers_in_arms.webp", rank: "1" },
@@ -502,18 +505,18 @@ let albums = [
     { mmr: "6.9", name: "Toxicity", artist: "System Of A Down", image: "img/album/toxicity.webp", rank: "1" },
     { mmr: "28", name: "(What's the Story) Morning Glory?", artist: "Oasis", image: "img/album/morning_glory.webp", rank: "3" },
     { mmr: "55", name: "Fuyü-Kükan", artist: "Tomoko Aran", image: "img/album/fuy__k_kan.webp", rank: "3" },
-    { mmr: "187", name: "The Fat of the Land", artist: "The Prodigy", image: "img/album/the_fat_of_the_land.webp", rank: "2" },
+    { mmr: "117", name: "The Fat of the Land", artist: "The Prodigy", image: "img/album/the_fat_of_the_land.webp", rank: "2" },
     { mmr: "62", name: "Cold Water Music", artist: "Aim", image: "img/album/cold_water_music.webp", rank: "3" },
     { mmr: "98", name: "L'Amour Toujours", artist: "Gigi D'Agostino", image: "img/album/l_amour_toujours.webp", rank: "2" },
     { mmr: "73", name: "good kid, m.A.A.d. city", artist: "Kendrick Lamar", image: "img/album/good_kid_m_a_a_d__city.webp", rank: "2" },
     { mmr: "34", name: "Very Mercenary", artist: "The Herbaliser", image: "img/album/very_mercenary.webp", rank: "2" },
     { mmr: "88", name: "To Pimp A Butterfly", artist: "Kendrick Lamar", image: "img/album/tpab.webp", rank: "3"},
-    { mmr: "71", name: "Moment of Truth", artist: "Gang Starr", image: "img/album/moment_of_truth.webp", rank: "2" },
+    { mmr: "146", name: "Moment of Truth", artist: "Gang Starr", image: "img/album/moment_of_truth.webp", rank: "2" },
     { mmr: "43", name: "A Funk Odyssey", artist: "Jamiroquai", image: "img/album/a_funk_odyssey.webp", rank: "3" },
     { mmr: "58.2", name: "Californication", artist: "Red Hot Chili Peppers", image: "img/album/californication.webp", rank: "3" },
     { mmr: "50", name: "III", artist: "BADBADNOTGOOD", image: "img/album/iii.webp", rank: "3" },
     { mmr: "40.5", name: "The Eminem Show", artist: "Eminem", image: "img/album/the_eminem_show.webp", rank: "3" },
-    { mmr: "132", name: "Late Night Tales:<br> BADBADNOTGOOD", artist: "", image: "img/album/late_night_tales__br__badbadnotgood.webp", rank: "2"},
+    { mmr: "72", name: "Late Night Tales:<br> BADBADNOTGOOD", artist: "", image: "img/album/late_night_tales__br__badbadnotgood.webp", rank: "2"},
     { mmr: "57", name: "Morning View", artist: "Incubus", image: "img/album/morning_view.webp", rank: "3" },
     { mmr: "61", name: "Record Collection", artist: "Mark Ronson", image: "img/album/record_collection.webp", rank: "3" },
     { mmr: "15", name: "Transplants", artist: "Transplants", image: "img/album/transplants.webp", rank: "3" },
@@ -522,11 +525,11 @@ let albums = [
     { mmr: "5.0", name: "Little Dark Age", artist: "MGMT", image: "img/album/little_dark_age.webp", rank: "1" },
     { mmr: "43", name: "Demon Days", artist: "Gorillaz", image: "img/album/demon_days.webp", rank: "3" },
     { mmr: "60", name: "Solitude.", artist: "Jinsang", image: "img/album/solitude_.webp", rank: "3" },
-    { mmr: "145", name: "Billion Dollar Gravy", artist: "London Elektricity", image: "img/album/billion_dollar_gravy.webp", rank: "2" },
+    { mmr: "80", name: "Billion Dollar Gravy", artist: "London Elektricity", image: "img/album/billion_dollar_gravy.webp", rank: "2" },
     { mmr: "10", name: "La Voce Del Padrone", artist: "Franco Battiato", image: "img/album/la_voce_del_padrone.webp", rank: "1" },
     { mmr: "35.25", name: "Peccati di Gioventù", artist: "Fabrizio De André", image: "img/album/peccati_di_giovent_.webp", rank: "3" },
-    { mmr: "161", name: "The Waiter", artist: "Dani Faiv", image: "img/album/the_waiter.webp", rank: "2" },
-    { mmr: "181", name: "Hellvisback", artist: "Salmo", image: "img/album/hellvisback.webp", rank: "2" },
+    { mmr: "145", name: "The Waiter", artist: "Dani Faiv", image: "img/album/the_waiter.webp", rank: "2" },
+    { mmr: "81", name: "Hellvisback", artist: "Salmo", image: "img/album/hellvisback.webp", rank: "2" },
     { mmr: "89", name: "Hyp3r", artist: "Nerone", image: "img/album/hyp3r.webp", rank: "3" },
     { mmr: "40.6", name: "Mattoni", artist: "Night Skinny", image: "img/album/mattoni.webp", rank: "3" },
     { mmr: "88", name: "Madreperla", artist: "Guè", image: "img/album/madreperla.webp", rank: "3" },
@@ -543,11 +546,11 @@ let albums = [
     { mmr: "148", name: "All Eyez On Me", artist: "2Pac", image: "img/album/all_eyez_on_me.webp", rank: "2" },
     { mmr: "76", name: "2012-2017", artist: "Against All Logic", image: "img/album/2012_2017.webp", rank: "3" },
     { mmr: "39.5", name: "Operation:<br> Doomsday", artist: "MF DOOM", image: "img/album/operation__br__doomsday.webp", rank: "3" },
-    { mmr: "190", name: "Voulez-Vous", artist: "ABBA", image: "img/album/voulez_vous.webp", rank: "2" },
+    { mmr: "58", name: "Voulez-Vous", artist: "ABBA", image: "img/album/voulez_vous.webp", rank: "2" },
     { mmr: "4.8", name: "One Fierce<br>Beer Coaster", artist: "Bloodhound Gang", image: "img/album/one_fierce_br_beer_coaster.webp", rank: "1" },
     { mmr: "90", name: "Hyper 2", artist: "Nerone", image: "img/album/hyper_2.webp", rank: "3" },
     { mmr: "25.6", name: "Relapse", artist: "Eminem", image: "img/album/relapse.webp", rank: "3" },
-    { mmr: "180", name: "1979", artist: "Casa del Mirto", image: "img/album/1979.webp", rank: "2" },
+    { mmr: "80", name: "1979", artist: "Casa del Mirto", image: "img/album/1979.webp", rank: "2" },
     { mmr: "134", name: "Madvillainy", artist: "MF DOOM", image: "img/album/madvillainy.webp", rank: "2" },
     { mmr: "191", name: "The Wall", artist: "Pink Floyd", image: "img/album/the_wall.webp", rank: "2" },
     { mmr: "59.5", name: "Twoism", artist: "Boards of Canada", image: "img/album/twoism.webp", rank: "3" },
@@ -557,7 +560,7 @@ let albums = [
     { mmr: "29", name: "Modal Soul", artist: "Nujabes", image: "img/album/modal_soul.webp", rank: "3" },
     { mmr: "41", name: "Vertigo", artist: "Groove Armada", image: "img/album/vertigo.webp", rank: "3" },
     { mmr: "5.2", name: "Hooray for Boobies", artist: "Bloodhound Gang", image: "img/album/hooray_for_boobies.webp", rank: "1" },
-    { mmr: "185", name: "Discovery", artist: "Daft Punk", image: "img/album/discovery.webp", rank: "2" },
+    { mmr: "70.17", name: "Discovery", artist: "Daft Punk", image: "img/album/discovery.webp", rank: "2" },
     { mmr: "120", name: "The Dark Side<br>Of The Moon", artist: "Pink Floyd", image: "img/album/the_dark_side_of_the_moon.webp", rank: "2" },
     { mmr: "28.1", name: "Slipknot", artist: "Slipknot", image: "img/album/slipknot.webp", rank: "3" },
     { mmr: "27", name: "Around the Fur", artist: "Deftones", image: "img/album/around_the_fur.webp", rank: "3" },
@@ -573,8 +576,8 @@ let albums = [
     { mmr: "28.5", name: "Paolo Conte", artist: "Paolo Conte", image: "img/album/paolo_conte.webp", rank: "3" },
     { mmr: "52", name: "OK Computer", artist: "Radiohead", image: "img/album/ok_computer.webp", rank: "3" },
     { mmr: "39", name: "THE MOUSE<br> & THE MASK", artist: "MF DOOM,<br> Danger Mouse", image: "img/album/the_mouse_br____the_mask.webp", rank: "3" },
-    { mmr: "76", name: "The 5th Exotic", artist: "Quantic", image: "img/album/the_5th_exotic.webp", rank: "3" },
-    { mmr: "26", name: "Pino Daniele", artist: "Pino Daniele", image: "img/album/pino_daniele.webp", rank: "3" }
+    { mmr: "76", name: "The 5th Exotic", artist: "Quantic", image: "img/album/the_5th_exotic.webp", rank: "3" }
+    /* { mmr: "26", name: "Pino Daniele", artist: "Pino Daniele", image: "img/album/pino_daniele.webp", rank: "3" } */
     ];
     
 let games = [
