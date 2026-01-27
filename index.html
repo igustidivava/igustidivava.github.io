@@ -16,7 +16,7 @@
 		.third_color {
 			color: #e3e3e3;
 		}
-
+        
 select {
   appearance: none; /* Remove default OS styling */
   -webkit-appearance: none; /* For Safari */
@@ -36,16 +36,18 @@ select {
   background-size: 12px;
 }
 
-/* Hover/focus states */
+/* Hover/focus states 
 select:hover, select:focus {
-  border-color: #a7a7a7; /* Your blue accent color */
+  border-color: #a7a7a7; 
 }
+*/
 
 /* Style options dropdown (limited customization) */
 select option {
   background: #333; /* Match select background */
   color: #e3e3e3;
 }
+
 
 .select-left, .select-right {
   position: absolute;
@@ -99,7 +101,7 @@ select option {
 /* Center text elements */
 .album h3, .album p, 
 .game h3, .movie h3 {
-  margin: 10px; /* Reduce default margins */
+  margin: 5px; /* Reduce default margins */
   /* width: 100%; Ensures text doesn't overflow */
 }
 /* Rank-based backgrounds */
@@ -108,15 +110,15 @@ select option {
     /* background-color: rgba(231, 183, 26, 0.993); */
     /* background-image: linear-gradient(30deg, rgb(97, 77, 21) , rgb(233, 170, 34)); */
     /* background-image: linear-gradient(30deg,rgba(202, 154, 21, 0.788),  rgb(255, 187, 0) , rgb(253, 227, 154)); */
-    border-color: #ffd000; 
-    background-image: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+    /* border-color: #880000; */ 
+      background-image: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
                 radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
 
 }
 .album.second_color, .game.second_color, .movie.second_color {
-    border-color: #ffffff; 
+    border-color: #969696; 
     /* background-color: rgba(6, 106, 255, 0.507); */
-    background-image: linear-gradient(
+    background-image: -moz-linear-gradient(
     45deg,
     #999 3%,
     #fff 10%,
@@ -142,8 +144,10 @@ select option {
 }
 
 .album.first_color h3,.album.first_color p {
-    /*background: linear-gradient(30deg, rgb(255, 196, 0), rgb(255,235,0)); */
-  background: linear-gradient(30deg, rgb(255, 167, 4), rgb(255, 255, 255));  
+    /*background: linear-gradient(30deg, rgb(255, 196, 0), rgb(255,235,0)); */  
+
+  background: white;
+   background: linear-gradient(30deg, rgb(255, 255, 255), rgb(241, 217, 76));  
   /* background:#2c2c2c; */
   -webkit-background-clip: text;
   background-clip: text;
@@ -163,7 +167,7 @@ select option {
         gap: 8px; /* Reduce gap on smaller screens */
         width: 100%; /* Ensure grid takes full width */
     }
-    
+
     .album {
         width: 100%; /* Make items responsive to container */
         max-width: none; /* Remove any max-width constraints */
@@ -220,6 +224,7 @@ select option {
         font-size: 12px;
         padding: 8px 12px;
     }
+
 }
 
 :root {
@@ -236,7 +241,6 @@ body {
     filter: none !important; /* Disables Chrome's auto-dark filter */
   }
 }
-
     </style>
 </head>
 <body style="background-color:#242323;" onload="populate()"> 
@@ -308,6 +312,22 @@ body {
 		return mmrB - mmrA;
        // return a.name.localeCompare(b.name);
     }
+
+    function sortYearDesc(a, b) {
+    // Extract year values (assuming they're numbers or strings)
+    const yearA = parseInt(a.year);
+    const yearB = parseInt(b.year);
+    
+    // Sort from newest to oldest (descending order)
+    // For oldest to newest, use: return yearA - yearB;
+    return yearB - yearA;
+}
+
+function sortYearAsc(a, b) {
+    const yearA = parseInt(a.year);
+    const yearB = parseInt(b.year);
+    return yearA - yearB; // Oldest first
+}
 	
     function changeMedia() {
         updateOptions();
@@ -324,24 +344,31 @@ body {
         switch (category) {
             case 'albums':
                 options = [
-					{ value: 'OriginalAlbums', text: '-----' },
+					{ value: 'OriginalAlbums', text: '---' },
                     { value: 'AlbumsArtists', text: 'Artista' },
                     { value: 'AlbumsAlbumName', text: 'Titolo' },
                     { value: 'AlbumsRating', text: 'Rating' },
+                    { value: 'AlbumsYearAsc', text: 'Anno ↓'},
+                    { value: 'AlbumsYearDesc', text: 'Anno ↑'},
+
                 ];
                 break;
             case 'games':
                 options = [
-					{ value: 'OriginalGames', text: '-----' },
+					{ value: 'OriginalGames', text: '---' },
                     { value: 'GamesTitle', text: 'Titolo' },
-                    { value: 'GamesRating', text: 'Rating' }
+                    { value: 'GamesRating', text: 'Rating' },
+                    { value: 'GamesYearAsc', text: 'Anno ↓'},
+                    { value: 'GamesYearDesc', text: 'Anno ↑'},
                 ];
                 break;
             case 'movies':
                 options = [
-					{ value: 'OriginalMovies', text: '-----' },
+					{ value: 'OriginalMovies', text: '---' },
                     { value: 'MoviesTitle', text: 'Titolo' },
-                    { value: 'MoviesRating', text: 'Rating' }
+                    { value: 'MoviesRating', text: 'Rating' },
+                    { value: 'MoviesYearAsc', text: 'Anno ↓'},
+                    { value: 'MoviesYearDesc', text: 'Anno ↑'},
                 ];
                 break;
             default:
@@ -372,7 +399,11 @@ body {
             } else if (filter === "AlbumsAlbumName") {
                 albums.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
             } else if (filter === "AlbumsRating") {
-                albums.sort(sortRankAlbums);
+                albums.sort(sortRankAlbums)
+            } else if (filter === "AlbumsYearAsc") {
+                albums.sort(sortYearAsc)
+            } else if (filter === "AlbumsYearDesc") {
+                albums.sort(sortYearDesc);
             }
         } else if (media === "games") {
 			if (filter === "OriginalGames"){
@@ -380,7 +411,11 @@ body {
 			} else if (filter === "GamesTitle") {
                 games.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
             } else if (filter === "GamesRating") {
-                games.sort(sortRankAlbums);
+                games.sort(sortRankAlbums)
+            } else if (filter === "GamesYearAsc") {
+                games.sort(sortYearAsc)
+            } else if (filter === "GamesYearDesc") {
+                games.sort(sortYearDesc);
             }
         } else if (media === "movies") {
 			if (filter === "OriginalMovies"){
@@ -389,6 +424,10 @@ body {
                 movies.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
             } else if (filter === "MoviesRating") {
                 movies.sort(sortRankAlbums);
+            } else if (filter === "MoviesYearAsc") {
+                movies.sort(sortYearAsc)
+            } else if (filter === "MoviesYearDesc") {
+                movies.sort(sortYearDesc);
             }
         }
 
@@ -416,7 +455,8 @@ body {
                 gridDiv.innerHTML = `
                     <img src="${album.image}" alt="${album.name}">
                     <h3>${album.name}</h3>
-                    <p>${album.artist}</p>`;
+                    <p>${album.artist}</p>
+                    <p>${album.year}</p>`;
                 gridContainer.appendChild(gridDiv);
             });
         } else if (media === "games") {
@@ -434,7 +474,8 @@ body {
                 }
                 gridDiv.innerHTML = `
                     <img src="${game.image}" alt="${game.name}">
-                    <h3>${game.name}</h3>`;
+                    <h3>${game.name}</h3>
+                    <p>${game.year}</p>`;
 			
                 gridContainer.appendChild(gridDiv);
             });
@@ -453,7 +494,8 @@ body {
                 }
                 gridDiv.innerHTML = `
                     <img src="${movie.image}" alt="${movie.name}">
-                    <h3>${movie.name}</h3>`;
+                    <h3>${movie.name}</h3>
+                    <p>${movie.year}</p>`;
                 gridContainer.appendChild(gridDiv);
             });
         }
@@ -467,346 +509,345 @@ body {
     }
 	
 let albums = [
-    { mmr: "73", name: "Novecinquanta", artist:"Fritz da Cat", image: "img/album/950.webp", rank: "3"},
-    { mmr: "23.5", name: "Hold Your Color", artist: "Pendulum", image: "img/album/holdyourc.webp", rank: "3"},
-    { mmr: "88.5", name: "The Score", artist: "Fugees", image: "img/album/thescore.webp", rank: "3"},
-    { mmr: "35.5", name: "Zeroin", artist: "Dope Smoker", image: "img/album/zeroin.webp", rank: "3"},
-    { mmr: "57", name: "Mezzanotte", artist: "Ghemon", image: "img/album/mezzanotte.webp", rank: "2"},
-    { mmr: "25.56", name: "Loud Rocks", artist: "Various Artists", image: "img/album/loud_rocks.webp", rank: "3" },
-    { mmr: "78", name: "Steal This Album!", artist: "System of A Down", image: "img/album/steal_this_album.webp", rank: "3" },
-    { mmr: "35.4", name: "Sour Soul", artist: "Ghostface Killah", image: "img/album/soursoul.webp", rank: "3" },
-    { mmr: "4.55", name: "Everybody Else Is Doing It, So Why Can't We?", artist: "The Cranberries", image: "img/album/everybody_else_is_doing_it__so_why_can_t_we_.webp", rank: "1" },
-    { mmr: "23", name: "Liquid Swords", artist: "GZA", image: "img/album/liquidswords.webp", rank: "3" },
-    { mmr: "91", name: "Rimini", artist: "Fabrizio De André", image: "img/album/rimini.webp", rank: "2" },
-    { mmr: "29.2", name: "Jar of Flies", artist: "Alice in Chains", image: "img/album/jarofflies.webp", rank: "3"},
-    { mmr: "35.6", name: "Individual Thought Patterns", artist: "Death", image: "img/album/individual.webp", rank: "3"},
-    { mmr: "25.55", name: "Enter<br>The<br>Wu-Tang<br>(36 Chambers)", artist: "Wu-Tang Clan", image: "img/album/36chambers.webp", rank:"3"},
-    { mmr: "35.1", name: "Blow Your Headphones", artist: "The Herbaliser", image: "img/album/blow_your_headphones.webp", rank: "3"},
-    { mmr: "30", name: "Nibbles", artist: "Klimeks", image: "img/album/nibbles.webp", rank: "3"},
-    { mmr: "118", name: "w w w <br>. d e e p d i v e <br>. c o m", artist: "Webinar™", image: "img/album/deepdive.webp", rank: "2"},
-    { mmr: "100", name: "Stato di necessità", artist: "Carmen Consoli", image: "img/album/stato_di_nec.webp", rank: "2" },
-    { mmr: "115", name: "Storia di un impiegato", artist: "Fabrizio De André", image: "img/album/storia_impiegato.webp", rank: "2" },
-    { mmr: "41.25", name: "Snap Your Neck Back", artist: "Gasoline", image: "img/album/snap_neck.webp", rank: "3" },
-    { mmr: "144", name: "Bread 'n' Butter", artist: "OMA", image: "img/album/bnb.webp", rank: "2" },
-    { mmr: "24.1", name: "Filosofem", artist: "Burzum", image: "img/album/filosofem.webp", rank: "3" },
-    { mmr: "39.25", name: "Leprosy", artist: "Death", image: "img/album/leprosy.webp", rank: "3" },
-    { mmr: "24", name: "Under the<br>Sign of Hell<br>2011", artist: "Gorgoroth", image: "img/album/utsoh2011.webp", rank: "3" },
-    { mmr: "29.05", name: "The Ultimate Sin", artist:"Ozzy Osbourne", image: "img/album/ultimate_sin.webp", rank: "3" },
-    { mmr: "82", name: "The Bends", artist: "Radiohead", image: "img/album/the_bends.webp", rank: "2" },
-    { mmr: "21", name: "The Ecstatic", artist:"Mos Def", image:"img/album/the_ecstatic.webp", rank:"3" },
-    { mmr: "4.56", name: "Mellon Collie<br>and the<br>Infinite Sadness", artist: "The Smashing Pumpkins", image: "img/album/mellon_collie.webp", rank:"1"},
-    { mmr: "119", name: "Wish You Were Here", artist: "Pink Floyd", image: "img/album/wish_you_were_here.webp", rank: "2" },
-    { mmr: "81", name: "Symbolic", artist: "Death", image: "img/album/symbolic.webp", rank: "3" },
-    { mmr: "35.3", name: "Tragic Kingdom", artist: "No Doubt", image: "img/album/tragic_kingdom.webp", rank: "3"},
-    { mmr: "58.5", name: "Rust In Peace", artist: "Megadeth", image :"img/album/rust_in_peace.webp", rank: "3"},
-    /* { mmr: "146", name: "Billion Dollar Remixes", artist: "London Elektricity", image: "img/album/bd_remixes.webp", rank: "2" }, */
-    { mmr: "27.5", name: "Journey Into Abstract Hip Hop", artist: "Gasoline", image: "img/album/journey_into_abstract.webp", rank: "3"},
-    { mmr: "40", name: "Senior", artist: "Röyksopp", image: "img/album/senior.webp", rank: "3" },
-    { mmr: "4.6", name: "Brothers in Arms", artist: "Dire Straits", image: "img/album/brothers_in_arms.webp", rank: "1" },
-    { mmr: "25", name: "Enema Of The State", artist: "blink-182", image: "img/album/enema_of_the_state.webp", rank: "3" },
-    { mmr: "5.6", name: "Breakfast in America", artist: "Supertramp", image: "img/album/breakfast_in_america.webp", rank: "1" },
-    { mmr: "71", name: "Compro", artist: "Skee Mask", image: "img/album/compro.webp", rank: "3" },
-    { mmr: "70.6", name: "Endtroducing.....", artist: "Dj Shadow", image: "img/album/endtroducing_____.webp", rank: "2"},
-    { mmr: "4.58", name: "Ten", artist: "Pearl Jam", image: "img/album/ten.webp", rank: "1" },
-    { mmr: "33.5", name: "Teoria del contrario", artist: "Dani Faiv", image: "img/album/teoria_del_contrario.webp", rank: "3" },
-    { mmr: "41.5", name: "Bury The Hatchet", artist: "The Cranberries", image: "img/album/bury_the_hatchet.webp", rank: "3" },
-    { mmr: "4.52", name: "Black on Both Sides", artist: "Mos Def", image: "img/album/black_on_both_sides.webp", rank: "1" },
-    { mmr: "40", name: "Dirt", artist: "Alice in Chains", image: "img/album/dirt.webp", rank: "3", ex: "true" },
-    { mmr: "35.7", name: "Octavarium", artist: "Dream Theater", image: "img/album/octavarium.webp", rank: "3" },
-    { mmr: "61", name: "Escapology", artist: "Robbie Williams", image: "img/album/escapology.webp", rank: "2" },
-    { mmr: "6", name: "Hefty Fine", artist: "Bloodhound Gang", image: "img/album/hefty_fine.webp", rank: "1" },
-    { mmr: "6.4", name: "Mezmerize", artist: "System Of A Down", image: "img/album/mezmerize.webp", rank: "1" },
-    { mmr: "29.1", name: "Nevermind", artist: "Nirvana", image: "img/album/nevermind.webp", rank: "3" },
-    { mmr: "35", name: "Rebel Yell", artist: "Billy Idol", image: "img/album/rebel_yell.webp", rank: "2" },
-    { mmr: "35", name: "blink-182", artist: "blink-182", image: "img/album/blink_182.webp", rank: "3" },
-    { mmr: "70.5", name: "Salad Days", artist: "Mac DeMarco", image: "img/album/salad_days.webp", rank: "2" },
-    { mmr: "60.5", name: "Settle", artist: "Disclosure", image: "img/album/settle.webp", rank: "3" },
-    { mmr: "65", name: "Skream!", artist: "Skream", image: "img/album/skream_.webp", rank: "3" },
-    { mmr: "60", name: "Revival", artist: "Eminem", image: "img/album/revival.webp", rank: "2" },
-    { mmr: "5.8", name: "The Sound of Perseverance", artist: "Death", image: "img/album/the_sound_of_perseverance.webp", rank: "1" },
-    { mmr: "16", name: "Unknown Death 2002", artist: "Yung Lean", image: "img/album/unknown_death_2002.webp", rank: "3" },
-    { mmr: "82", name: "Sub Focus", artist: "Sub Focus", image: "img/album/sub_focus.webp", rank: "3" },
-    { mmr: "56", name: "Telefone", artist: "Noname", image: "img/album/telefone.webp", rank: "3" },
-    { mmr: "123", name: "This Old Dog", artist: "Mac DeMarco", image: "img/album/this_old_dog.webp", rank: "2" },
-    { mmr: "6.9", name: "Toxicity", artist: "System Of A Down", image: "img/album/toxicity.webp", rank: "1" },
-    { mmr: "28", name: "(What's the Story) Morning Glory?", artist: "Oasis", image: "img/album/morning_glory.webp", rank: "3" },
-    { mmr: "55", name: "Fuyü-Kükan", artist: "Tomoko Aran", image: "img/album/fuy__k_kan.webp", rank: "3" },
-    { mmr: "117.5", name: "The Fat of the Land", artist: "The Prodigy", image: "img/album/the_fat_of_the_land.webp", rank: "2" },
-    { mmr: "62", name: "Cold Water Music", artist: "Aim", image: "img/album/cold_water_music.webp", rank: "3" },
-    { mmr: "98", name: "L'Amour Toujours", artist: "Gigi D'Agostino", image: "img/album/l_amour_toujours.webp", rank: "2" },
-    { mmr: "73", name: "good kid, m.A.A.d. city", artist: "Kendrick Lamar", image: "img/album/good_kid_m_a_a_d__city.webp", rank: "2" },
-    { mmr: "40", name: "Very Mercenary", artist: "The Herbaliser", image: "img/album/very_mercenary.webp", rank: "2" },
-    { mmr: "88", name: "To Pimp A Butterfly", artist: "Kendrick Lamar", image: "img/album/tpab.webp", rank: "3"},
-    { mmr: "146", name: "Moment of Truth", artist: "Gang Starr", image: "img/album/moment_of_truth.webp", rank: "2" },
-    { mmr: "43", name: "A Funk Odyssey", artist: "Jamiroquai", image: "img/album/a_funk_odyssey.webp", rank: "3" },
-    { mmr: "58.2", name: "Californication", artist: "Red Hot Chili Peppers", image: "img/album/californication.webp", rank: "3" },
-    { mmr: "50", name: "III", artist: "BADBADNOTGOOD", image: "img/album/iii.webp", rank: "3" },
-    { mmr: "40.5", name: "The Eminem Show", artist: "Eminem", image: "img/album/the_eminem_show.webp", rank: "3" },
-    { mmr: "72", name: "Late Night Tales:<br> BADBADNOTGOOD", artist: "", image: "img/album/late_night_tales__br__badbadnotgood.webp", rank: "2"},
-    { mmr: "57", name: "Morning View", artist: "Incubus", image: "img/album/morning_view.webp", rank: "3" },
-    { mmr: "61", name: "Record Collection", artist: "Mark Ronson", image: "img/album/record_collection.webp", rank: "3" },
-    { mmr: "15", name: "Transplants", artist: "Transplants", image: "img/album/transplants.webp", rank: "3" },
-    { mmr: "23", name: "Straight Outta Compton", artist: "N.W.A.", image: "img/album/straight_outta_compton.webp", rank: "3" },
-    { mmr: "70", name: "Life", artist: "Jinsang", image: "img/album/life.webp", rank: "3" },
-    { mmr: "106", name: "Little Dark Age", artist: "MGMT", image: "img/album/little_dark_age.webp", rank: "2" },
-    { mmr: "43", name: "Demon Days", artist: "Gorillaz", image: "img/album/demon_days.webp", rank: "3" },
-    { mmr: "60", name: "Solitude.", artist: "Jinsang", image: "img/album/solitude_.webp", rank: "3" },
-    { mmr: "80", name: "Billion Dollar Gravy", artist: "London Elektricity", image: "img/album/billion_dollar_gravy.webp", rank: "2" },
-    { mmr: "10", name: "La Voce Del Padrone", artist: "Franco Battiato", image: "img/album/la_voce_del_padrone.webp", rank: "1" },
-    { mmr: "35.25", name: "Peccati di Gioventù", artist: "Fabrizio De André", image: "img/album/peccati_di_giovent_.webp", rank: "3" },
-    { mmr: "145", name: "The Waiter", artist: "Dani Faiv", image: "img/album/the_waiter.webp", rank: "2" },
-    { mmr: "81", name: "Hellvisback", artist: "Salmo", image: "img/album/hellvisback.webp", rank: "2" },
-    { mmr: "89", name: "Hyp3r", artist: "Nerone", image: "img/album/hyp3r.webp", rank: "3" },
-    { mmr: "40.6", name: "Mattoni", artist: "Night Skinny", image: "img/album/mattoni.webp", rank: "3" },
-    { mmr: "88", name: "Madreperla", artist: "Guè", image: "img/album/madreperla.webp", rank: "3" },
-    { mmr: "29.25", name: "Domani Smetto", artist: "Articolo 31", image: "img/album/domani_smetto.webp", rank: "3" },
-    { mmr: "30", name: "Fast Life 4", artist: "Guè", image: "img/album/fast_life_4.webp", rank: "3" },
-    { mmr: "23", name: "Italiano medio", artist: "Articolo 31", image: "img/album/italiano_medio.webp", rank: "2" },
-    { mmr: "75", name: "Turbe Giovanili", artist: "Fabri Fibra", image: "img/album/turbe_giovanili.webp", rank: "2" },
-    { mmr: "119", name: "Illmatic", artist: "NAS", image: "img/album/illmatic.webp", rank: "2", ex: "true" },
-    { mmr: "110", name: "Vicious Delicious", artist: "Infected Mushroom", image: "img/album/vicious_delicious.webp", rank: "2" },
-    { mmr: "147", name: "ATLiens", artist: "Outkast", image: "img/album/atliens.webp", rank: "2" },
-    { mmr: "96", name: "Bizarre Ride II", artist: "The Pharcyde", image: "img/album/bizarre_ride_ii.webp", rank: "2" },
-    { mmr: "117", name: "大理石のファンタジー", artist: "Haircuts for Men", image: "img/album/barbers.webp", rank: "2" },
-    { mmr: "92", name: "Midnight Marauders", artist: "A Tribe Called Quest", image: "img/album/midnight_marauders.webp", rank: "2" },
-    { mmr: "148", name: "All Eyez On Me", artist: "2Pac", image: "img/album/all_eyez_on_me.webp", rank: "2" },
-    { mmr: "28.4", name: "2012-2017", artist: "Against All Logic", image: "img/album/2012_2017.webp", rank: "3" },
-    { mmr: "39.5", name: "Operation:<br> Doomsday", artist: "MF DOOM", image: "img/album/operation__br__doomsday.webp", rank: "3" },
-    { mmr: "58", name: "Voulez-Vous", artist: "ABBA", image: "img/album/voulez_vous.webp", rank: "2" },
-    { mmr: "4.8", name: "One Fierce<br>Beer Coaster", artist: "Bloodhound Gang", image: "img/album/one_fierce_br_beer_coaster.webp", rank: "1" },
-    { mmr: "90", name: "Hyper 2", artist: "Nerone", image: "img/album/hyper_2.webp", rank: "3" },
-    { mmr: "25.6", name: "Relapse", artist: "Eminem", image: "img/album/relapse.webp", rank: "3" },
-    { mmr: "80", name: "1979", artist: "Casa del Mirto", image: "img/album/1979.webp", rank: "2" },
-    { mmr: "134", name: "Madvillainy", artist: "MF DOOM", image: "img/album/madvillainy.webp", rank: "2" },
-    { mmr: "191", name: "The Wall", artist: "Pink Floyd", image: "img/album/the_wall.webp", rank: "2" },
-    { mmr: "59.5", name: "Twoism", artist: "Boards of Canada", image: "img/album/twoism.webp", rank: "3" },
-    { mmr: "80", name: "System Of A Down", artist: "System Of A Down", image: "img/album/system_of_a_down.webp", rank: "3" },
-    { mmr: "25.75", name: "The Beatles", artist: "The Beatles", image: "img/album/the_beatles.webp", rank: "3" },
-    { mmr: "77", name: "Bohemian Beatnik", artist: "Bugseed", image: "img/album/bohemian_beatnik.webp", rank: "3" },
-    { mmr: "29", name: "Modal Soul", artist: "Nujabes", image: "img/album/modal_soul.webp", rank: "3" },
-    { mmr: "41", name: "Vertigo", artist: "Groove Armada", image: "img/album/vertigo.webp", rank: "3" },
-    { mmr: "5.2", name: "Hooray for Boobies", artist: "Bloodhound Gang", image: "img/album/hooray_for_boobies.webp", rank: "1" },
-    { mmr: "16", name: "Discovery", artist: "Daft Punk", image: "img/album/discovery.webp", rank: "2" },
-    { mmr: "120", name: "The Dark Side<br>Of The Moon", artist: "Pink Floyd", image: "img/album/the_dark_side_of_the_moon.webp", rank: "2" },
-    { mmr: "28.1", name: "Slipknot", artist: "Slipknot", image: "img/album/slipknot.webp", rank: "3" },
-    { mmr: "27", name: "Around the Fur", artist: "Deftones", image: "img/album/around_the_fur.webp", rank: "3" },
-    { mmr: "72", name: "89", artist: "Klimeks", image: "img/album/89.webp", rank: "3" },
-    { mmr: "4.5", name: "Melody A.M.", artist: "Röyksopp", image: "img/album/melody_a_m_.webp", rank: "1" },
-    { mmr: "10", name: "Dead Letters", artist: "The Rasmus", image: "img/album/dead_letters.webp", rank: "3" },
-    { mmr: "150", name: "Aquemini", artist: "Outkast", image: "img/album/aquemini.webp", rank: "2" },
-    { mmr: "25.5", name: "Music Has The Right To Children", artist: "Boards of Canada", image: "img/album/music_has_the_right_to_children.webp", rank: "3" },
-    { mmr: "20", name: "Urban", artist: "A.S.I.A.", image: "img/album/urban.webp", rank: "2" },
-    { mmr: "32", name: "Blizzard of Ozz", artist: "Ozzy Osbourne", image: "img/album/blizzard_of_ozz.webp", rank: "3" },
-    { mmr: "4.75", name: "Hypnotize", artist: "System Of A Down", image: "img/album/hypnotize.webp", rank: "1" },
-    { mmr: "42", name: "Life After Death", artist: "The Notorious B.I.G.", image: "img/album/life_after_death.webp", rank: "3" },
-    { mmr: "28.5", name: "Paolo Conte", artist: "Paolo Conte", image: "img/album/paolo_conte.webp", rank: "3" },
-    { mmr: "52", name: "OK Computer", artist: "Radiohead", image: "img/album/ok_computer.webp", rank: "3" },
-    { mmr: "39", name: "THE MOUSE<br> & THE MASK", artist: "MF DOOM,<br> Danger Mouse", image: "img/album/the_mouse_br____the_mask.webp", rank: "3" },
-    { mmr: "76", name: "The 5th Exotic", artist: "Quantic", image: "img/album/the_5th_exotic.webp", rank: "3" }
-    /* { mmr: "26", name: "Pino Daniele", artist: "Pino Daniele", image: "img/album/pino_daniele.webp", rank: "3" } */
-    ];
+    { mmr: "73", name: "Novecinquanta", artist:"Fritz da Cat", image: "img/album/950.webp", rank: "3", year: "1995"},
+    { mmr: "23.5", name: "Hold Your Color", artist: "Pendulum", image: "img/album/holdyourc.webp", rank: "3", year: "2005"},
+    { mmr: "88.5", name: "The Score", artist: "Fugees", image: "img/album/thescore.webp", rank: "3", year: "1996"},
+    { mmr: "35.5", name: "Zeroin", artist: "Dope Smoker", image: "img/album/zeroin.webp", rank: "3", year: "2017"},
+    { mmr: "57", name: "Mezzanotte", artist: "Ghemon", image: "img/album/mezzanotte.webp", rank: "2", year: "2013"},
+    { mmr: "25.56", name: "Loud Rocks", artist: "Various Artists", image: "img/album/loud_rocks.webp", rank: "3", year: "2000"},
+    { mmr: "78", name: "Steal This Album!", artist: "System of A Down", image: "img/album/steal_this_album.webp", rank: "3", year: "2002"},
+    { mmr: "35.4", name: "Sour Soul", artist: "Ghostface Killah", image: "img/album/soursoul.webp", rank: "3", year: "2015"},
+    { mmr: "4.55", name: "Everybody Else Is Doing It, So Why Can't We?", artist: "The Cranberries", image: "img/album/everybody_else_is_doing_it__so_why_can_t_we_.webp", rank: "1", year: "1993"},
+    { mmr: "23", name: "Liquid Swords", artist: "GZA", image: "img/album/liquidswords.webp", rank: "3", year: "1995"},
+    { mmr: "91", name: "Rimini", artist: "Fabrizio De André", image: "img/album/rimini.webp", rank: "2", year: "1978"},
+    { mmr: "29.2", name: "Jar of Flies", artist: "Alice in Chains", image: "img/album/jarofflies.webp", rank: "3", year: "1994"},
+    { mmr: "35.6", name: "Individual Thought Patterns", artist: "Death", image: "img/album/individual.webp", rank: "3", year: "1993"},
+    { mmr: "25.55", name: "Enter<br>The<br>Wu-Tang<br>(36 Chambers)", artist: "Wu-Tang Clan", image: "img/album/36chambers.webp", rank:"3", year: "1993"},
+    { mmr: "35.1", name: "Blow Your Headphones", artist: "The Herbaliser", image: "img/album/blow_your_headphones.webp", rank: "3", year: "1997"},
+    { mmr: "30", name: "Nibbles", artist: "Klimeks", image: "img/album/nibbles.webp", rank: "3", year: "2014"},
+    { mmr: "118", name: "w w w <br>. d e e p d i v e <br>. c o m", artist: "Webinar™", image: "img/album/deepdive.webp", rank: "2", year: "2017"},
+    { mmr: "100", name: "Stato di necessità", artist: "Carmen Consoli", image: "img/album/stato_di_nec.webp", rank: "2", year: "2000"},
+    { mmr: "115", name: "Storia di un impiegato", artist: "Fabrizio De André", image: "img/album/storia_impiegato.webp", rank: "2", year: "1973"},
+    { mmr: "41.25", name: "Snap Your Neck Back", artist: "Gasoline", image: "img/album/snap_neck.webp", rank: "3", year: "2020"},
+    { mmr: "144", name: "Bread 'n' Butter", artist: "OMA", image: "img/album/bnb.webp", rank: "2", year: "2022"},
+    { mmr: "24.1", name: "Filosofem", artist: "Burzum", image: "img/album/filosofem.webp", rank: "3", year: "1996"},
+    { mmr: "39.25", name: "Leprosy", artist: "Death", image: "img/album/leprosy.webp", rank: "3", year: "1988"},
+    { mmr: "24", name: "Under the<br>Sign of Hell<br>2011", artist: "Gorgoroth", image: "img/album/utsoh2011.webp", rank: "3", year: "2011"},
+    { mmr: "29.05", name: "The Ultimate Sin", artist:"Ozzy Osbourne", image: "img/album/ultimate_sin.webp", rank: "3", year: "1986"},
+    { mmr: "82", name: "The Bends", artist: "Radiohead", image: "img/album/the_bends.webp", rank: "2", year: "1995"},
+    { mmr: "21", name: "The Ecstatic", artist:"Mos Def", image:"img/album/the_ecstatic.webp", rank:"3", year: "2009"},
+    { mmr: "4.56", name: "Mellon Collie<br>and the<br>Infinite Sadness", artist: "The Smashing Pumpkins", image: "img/album/mellon_collie.webp", rank:"1", year: "1995"},
+    { mmr: "119", name: "Wish You Were Here", artist: "Pink Floyd", image: "img/album/wish_you_were_here.webp", rank: "2", year: "1975"},
+    { mmr: "81", name: "Symbolic", artist: "Death", image: "img/album/symbolic.webp", rank: "3", year: "1995"},
+    { mmr: "35.3", name: "Tragic Kingdom", artist: "No Doubt", image: "img/album/tragic_kingdom.webp", rank: "3", year: "1995"},
+    { mmr: "58.5", name: "Rust In Peace", artist: "Megadeth", image :"img/album/rust_in_peace.webp", rank: "3", year: "1990"},
+    { mmr: "27.5", name: "Journey Into Abstract Hip Hop", artist: "Gasoline", image: "img/album/journey_into_abstract.webp", rank: "3", year: "2018"},
+    { mmr: "40", name: "Senior", artist: "Röyksopp", image: "img/album/senior.webp", rank: "3", year: "2010"},
+    { mmr: "4.6", name: "Brothers in Arms", artist: "Dire Straits", image: "img/album/brothers_in_arms.webp", rank: "1", year: "1985"},
+    { mmr: "25", name: "Enema Of The State", artist: "blink-182", image: "img/album/enema_of_the_state.webp", rank: "3", year: "1999"},
+    { mmr: "5.6", name: "Breakfast in America", artist: "Supertramp", image: "img/album/breakfast_in_america.webp", rank: "1", year: "1979"},
+    { mmr: "71", name: "Compro", artist: "Skee Mask", image: "img/album/compro.webp", rank: "3", year: "2018"},
+    { mmr: "70.6", name: "Endtroducing.....", artist: "Dj Shadow", image: "img/album/endtroducing_____.webp", rank: "2", year: "1996"},
+    { mmr: "4.58", name: "Ten", artist: "Pearl Jam", image: "img/album/ten.webp", rank: "1", year: "1991"},
+    { mmr: "33.5", name: "Teoria del contrario", artist: "Dani Faiv", image: "img/album/teoria_del_contrario.webp", rank: "3", year: "2021"},
+    { mmr: "41.5", name: "Bury The Hatchet", artist: "The Cranberries", image: "img/album/bury_the_hatchet.webp", rank: "3", year: "1999"},
+    { mmr: "4.52", name: "Black on Both Sides", artist: "Mos Def", image: "img/album/black_on_both_sides.webp", rank: "1", year: "1999"},
+    { mmr: "40", name: "Dirt", artist: "Alice in Chains", image: "img/album/dirt.webp", rank: "3", ex: "true", year: "1992"},
+    { mmr: "35.7", name: "Octavarium", artist: "Dream Theater", image: "img/album/octavarium.webp", rank: "3", year: "2005"},
+    { mmr: "61", name: "Escapology", artist: "Robbie Williams", image: "img/album/escapology.webp", rank: "2", year: "2002"},
+    { mmr: "6", name: "Hefty Fine", artist: "Bloodhound Gang", image: "img/album/hefty_fine.webp", rank: "1", year: "2005"},
+    { mmr: "6.4", name: "Mezmerize", artist: "System Of A Down", image: "img/album/mezmerize.webp", rank: "1", year: "2005"},
+    { mmr: "29.1", name: "Nevermind", artist: "Nirvana", image: "img/album/nevermind.webp", rank: "3", year: "1991"},
+    { mmr: "35", name: "Rebel Yell", artist: "Billy Idol", image: "img/album/rebel_yell.webp", rank: "2", year: "1983"},
+    { mmr: "35", name: "blink-182", artist: "blink-182", image: "img/album/blink_182.webp", rank: "3", year: "2003"},
+    { mmr: "70.5", name: "Salad Days", artist: "Mac DeMarco", image: "img/album/salad_days.webp", rank: "2", year: "2014"},
+    { mmr: "60.5", name: "Settle", artist: "Disclosure", image: "img/album/settle.webp", rank: "3", year: "2013"},
+    { mmr: "65", name: "Skream!", artist: "Skream", image: "img/album/skream_.webp", rank: "3", year: "2006"},
+    { mmr: "60", name: "Revival", artist: "Eminem", image: "img/album/revival.webp", rank: "2", year: "2017"},
+    { mmr: "5.8", name: "The Sound of Perseverance", artist: "Death", image: "img/album/the_sound_of_perseverance.webp", rank: "1", year: "1998"},
+    { mmr: "16", name: "Unknown Death 2002", artist: "Yung Lean", image: "img/album/unknown_death_2002.webp", rank: "3", year: "2013"},
+    { mmr: "82", name: "Sub Focus", artist: "Sub Focus", image: "img/album/sub_focus.webp", rank: "3", year: "2009"},
+    { mmr: "56", name: "Telefone", artist: "Noname", image: "img/album/telefone.webp", rank: "3", year: "2016"},
+    { mmr: "123", name: "This Old Dog", artist: "Mac DeMarco", image: "img/album/this_old_dog.webp", rank: "2", year: "2017"},
+    { mmr: "6.9", name: "Toxicity", artist: "System Of A Down", image: "img/album/toxicity.webp", rank: "1", year: "2001"},
+    { mmr: "28", name: "(What's the Story) Morning Glory?", artist: "Oasis", image: "img/album/morning_glory.webp", rank: "3", year: "1995"},
+    { mmr: "55", name: "Fuyü-Kükan", artist: "Tomoko Aran", image: "img/album/fuy__k_kan.webp", rank: "3", year: "1983"},
+    { mmr: "117.5", name: "The Fat of the Land", artist: "The Prodigy", image: "img/album/the_fat_of_the_land.webp", rank: "2", year: "1997"},
+    { mmr: "62", name: "Cold Water Music", artist: "Aim", image: "img/album/cold_water_music.webp", rank: "3", year: "1999"},
+    { mmr: "98", name: "L'Amour Toujours", artist: "Gigi D'Agostino", image: "img/album/l_amour_toujours.webp", rank: "2", year: "1999"},
+    { mmr: "73", name: "good kid, m.A.A.d. city", artist: "Kendrick Lamar", image: "img/album/good_kid_m_a_a_d__city.webp", rank: "2", year: "2012"},
+    { mmr: "40", name: "Very Mercenary", artist: "The Herbaliser", image: "img/album/very_mercenary.webp", rank: "2", year: "1999"},
+    { mmr: "88", name: "To Pimp A Butterfly", artist: "Kendrick Lamar", image: "img/album/tpab.webp", rank: "3", year: "2015"},
+    { mmr: "146", name: "Moment of Truth", artist: "Gang Starr", image: "img/album/moment_of_truth.webp", rank: "2", year: "1998"},
+    { mmr: "43", name: "A Funk Odyssey", artist: "Jamiroquai", image: "img/album/a_funk_odyssey.webp", rank: "3", year: "2001"},
+    { mmr: "58.2", name: "Californication", artist: "Red Hot Chili Peppers", image: "img/album/californication.webp", rank: "3", year: "1999"},
+    { mmr: "50", name: "III", artist: "BADBADNOTGOOD", image: "img/album/iii.webp", rank: "3", year: "2014"},
+    { mmr: "40.5", name: "The Eminem Show", artist: "Eminem", image: "img/album/the_eminem_show.webp", rank: "3", year: "2002"},
+    { mmr: "72", name: "Late Night Tales:<br> BADBADNOTGOOD", artist: "", image: "img/album/late_night_tales__br__badbadnotgood.webp", rank: "2", year: "2017"},
+    { mmr: "57", name: "Morning View", artist: "Incubus", image: "img/album/morning_view.webp", rank: "3", year: "2001"},
+    { mmr: "61", name: "Record Collection", artist: "Mark Ronson", image: "img/album/record_collection.webp", rank: "3", year: "2010"},
+    { mmr: "15", name: "Transplants", artist: "Transplants", image: "img/album/transplants.webp", rank: "3", year: "2002"},
+    { mmr: "23", name: "Straight Outta Compton", artist: "N.W.A.", image: "img/album/straight_outta_compton.webp", rank: "3", year: "1988"},
+    { mmr: "70", name: "Life", artist: "Jinsang", image: "img/album/life.webp", rank: "3", year: "2016"},
+    { mmr: "106", name: "Little Dark Age", artist: "MGMT", image: "img/album/little_dark_age.webp", rank: "2", year: "2018"},
+    { mmr: "43", name: "Demon Days", artist: "Gorillaz", image: "img/album/demon_days.webp", rank: "3", year: "2005"},
+    { mmr: "60", name: "Solitude.", artist: "Jinsang", image: "img/album/solitude_.webp", rank: "3", year: "2015"},
+    { mmr: "80", name: "Billion Dollar Gravy", artist: "London Elektricity", image: "img/album/billion_dollar_gravy.webp", rank: "2", year: "2003"},
+    { mmr: "10", name: "La Voce Del Padrone", artist: "Franco Battiato", image: "img/album/la_voce_del_padrone.webp", rank: "1", year: "1981"},
+    { mmr: "145", name: "The Waiter", artist: "Dani Faiv", image: "img/album/the_waiter.webp", rank: "2", year: "2017"},
+    { mmr: "81", name: "Hellvisback", artist: "Salmo", image: "img/album/hellvisback.webp", rank: "2", year: "2016"},
+    { mmr: "89", name: "Hyp3r", artist: "Nerone", image: "img/album/hyp3r.webp", rank: "3", year: "2020"},
+    { mmr: "40.6", name: "Mattoni", artist: "Night Skinny", image: "img/album/mattoni.webp", rank: "3", year: "2022"},
+    { mmr: "88", name: "Madreperla", artist: "Guè", image: "img/album/madreperla.webp", rank: "3", year: "2023"},
+    { mmr: "29.25", name: "Domani Smetto", artist: "Articolo 31", image: "img/album/domani_smetto.webp", rank: "3", year: "2002"},
+    { mmr: "30", name: "Fast Life 4", artist: "Guè", image: "img/album/fast_life_4.webp", rank: "3", year: "2020"},
+    { mmr: "23", name: "Italiano medio", artist: "Articolo 31", image: "img/album/italiano_medio.webp", rank: "2", year: "1998"},
+    { mmr: "75", name: "Turbe Giovanili", artist: "Fabri Fibra", image: "img/album/turbe_giovanili.webp", rank: "2", year: "2013"},
+    { mmr: "119", name: "Illmatic", artist: "NAS", image: "img/album/illmatic.webp", rank: "2", ex: "true", year: "1994"},
+    { mmr: "110", name: "Vicious Delicious", artist: "Infected Mushroom", image: "img/album/vicious_delicious.webp", rank: "2", year: "2007"},
+    { mmr: "147", name: "ATLiens", artist: "Outkast", image: "img/album/atliens.webp", rank: "2", year: "1996"},
+    { mmr: "96", name: "Bizarre Ride II", artist: "The Pharcyde", image: "img/album/bizarre_ride_ii.webp", rank: "2", year: "1992"},
+    { mmr: "117", name: "大理石のファンタジー", artist: "Haircuts for Men", image: "img/album/barbers.webp", rank: "2", year: "2018"},
+    { mmr: "92", name: "Midnight Marauders", artist: "A Tribe Called Quest", image: "img/album/midnight_marauders.webp", rank: "2", year: "1993"},
+    { mmr: "148", name: "All Eyez On Me", artist: "2Pac", image: "img/album/all_eyez_on_me.webp", rank: "2", year: "1996"},
+    { mmr: "28.4", name: "2012-2017", artist: "Against All Logic", image: "img/album/2012_2017.webp", rank: "3", year: "2018"},
+    { mmr: "39.5", name: "Operation:<br> Doomsday", artist: "MF DOOM", image: "img/album/operation__br__doomsday.webp", rank: "3", year: "1999"},
+    { mmr: "58", name: "Voulez-Vous", artist: "ABBA", image: "img/album/voulez_vous.webp", rank: "2", year: "1979"},
+    { mmr: "4.8", name: "One Fierce<br>Beer Coaster", artist: "Bloodhound Gang", image: "img/album/one_fierce_br_beer_coaster.webp", rank: "1", year: "1996"},
+    { mmr: "90", name: "Hyper 2", artist: "Nerone", image: "img/album/hyper_2.webp", rank: "3", year: "2019"},
+    { mmr: "25.6", name: "Relapse", artist: "Eminem", image: "img/album/relapse.webp", rank: "3", year: "2009"},
+    { mmr: "80", name: "1979", artist: "Casa del Mirto", image: "img/album/1979.webp", rank: "2", year: "2011"},
+    { mmr: "134", name: "Madvillainy", artist: "MF DOOM", image: "img/album/madvillainy.webp", rank: "2", year: "2004"},
+    { mmr: "191", name: "The Wall", artist: "Pink Floyd", image: "img/album/the_wall.webp", rank: "2", year: "1979"},
+    { mmr: "59.5", name: "Twoism", artist: "Boards of Canada", image: "img/album/twoism.webp", rank: "3", year: "1995"},
+    { mmr: "80", name: "System Of A Down", artist: "System Of A Down", image: "img/album/system_of_a_down.webp", rank: "3", year: "1998"},
+    { mmr: "25.75", name: "The Beatles", artist: "The Beatles", image: "img/album/the_beatles.webp", rank: "3", year: "1968"},
+    { mmr: "77", name: "Bohemian Beatnik", artist: "Bugseed", image: "img/album/bohemian_beatnik.webp", rank: "3", year: "2013"},
+    { mmr: "29", name: "Modal Soul", artist: "Nujabes", image: "img/album/modal_soul.webp", rank: "3", year: "2005"},
+    { mmr: "41", name: "Vertigo", artist: "Groove Armada", image: "img/album/vertigo.webp", rank: "3", year: "1999"},
+    { mmr: "5.2", name: "Hooray for Boobies", artist: "Bloodhound Gang", image: "img/album/hooray_for_boobies.webp", rank: "1", year: "1999"},
+    { mmr: "16", name: "Discovery", artist: "Daft Punk", image: "img/album/discovery.webp", rank: "2", year: "2001"},
+    { mmr: "120", name: "The Dark Side<br>Of The Moon", artist: "Pink Floyd", image: "img/album/the_dark_side_of_the_moon.webp", rank: "2", year: "1973"},
+    { mmr: "28.1", name: "Slipknot", artist: "Slipknot", image: "img/album/slipknot.webp", rank: "3", year: "1999"},
+    { mmr: "27", name: "Around the Fur", artist: "Deftones", image: "img/album/around_the_fur.webp", rank: "3", year: "1997"},
+    { mmr: "72", name: "89", artist: "Klimeks", image: "img/album/89.webp", rank: "3", year: "2015"},
+    { mmr: "4.5", name: "Melody A.M.", artist: "Röyksopp", image: "img/album/melody_a_m_.webp", rank: "1", year: "2001"},
+    { mmr: "10", name: "Dead Letters", artist: "The Rasmus", image: "img/album/dead_letters.webp", rank: "3", year: "2003"},
+    { mmr: "150", name: "Aquemini", artist: "Outkast", image: "img/album/aquemini.webp", rank: "2", year: "1998"},
+    { mmr: "25.5", name: "Music Has The Right To Children", artist: "Boards of Canada", image: "img/album/music_has_the_right_to_children.webp", rank: "3", year: "1998"},
+    { mmr: "20", name: "Urban", artist: "A.S.I.A.", image: "img/album/urban.webp", rank: "2", year: "2021"},
+    { mmr: "32", name: "Blizzard of Ozz", artist: "Ozzy Osbourne", image: "img/album/blizzard_of_ozz.webp", rank: "3", year: "1980"},
+    { mmr: "4.75", name: "Hypnotize", artist: "System Of A Down", image: "img/album/hypnotize.webp", rank: "1", year: "2005"},
+    { mmr: "42", name: "Life After Death", artist: "The Notorious B.I.G.", image: "img/album/life_after_death.webp", rank: "3", year: "1997"},
+    { mmr: "28.5", name: "Paolo Conte", artist: "Paolo Conte", image: "img/album/paolo_conte.webp", rank: "3", year: "1984"},
+    { mmr: "52", name: "OK Computer", artist: "Radiohead", image: "img/album/ok_computer.webp", rank: "3", year: "1997"},
+    { mmr: "39", name: "THE MOUSE<br> & THE MASK", artist: "MF DOOM,<br> Danger Mouse", image: "img/album/the_mouse_br____the_mask.webp", rank: "3", year: "2005"},
+    { mmr: "76", name: "The 5th Exotic", artist: "Quantic", image: "img/album/the_5th_exotic.webp", rank: "3", year: "2001"}
+    // { mmr: "35.25", name: "Peccati di Gioventù", artist: "Fabrizio De André", image: "img/album/peccati_di_giovent_.webp", rank: "3", year: "1988"},
+    // { mmr: "26", name: "Pino Daniele", artist: "Pino Daniele", image: "img/album/pino_daniele.webp", rank: "3" },
+    // { mmr: "146", name: "Billion Dollar Remixes", artist: "London Elektricity", image: "img/album/bd_remixes.webp", rank: "2" },
+]
     
 let games = [
-    { mmr: "44", name: "Tomb Raider III", image: "img/games/tr3.webp", rank: "3"},
-    { mmr: "1.035", name:"Scratches:<br>Director's Cut", image: "img/games/scratches.webp", rank: "2"},
-    { mmr: "1.24", name: "Lies of P", image: "img/games/lies_of_p.webp", rank: "2"},
-    { mmr: "8", name: "Demon's Souls", image: "img/games/demons_souls_v2.webp", rank: "3"} ,
-    { mmr: "1.429", name: "Dark Souls III", image: "img/games/ds3.webp", rank: "2" },
-    { mmr: "1.61", name: "UnderRail", image: "img/games/underrail.webp", rank: "1" },
-    { mmr: "6.55", name: "Discworld Noir", image: "img/games/disc_noir.webp", rank:"3"},
-    { mmr: "43", name: "Tomb Raider II", image:"img/games/tr2.webp", rank: "3"},
-    { mmr: "1.621", name: "Dark Souls II:<br>Scholar of the First Sin", image:"img/games/ds2.webp", rank: "1"},
-    { mmr: "1.622", name: "Dark Souls<br>Remastered", image:"img/games/dark_souls.webp", rank: "1"},
-    { mmr: "1.385", name: "Tomb Raider", image: "img/games/tr_vert.webp", rank: "2"},
-    { mmr: "41", name: "Silent Hill 3", image: "img/games/sh3_vert.webp", rank: "3"},
-    { mmr: "1.21", name: "Midnight Club 2", image: "img/games/midnight_club2.webp", rank: "2"},
-    { mmr: "3.353", name: "Grand Theft Auto<br>IV", image: "img/games/gtaiv.webp", rank: "3"},
-    { mmr: "1.42", name: "Wolfenstein:<br>The Old Blood", image: "img/games/wolf_tob_vert.webp", rank: "2" },
-    { mmr: "1.41", name: "Wolfenstein:<br>The New Order", image: "img/games/wolf_tno_vert.webp", rank: "2" },
-    { mmr: "1.49", name: "For The King", image: "img/games/for_the_king.webp", rank: "1" },
-    { mmr: "1.27", name: "The Longest Journey", image: "img/games/the_longest_journey_vert.webp", rank: "2" },
-    { mmr: "6.5", name: "Fahrenheit:<br>Indigo Prophecy", image: "img/games/fahrenheit__br_indigo_prophecy.webp", rank: "3" },
-    { mmr: "87", name: "Disco Elysium", image: "img/games/disco_elysium.webp", rank: "3" },
-    { mmr: "1.90", name: "Half-Life", image: "img/games/half_life.webp", rank: "1" },
-    { mmr: "1.55", name: "Hitman:<br> Codename 47", image: "img/games/hitman1_vert.webp", rank: "1" },
-    { mmr: "111", name: "Fallout 3", image: "img/games/fallout_3.webp", rank: "3" },
-    { mmr: "1.65", name: "Fallout 2", image: "img/games/fallout_2.webp", rank: "1" },
-    { mmr: "1.48", name: "The House of the Dead 2", image: "img/games/thotd2_vert.webp", rank: "1" },
-    { mmr: "100.5", name: "Baldur's Gate", image: "img/games/baldur_s_gate.webp", rank: "3" },
-    { mmr: "1.05", name: "Syberia", image: "img/games/syberia.webp", rank: "2" },
-    { mmr: "1.37", name: "The House of the Dead 3", image: "img/games/the_house_of_the_dead_3.webp", rank: "2" },
-    { mmr: "1.28", name: "Half-Life 2", image: "img/games/half_life_2.webp", rank: "2" },
-    { mmr: "1.60", name: "Baldur's Gate II:<br> Shadows of Amn", image: "img/games/baldur_s_gate_ii__br__shadows_of_amn.webp", rank: "1" },
-    { mmr: "1.24", name: "Hitman 2:<br> Silent Assassin", image: "img/games/hitman_2__br__silent_assassin.webp", rank: "2" },
-    { mmr: "1.54", name: "XIII", image: "img/games/xiii_vert.webp", rank: "1" },
-    { mmr: "1.59", name: "Hitman 3:<br> Contracts", image: "img/games/hitman_3__br__contracts.webp", rank: "1" },
-    { mmr: "1.83", name: "Arcanum:<br> Of Steamworks and Magick Obscura", image: "img/games/arcanum__br__of_steamworks_and_magick_obscura.webp", rank: "1" },
-    { mmr: "1.335", name: "Deus Ex", image: "img/games/deus_ex.webp", rank: "2" },
-    { mmr: "1.13", name: "SiN Episodes: Emergence", image:" img/games/sin_emergence.webp", rank: "2"},
-    { mmr: "4", name: "Kane & Lynch:<br>Dead Men", image: "img/games/kane___lynch__br_dead_men.webp", rank: "3" },
-    { mmr: "3.5", name: "Kane & Lynch 2:<br>Dog Days", image: "img/games/kane___lynch_2__br_dog_days.webp", rank: "3" },
-    { mmr: "6", name: "Commandos:<br>Strike Force", image: "img/games/commandos__br_strike_force.webp", rank: "3" },
-    { mmr: "100.25", name: "The House of the Dead", image: "img/games/the_house_of_the_dead.webp", rank: "3" },
-    { mmr: "1.85", name: "Grand Theft Auto III", image: "img/games/grand_theft_auto_iii.webp", rank: "1" },
-    { mmr: "1.76", name: "Grand Theft Auto:<br> San Andreas", image: "img/games/grand_theft_auto__br__san_andreas.webp", rank: "1" },
-    { mmr: "1.427", name: "Grand Theft Auto:<br> Vice City", image: "img/games/grand_theft_auto__br__vice_city.webp", rank: "2" },
-    { mmr: "1.205", name: "Grand Theft Auto<br> 2", image: "img/games/grand_theft_auto_br__2.webp", rank: "2" },
-    { mmr: "90", name: "Resident Evil 4", image: "img/games/resident_evil_4.webp", rank: "3" },
-    { mmr: "8", name: "FlatOut 2", image: "img/games/flatout_2.webp", rank: "3" },
-    { mmr: "1.82", name: "Quake II", image: "img/games/quake_2_vert_v3.webp", rank: "1" },
-    { mmr: "1.12", name: "Papers, Please", image: "img/games/paperspls_vert.webp", rank: "2"},
-    { mmr: "1.39", name: "BioShock", image: "img/games/bioshock.webp", rank: "2" },
-    { mmr: "7.5", name: "Worms 4:<br> Mayhem", image: "img/games/worms_4__br__mayhem.webp", rank: "3" },
-    { mmr: "52", name: "Call of Duty", image: "img/games/cod_vert.webp", rank: "3" },
-    { mmr: "51", name: "Call of Duty 2", image: "img/games/call_of_duty_2.webp", rank: "3" },
-    { mmr: "55", name: "Call of Duty:<br> World at War", image: "img/games/call_of_duty__br__world_at_war.webp", rank: "3" },
-    { mmr: "1.605", name: "S.T.A.L.K.E.R.<br> Shadow of Chernobyl", image: "img/games/s_t_a_l_k_e_r__br__shadow_of_chernobyl.webp", rank: "1" },
-    { mmr: "1.15", name: "S.T.A.L.K.E.R.<br> Clear Sky", image: "img/games/s_t_a_l_k_e_r__br__clear_sky.webp", rank: "2" },
-    { mmr: "1.36", name: "S.T.A.L.K.E.R.<br> Call of Pripyat", image: "img/games/s_t_a_l_k_e_r__br__call_of_pripyat.webp", rank: "2" },
-    { mmr: "1.25", name: "Manhunt", image: "img/games/manhunt.webp", rank: "2" },
-    { mmr: "100", name: "Quake", image: "img/games/quake_vert.webp", rank: "3" },
-    { mmr: "1.64", name: "Fallout:<br>New Vegas", image: "img/games/fallout__br_new_vegas.webp", rank: "1" },
-    { mmr: "95", name: "DOOM", image: "img/games/doom.webp", rank: "3" },
-    { mmr: "102", name: "DOOM (2016)", image: "img/games/doom__2016_.webp", rank: "3" },
-    { mmr: "1.38", name: "Obscure", image: "img/games/obscure.webp", rank: "2" },       
-    { mmr: "1.84", name: "Grim Fandango", image: "img/games/grim_fandango.webp", rank: "1" },
-    { mmr: "1.63", name: "Fallout", image: "img/games/fallout.webp", rank: "1" },
-    { mmr: "40", name: "Need for Speed:<br> Most Wanted", image: "img/games/need_for_speed__br__most_wanted.webp", rank: "3" },
-    { mmr: "1.41", name: "Counter-Strike:<br>Condition Zero Deleted Scenes", image: "img/games/csczds_vert.webp", rank: "1" },
-    { mmr: "1.21", name: "Serious Sam:<br> The First Encounter", image: "img/games/serious_sam__br__the_first_encounter.webp", rank: "2" },
-    { mmr: "2.5", name: "The Chronicles of Riddick:<br>Escape from Butcher Bay", image: "img/games/the_chronicles_of_riddick__br_escape_from_butcher_bay.webp", rank: "3" },
-    { mmr: "1.81", name: "DOOM 3", image: "img/games/doom_3_vert.webp", rank: "1" },
-    { mmr: "1.03", name: "Lego Racers", image: "img/games/lego_racers.webp", rank: "2" },
-    { mmr: "1.22", name: "MotoGP 2", image: "img/games/motogp_2.webp", rank: "2" },
-    { mmr: "1.428", name: "Oni", image: "img/games/oni.webp", rank: "2" },
-    { mmr: "45", name: "Wolfenstein II:<br>The New Colossus", image: "img/games/wolfenstein_ii__br_the_new_colossus.webp", rank: "3" },
-    { mmr: "7", name: "Quake 4", image: "img/games/q4_vert.webp", rank: "3" },
-    { mmr: "47", name: "Sanitarium", image: "img/games/sanitarium_vert.webp", rank: "3" },
-    { mmr: "1", name: "Safari Biathlon", image: "img/games/safari_biathlon.webp", rank: "2" },
-    { mmr: "1.2", name: "Heroes of Might and Magic 4", image: "img/games/heroes_of_might_and_magic_4.webp", rank: "2" },
-    { mmr: "1.75", name: "Beyond<br>Good & Evil", image: "img/games/beyond_br_good___evil.webp", rank: "1" },
-    { mmr: "1.34", name: "Rayman 3:<br> Hoodlum Havoc", image: "img/games/rayman_3__br__hoodlum_havoc.webp", rank: "2" },
-    { mmr: "48", name: "Far Cry 3", image: "img/games/far_cry_3.webp", rank: "3" },
-    { mmr: "1.47", name: "Portal", image: "img/games/portal.webp", rank: "1" },
-    { mmr: "1.1", name: "MotoGP 13", image: "img/games/motogp13_vert.webp", rank: "2" },
-    { mmr: "1.46", name: "Portal 2", image: "img/games/portal_2.webp", rank: "1" },
-    { mmr: "101.5", name: "Half-Life 2:<br>Episode Two", image: "img/games/half_life_2__br_episode_two.webp", rank: "3" },
-    { mmr: "56", name: "Half-Life 2:<br>Episode One", image: "img/games/hl2ep1_vert.webp", rank: "3" },
-    { mmr: "2", name: "Vietcong 2", image: "img/games/vietcong_2.webp", rank: "3" },
-    { mmr: "54", name: "Medal of Honor:<br>Pacific Assault", image: "img/games/medal_of_honor__br_pacific_assault.webp", rank: "3" },
-    { mmr: "1.04", name: "Silent Hill 2", image: "img/games/sh2_vert.webp", rank: "2" },
-    { mmr: "1.40", name: "Painkiller", image: "img/games/painkiller.webp", rank: "1" },
-    { mmr: "49", name: "Brothers in Arms:<br> Road to Hill 30", image: "img/games/brothers_in_arms__br__road_to_hill_30.webp", rank: "3" },
-    { mmr: "48.5", name: "Brothers in Arms:<br> Earned in Blood", image: "img/games/brothers_in_arms__br__earned_in_blood.webp", rank: "3" },
-    { mmr: "48.25", name: "Brothers in Arms:<br> Hell's Highway", image: "img/games/brothers_in_arms__br__hell_s_highway.webp", rank: "3" },
-    { mmr: "1.04", name: "Call of Juarez", image: "img/games/call_of_juarez.webp", rank: "2" },
-    { mmr: "88", name: "Serious Sam 2", image: "img/games/serious_sam_2.webp", rank: "3" },
-    { mmr: "1.07", name: "Dark Messiah<br> of Might & Magic", image: "img/games/dark_messiah_br__of_might___magic.webp", rank: "2" },
-    { mmr: "3.352", name: "Tom Clancy's Rainbow Six: Vegas", image: "img/games/tom_clancy_s_rainbow_six__vegas.webp", rank: "3" },
-    { mmr: "54.5", name: "Medal of Honor:<br> Airborne", image: "img/games/medal_of_honor__br__airborne.webp", rank: "3" },
-    { mmr: "1.06", name: "Tony Hawk's<br>Pro Skater 3", image: "img/games/tony_hawk_s_br_pro_skater_3.webp", rank: "2" },
-    { mmr: "103", name: "Resident Evil", image: "img/games/resident_evil.webp", rank: "3" },
-    { mmr: "1.23", name: "Hades", image: "img/games/hades.webp", rank: "2" },
-    { mmr: "1.43", name: "Desperados:<br>Wanted Dead or Alive", image: "img/games/desperados__br_wanted_dead_or_alive.webp", rank: "1" },
-    { mmr: "3.1", name: "Shadow Man Remastered", image: "img/games/shadow_man_remastered.webp", rank: "3" },
-    { mmr: "3", name: "Freedom Fighters", image: "img/games/freedom_fighters.webp", rank: "3" },
-    { mmr: "1.40", name: "Half-Life:<br> Blue Shift", image: "img/games/half_life__br__blue_shift.webp", rank: "2" },
-    { mmr: "1.38", name: "Half-Life:<br> Opposing Force", image: "img/games/half_life__br__opposing_force.webp", rank: "2" },
-    { mmr: "3.25", name: "Psi-Ops:<br>The Mindgate Conspiracy", image: "img/games/psi_ops__br_the_mindgate_conspiracy.webp", rank: "3" },
-    { mmr: "1.62", name: "Max Payne", image: "img/games/max_payne_vert.webp", rank: "1" },
-    { mmr: "1.33", name: "Max Payne 2:<br> The Fall of Max Payne", image: "img/games/max_payne_2__br__the_fall_of_max_payne.webp", rank: "2" },
-    { mmr: "99", name: "Battlefield 3", image: "img/games/battlefield_3.webp", rank: "3" },
-    { mmr: "1", name: "Men of Valor", image: "img/games/men_of_valor.webp", rank: "3" },
-    { mmr: "1.425", name: "Divinity:<br> Original Sin 2", image: "img/games/divinity__br__original_sin_2.webp", rank: "2" },
-    { mmr: "1.225", name: "Vampire:<br> The Masquerade <br> Bloodlines", image: "img/games/vampire__br__the_masquerade__br__bloodlines.webp", rank: "2" },
-    { mmr: "1.372", name: "The Elder Scrolls V:<br>Skyrim", image: "img/games/the_elder_scrolls_v__br_skyrim.webp", rank: "2" },
-    { mmr: "87", name: "Duke Nukem: Manhattan Project", image: "img/games/duke_nukem__manhattan_project.webp", rank: "3" },
-    { mmr: "86", name: "Hitman:<br>Blood Money", image: "img/games/hitman__br_blood_money.webp", rank: "3" },
-    { mmr: "0", name: "UberSoldier", image: "img/games/ubersoldier.webp", rank: "3" }
+    { mmr: "44", name: "Tomb Raider III", image: "img/games/tr3.webp", rank: "3", year: "1998"},
+    { mmr: "1.035", name:"Scratches:<br>Director's Cut", image: "img/games/scratches.webp", rank: "2", year: "2006"},
+    { mmr: "1.24", name: "Lies of P", image: "img/games/lies_of_p.webp", rank: "2", year: "2023"},
+    { mmr: "8", name: "Demon's Souls", image: "img/games/demons_souls_v2.webp", rank: "3", year: "2009"},
+    { mmr: "1.429", name: "Dark Souls III", image: "img/games/ds3.webp", rank: "2", year: "2016"},
+    { mmr: "1.61", name: "UnderRail", image: "img/games/underrail.webp", rank: "1", year: "2015"},
+    { mmr: "6.55", name: "Discworld Noir", image: "img/games/disc_noir.webp", rank:"3", year: "1999"},
+    { mmr: "43", name: "Tomb Raider II", image:"img/games/tr2.webp", rank: "3", year: "1997"},
+    { mmr: "1.621", name: "Dark Souls II:<br>Scholar of the First Sin", image:"img/games/ds2.webp", rank: "1", year: "2015"},
+    { mmr: "1.622", name: "Dark Souls<br>Remastered", image:"img/games/dark_souls.webp", rank: "1", year: "2018"},
+    { mmr: "1.385", name: "Tomb Raider", image: "img/games/tr_vert.webp", rank: "2", year: "1996"},
+    { mmr: "41", name: "Silent Hill 3", image: "img/games/sh3_vert.webp", rank: "3", year: "2003"},
+    { mmr: "1.21", name: "Midnight Club 2", image: "img/games/midnight_club2.webp", rank: "2", year: "2003"},
+    { mmr: "3.353", name: "Grand Theft Auto<br>IV", image: "img/games/gtaiv.webp", rank: "3", year: "2008"},
+    { mmr: "1.42", name: "Wolfenstein:<br>The Old Blood", image: "img/games/wolf_tob_vert.webp", rank: "2", year: "2015"},
+    { mmr: "1.41", name: "Wolfenstein:<br>The New Order", image: "img/games/wolf_tno_vert.webp", rank: "2", year: "2014"},
+    { mmr: "1.49", name: "For The King", image: "img/games/for_the_king.webp", rank: "1", year: "2018"},
+    { mmr: "1.27", name: "The Longest Journey", image: "img/games/the_longest_journey_vert.webp", rank: "2", year: "1999"},
+    { mmr: "6.5", name: "Fahrenheit:<br>Indigo Prophecy", image: "img/games/fahrenheit__br_indigo_prophecy.webp", rank: "3", year: "2005"},
+    { mmr: "87", name: "Disco Elysium", image: "img/games/disco_elysium.webp", rank: "3", year: "2019"},
+    { mmr: "1.90", name: "Half-Life", image: "img/games/half_life.webp", rank: "1", year: "1998"},
+    { mmr: "1.55", name: "Hitman:<br> Codename 47", image: "img/games/hitman1_vert.webp", rank: "1", year: "2000"},
+    { mmr: "111", name: "Fallout 3", image: "img/games/fallout_3.webp", rank: "3", year: "2008"},
+    { mmr: "1.65", name: "Fallout 2", image: "img/games/fallout_2.webp", rank: "1", year: "1998"},
+    { mmr: "1.48", name: "The House of the Dead 2", image: "img/games/thotd2_vert.webp", rank: "1", year: "1999"},
+    { mmr: "100.5", name: "Baldur's Gate", image: "img/games/baldur_s_gate.webp", rank: "3", year: "1998"},
+    { mmr: "1.05", name: "Syberia", image: "img/games/syberia.webp", rank: "2", year: "2002"},
+    { mmr: "1.37", name: "The House of the Dead 3", image: "img/games/the_house_of_the_dead_3.webp", rank: "2", year: "2002"},
+    { mmr: "1.28", name: "Half-Life 2", image: "img/games/half_life_2.webp", rank: "2", year: "2004"},
+    { mmr: "1.60", name: "Baldur's Gate II:<br> Shadows of Amn", image: "img/games/baldur_s_gate_ii__br__shadows_of_amn.webp", rank: "1", year: "2000"},
+    { mmr: "1.24", name: "Hitman 2:<br> Silent Assassin", image: "img/games/hitman_2__br__silent_assassin.webp", rank: "2", year: "2002"},
+    { mmr: "1.54", name: "XIII", image: "img/games/xiii_vert.webp", rank: "1", year: "2003"},
+    { mmr: "1.59", name: "Hitman 3:<br> Contracts", image: "img/games/hitman_3__br__contracts.webp", rank: "1", year: "2004"},
+    { mmr: "1.83", name: "Arcanum:<br> Of Steamworks and Magick Obscura", image: "img/games/arcanum__br__of_steamworks_and_magick_obscura.webp", rank: "1", year: "2001"},
+    { mmr: "1.335", name: "Deus Ex", image: "img/games/deus_ex.webp", rank: "2", year: "2000"},
+    { mmr: "1.13", name: "SiN Episodes: Emergence", image:" img/games/sin_emergence.webp", rank: "2", year: "2006"},
+    { mmr: "4", name: "Kane & Lynch:<br>Dead Men", image: "img/games/kane___lynch__br_dead_men.webp", rank: "3", year: "2007"},
+    { mmr: "3.5", name: "Kane & Lynch 2:<br>Dog Days", image: "img/games/kane___lynch_2__br_dog_days.webp", rank: "3", year: "2010"},
+    { mmr: "6", name: "Commandos:<br>Strike Force", image: "img/games/commandos__br_strike_force.webp", rank: "3", year: "2006"},
+    { mmr: "100.25", name: "The House of the Dead", image: "img/games/the_house_of_the_dead.webp", rank: "3", year: "1998"},
+    { mmr: "1.85", name: "Grand Theft Auto III", image: "img/games/grand_theft_auto_iii.webp", rank: "1", year: "2002"},
+    { mmr: "1.76", name: "Grand Theft Auto:<br> San Andreas", image: "img/games/grand_theft_auto__br__san_andreas.webp", rank: "1", year: "2005"},
+    { mmr: "1.427", name: "Grand Theft Auto:<br> Vice City", image: "img/games/grand_theft_auto__br__vice_city.webp", rank: "2", year: "2003"},
+    { mmr: "1.205", name: "Grand Theft Auto<br> 2", image: "img/games/grand_theft_auto_br__2.webp", rank: "2", year: "1999"},
+    { mmr: "90", name: "Resident Evil 4", image: "img/games/resident_evil_4.webp", rank: "3", year: "2007"},
+    { mmr: "8", name: "FlatOut 2", image: "img/games/flatout_2.webp", rank: "3", year: "2006"},
+    { mmr: "1.82", name: "Quake II", image: "img/games/quake_2_vert_v3.webp", rank: "1", year: "1997"},
+    { mmr: "1.12", name: "Papers, Please", image: "img/games/paperspls_vert.webp", rank: "2", year: "2013"},
+    { mmr: "1.39", name: "BioShock", image: "img/games/bioshock.webp", rank: "2", year: "2007"},
+    { mmr: "7.5", name: "Worms 4:<br> Mayhem", image: "img/games/worms_4__br__mayhem.webp", rank: "3", year: "2005"},
+    { mmr: "52", name: "Call of Duty", image: "img/games/cod_vert.webp", rank: "3", year: "2003"},
+    { mmr: "51", name: "Call of Duty 2", image: "img/games/call_of_duty_2.webp", rank: "3", year: "2005"},
+    { mmr: "55", name: "Call of Duty:<br> World at War", image: "img/games/call_of_duty__br__world_at_war.webp", rank: "3", year: "2008"},
+    { mmr: "1.605", name: "S.T.A.L.K.E.R.<br> Shadow of Chernobyl", image: "img/games/s_t_a_l_k_e_r__br__shadow_of_chernobyl.webp", rank: "1", year: "2007"},
+    { mmr: "1.15", name: "S.T.A.L.K.E.R.<br> Clear Sky", image: "img/games/s_t_a_l_k_e_r__br__clear_sky.webp", rank: "2", year: "2008"},
+    { mmr: "1.36", name: "S.T.A.L.K.E.R.<br> Call of Pripyat", image: "img/games/s_t_a_l_k_e_r__br__call_of_pripyat.webp", rank: "2", year: "2009"},
+    { mmr: "1.25", name: "Manhunt", image: "img/games/manhunt.webp", rank: "2", year: "2004"},
+    { mmr: "100", name: "Quake", image: "img/games/quake_vert.webp", rank: "3", year: "1996"},
+    { mmr: "1.64", name: "Fallout:<br>New Vegas", image: "img/games/fallout__br_new_vegas.webp", rank: "1", year: "2010"},
+    { mmr: "95", name: "DOOM", image: "img/games/doom.webp", rank: "3", year: "1993"},
+    { mmr: "102", name: "DOOM", image: "img/games/doom__2016_.webp", rank: "3", year: "2016"},
+    { mmr: "1.38", name: "Obscure", image: "img/games/obscure.webp", rank: "2", year: "2004"},
+    { mmr: "1.84", name: "Grim Fandango", image: "img/games/grim_fandango.webp", rank: "1", year: "1998"},
+    { mmr: "1.63", name: "Fallout", image: "img/games/fallout.webp", rank: "1", year: "1997"},
+    { mmr: "40", name: "Need for Speed:<br> Most Wanted", image: "img/games/need_for_speed__br__most_wanted.webp", rank: "3", year: "2005"},
+    { mmr: "1.41", name: "Counter-Strike:<br>Condition Zero Deleted Scenes", image: "img/games/csczds_vert.webp", rank: "1", year: "2004"},
+    { mmr: "1.21", name: "Serious Sam:<br> The First Encounter", image: "img/games/serious_sam__br__the_first_encounter.webp", rank: "2", year: "2001"},
+    { mmr: "2.5", name: "The Chronicles of Riddick:<br>Escape from Butcher Bay", image: "img/games/the_chronicles_of_riddick__br_escape_from_butcher_bay.webp", rank: "3", year: "2004"},
+    { mmr: "1.81", name: "DOOM 3", image: "img/games/doom_3_vert.webp", rank: "1", year: "2004"},
+    { mmr: "1.03", name: "Lego Racers", image: "img/games/lego_racers.webp", rank: "2", year: "1999"},
+    { mmr: "1.22", name: "MotoGP 2", image: "img/games/motogp_2.webp", rank: "2", year: "2003"},
+    { mmr: "1.428", name: "Oni", image: "img/games/oni.webp", rank: "2", year: "2001"},
+    { mmr: "45", name: "Wolfenstein II:<br>The New Colossus", image: "img/games/wolfenstein_ii__br_the_new_colossus.webp", rank: "3", year: "2017"},
+    { mmr: "7", name: "Quake 4", image: "img/games/q4_vert.webp", rank: "3", year: "2005"},
+    { mmr: "47", name: "Sanitarium", image: "img/games/sanitarium_vert.webp", rank: "3", year: "1998"},
+    { mmr: "1", name: "Safari Biathlon", image: "img/games/safari_biathlon.webp", rank: "2", year: "2002"},
+    { mmr: "1.2", name: "Heroes of Might and Magic 4", image: "img/games/heroes_of_might_and_magic_4.webp", rank: "2", year: "2002"},
+    { mmr: "1.75", name: "Beyond<br>Good & Evil", image: "img/games/beyond_br_good___evil.webp", rank: "1", year: "2003"},
+    { mmr: "1.34", name: "Rayman 3:<br> Hoodlum Havoc", image: "img/games/rayman_3__br__hoodlum_havoc.webp", rank: "2", year: "2003"},
+    { mmr: "48", name: "Far Cry 3", image: "img/games/far_cry_3.webp", rank: "3", year: "2012"},
+    { mmr: "1.47", name: "Portal", image: "img/games/portal.webp", rank: "1", year: "2007"},
+    { mmr: "1.1", name: "MotoGP 13", image: "img/games/motogp13_vert.webp", rank: "2", year: "2013"},
+    { mmr: "1.46", name: "Portal 2", image: "img/games/portal_2.webp", rank: "1", year: "2011"},
+    { mmr: "101.5", name: "Half-Life 2:<br>Episode Two", image: "img/games/half_life_2__br_episode_two.webp", rank: "3", year: "2007"},
+    { mmr: "56", name: "Half-Life 2:<br>Episode One", image: "img/games/hl2ep1_vert.webp", rank: "3", year: "2006"},
+    { mmr: "2", name: "Vietcong 2", image: "img/games/vietcong_2.webp", rank: "3", year: "2005"},
+    { mmr: "54", name: "Medal of Honor:<br>Pacific Assault", image: "img/games/medal_of_honor__br_pacific_assault.webp", rank: "3", year: "2004"},
+    { mmr: "1.04", name: "Silent Hill 2", image: "img/games/sh2_vert.webp", rank: "2", year: "2002"},
+    { mmr: "1.40", name: "Painkiller", image: "img/games/painkiller.webp", rank: "1", year: "2004"},
+    { mmr: "49", name: "Brothers in Arms:<br> Road to Hill 30", image: "img/games/brothers_in_arms__br__road_to_hill_30.webp", rank: "3", year: "2005"},
+    { mmr: "48.5", name: "Brothers in Arms:<br> Earned in Blood", image: "img/games/brothers_in_arms__br__earned_in_blood.webp", rank: "3", year: "2005"},
+    { mmr: "48.25", name: "Brothers in Arms:<br> Hell's Highway", image: "img/games/brothers_in_arms__br__hell_s_highway.webp", rank: "3", year: "2008"},
+    { mmr: "1.04", name: "Call of Juarez", image: "img/games/call_of_juarez.webp", rank: "2", year: "2006"},
+    { mmr: "88", name: "Serious Sam 2", image: "img/games/serious_sam_2.webp", rank: "3", year: "2005"},
+    { mmr: "1.07", name: "Dark Messiah<br> of Might & Magic", image: "img/games/dark_messiah_br__of_might___magic.webp", rank: "2", year: "2006"},
+    { mmr: "3.352", name: "Tom Clancy's Rainbow Six: Vegas", image: "img/games/tom_clancy_s_rainbow_six__vegas.webp", rank: "3", year: "2006"},
+    { mmr: "54.5", name: "Medal of Honor:<br> Airborne", image: "img/games/medal_of_honor__br__airborne.webp", rank: "3", year: "2007"},
+    { mmr: "1.06", name: "Tony Hawk's<br>Pro Skater 3", image: "img/games/tony_hawk_s_br_pro_skater_3.webp", rank: "2", year: "2001"},
+    { mmr: "103", name: "Resident Evil", image: "img/games/resident_evil.webp", rank: "3", year: "1996"},
+    { mmr: "1.23", name: "Hades", image: "img/games/hades.webp", rank: "2", year: "2020"},
+    { mmr: "1.43", name: "Desperados:<br>Wanted Dead or Alive", image: "img/games/desperados__br_wanted_dead_or_alive.webp", rank: "1", year: "2001"},
+    { mmr: "3.1", name: "Shadow Man Remastered", image: "img/games/shadow_man_remastered.webp", rank: "3", year: "2021"},
+    { mmr: "3", name: "Freedom Fighters", image: "img/games/freedom_fighters.webp", rank: "3", year: "2003"},
+    { mmr: "1.40", name: "Half-Life:<br> Blue Shift", image: "img/games/half_life__br__blue_shift.webp", rank: "2", year: "2001"},
+    { mmr: "1.38", name: "Half-Life:<br> Opposing Force", image: "img/games/half_life__br__opposing_force.webp", rank: "2", year: "1999"},
+    { mmr: "3.25", name: "Psi-Ops:<br>The Mindgate Conspiracy", image: "img/games/psi_ops__br_the_mindgate_conspiracy.webp", rank: "3", year: "2004"},
+    { mmr: "1.62", name: "Max Payne", image: "img/games/max_payne_vert.webp", rank: "1", year: "2001"},
+    { mmr: "1.33", name: "Max Payne 2:<br> The Fall of Max Payne", image: "img/games/max_payne_2__br__the_fall_of_max_payne.webp", rank: "2", year: "2003"},
+    { mmr: "99", name: "Battlefield 3", image: "img/games/battlefield_3.webp", rank: "3", year: "2011"},
+    { mmr: "1", name: "Men of Valor", image: "img/games/men_of_valor.webp", rank: "3", year: "2004"},
+    { mmr: "1.425", name: "Divinity:<br> Original Sin 2", image: "img/games/divinity__br__original_sin_2.webp", rank: "2", year: "2017"},
+    { mmr: "1.225", name: "Vampire:<br> The Masquerade <br> Bloodlines", image: "img/games/vampire__br__the_masquerade__br__bloodlines.webp", rank: "2", year: "2004"},
+    { mmr: "1.372", name: "The Elder Scrolls V:<br>Skyrim", image: "img/games/the_elder_scrolls_v__br_skyrim.webp", rank: "2", year: "2011"},
+    { mmr: "87", name: "Duke Nukem: Manhattan Project", image: "img/games/duke_nukem__manhattan_project.webp", rank: "3", year: "2002"},
+    { mmr: "86", name: "Hitman:<br>Blood Money", image: "img/games/hitman__br_blood_money.webp", rank: "3", year: "2006"},
+    { mmr: "0", name: "UberSoldier", image: "img/games/ubersoldier.webp", rank: "3", year: "2005"}
 ];
 
 let movies = [
-    { mmr: "0.75", name: "Deep Cover", image:"img/movies/deep_cover.webp", rank: "2"},
-    { mmr: "8.425", name: "Lemony Snicket's<br>A Series of Unfortunate Events", image: "img/movies/unf_events.webp", rank: "2"},
-    { mmr: "0.5", name: "Die Hard", image: "img/movies/die_hard.webp", rank: "2"},
-    { mmr: "6", name: "The Naked Gun 2½:<br>The Smell of Fear", image: "img/movies/naked_gun2.webp", rank: "3"},
-    { mmr: "2", name: "Mulholland Drive", image: "img/movies/mu_drive.webp", rank: "2"},
-    { mmr: "1.525", name: "Inception", image: "img/movies/inception.webp", rank: "3"},
-    { mmr: "8.45", name: "Joker", image: "img/movies/joker2019.webp", rank: "2"},
-    { mmr: "4", name: "American History X", image: "img/movies/amhx.webp", rank: "1"},
-    { mmr: "14.5", name: "Il Signor Diavolo", image: "img/movies/sig_diavolo.webp", rank: "2"},
-    { mmr: "16.5", name: "The Fly", image: "img/movies/the_fly.webp", rank: "2"},
-    { mmr: "2", name: "8 Mile", image: "img/movies/8mile.webp", rank: "1"},
-    { mmr: "8.4", name: "The Negotiator", image:"img/movies/the_negotiator.webp", rank:"2"},
-    { mmr: "8.3", name: "Devil's Advocate", image:"img/movies/devil_advocate.webp", rank:"2"},
-    { mmr: "5.25", name: "Gridlock'd", image:"img/movies/gridlockd.webp", rank:"2"},
-    { mmr: "1.52", name: "Moneyball", image: "img/movies/moneyball.webp", rank:"2"},
-    { mmr: "17", name: "Parasite", image: "img/movies/parasite.webp", rank: "2"},
-    { mmr: "75", name: "Men in Black II", image: "img/movies/men_in_black_ii.webp", rank: "3" },
-    { mmr: "14", name: "Men in Black", image: "img/movies/men_in_black.webp", rank: "2" },
-    { mmr: "108", name: "New Jack City", image: "img/movies/new_jack_city.webp", rank: "3" },
-    { mmr: "70", name: "L'inquilino del terzo piano", image: "img/movies/l_inquilino_del_terzo_piano.webp", rank: "1" },
-    { mmr: "12", name: "Dog Day Afternoon", image: "img/movies/dog_day_afternoon.webp", rank: "2" },
-    { mmr: "6.1", name: "Mean Streets", image: "img/movies/mean_streets.webp", rank: "1" },
-    { mmr: "80", name: "Smetto quando voglio", image: "img/movies/smetto_quando_voglio.webp", rank: "3" },
-    { mmr: "88", name: "Pulp Fiction", image: "img/movies/pulp_fiction.webp", rank: "1" },
-    { mmr: "1", name: "Shrek", image: "img/movies/shrek.webp", rank: "1" },
-    { mmr: "16", name: "Donnie Darko", image: "img/movies/donnie_darko.webp", rank: "2" },
-    { mmr: "100", name: "The Silence of the Lambs", image: "img/movies/the_silence_of_the_lambs.webp", rank: "3" },
-    { mmr: "4", name: "Fight Club", image: "img/movies/fight_club.webp", rank: "2" },
-    { mmr: "5.5", name: "Heat", image: "img/movies/heat.webp", rank: "2" },
-    { mmr: "10", name: "The Truman Show", image: "img/movies/the_truman_show.webp", rank: "2" },
-    { mmr: "4", name: "The Untouchables", image: "img/movies/the_untouchables.webp", rank: "3" },
-    { mmr: "10", name: "Donnie Brasco", image: "img/movies/donnie_brasco.webp", rank: "1" },
-    { mmr: "86", name: "Casino", image: "img/movies/casino.webp", rank: "1" },
-    { mmr: "87", name: "Goodfellas", image: "img/movies/goodfellas.webp", rank: "1" },
-    { mmr: "1.55", name: "Training Day", image: "img/movies/training_day.webp", rank: "3"},
-    { mmr: "9", name: "The Godfather", image: "img/movies/the_godfather.webp", rank: "1" },
-    { mmr: "85", name: "Scarface", image: "img/movies/scarface.webp", rank: "1" },
-    { mmr: "5.75", name: "The Matrix", image: "img/movies/the_matrix.webp", rank: "2" },
-    { mmr: "7", name: "Menace II Society", image: "img/movies/menace_ii_society.webp", rank: "2" },
-    { mmr: "100", name: "One Flew Over the Cuckoo's Nest", image: "img/movies/one_flew_over_the_cuckoo_s_nest.webp", rank: "1" },
-    { mmr: "8.5", name: "Fargo", image: "img/movies/fargo.webp", rank: "2" },
-    { mmr: "85", name: "Carlito's Way", image: "img/movies/carlito_s_way.webp", rank: "3" },
-    { mmr: "15", name: "Reservoir Dogs", image: "img/movies/reservoir_dogs.webp", rank: "2" },
-    { mmr: "76", name: "Boyz n the Hood", image: "img/movies/boyz_n_the_hood.webp", rank: "3" },
-    { mmr: "9", name: "Do the Right Thing", image: "img/movies/do_the_right_thing.webp", rank: "2" },
-    { mmr: "90", name: "American Gangster", image: "img/movies/american_gangster.webp", rank: "3" },
-    { mmr: "90", name: "Trainspotting", image: "img/movies/trainspotting.webp", rank: "1" },
-    { mmr: "85", name: "American Psycho", image: "img/movies/american_psycho.webp", rank: "1" },
-    { mmr: "7.1", name: "L.A. Confidential", image: "img/movies/l_a__confidential.webp", rank: "2" },
-    { mmr: "2", name: "The Big Lebowski", image: "img/movies/the_big_lebowski.webp", rank: "3" },
-    { mmr: "0", name: "American Pie", image: "img/movies/american_pie.webp", rank: "3" },
-    { mmr: "50", name: "V for Vendetta", image: "img/movies/v_for_vendetta.webp", rank: "3" },
-    { mmr: "1", name: "Galline in fuga", image: "img/movies/galline_in_fuga.webp", rank: "2" },
-    { mmr: "7", name: "Taxi Driver", image: "img/movies/taxi_driver.webp", rank: "1" },
-    { mmr: "1.25", name: "Shrek 2", image: "img/movies/shrek_2.webp", rank: "2" },
-    { mmr: "1", name: "La spada magica<br>Alla ricerca di Camelot", image: "img/movies/la_spada_magica_br_alla_ricerca_di_camelot.webp", rank: "3" },
-    { mmr: "110", name: "Apocalypse Now", image: "img/movies/apocalypse_now.webp", rank: "3" },
-    { mmr: "2", name: "La leggenda di<br>Al, John e Jack", image: "img/movies/la_leggenda_di_br_al__john_e_jack.webp", rank: "2" },
-    { mmr: "5", name: "Chiedimi se sono felice", image: "img/movies/chiedimi_se_sono_felice.webp", rank: "1" },
-    { mmr: "73", name: "Johnny English", image: "img/movies/johnny_english.webp", rank: "3" },
-    { mmr: "8", name: "The Usual Suspects", image: "img/movies/the_usual_suspects.webp", rank: "1" },
-    { mmr: "5", name: "Withnail and I", image: "img/movies/withnail_and_i.webp", rank: "2" },
-    { mmr: "4.05", name: "Enemy of the State", image: "img/movies/enemy_of_the_state.webp", rank: "3" },
-    { mmr: "5", name: "The Naked Gun:<br>From the Files of Police Squad!", image: "img/movies/the_naked_gun.webp", rank: "3" },
-    { mmr: "7", name: "Juice", image: "img/movies/juice.webp", rank: "2" },
-    { mmr: "11", name: "Falling Down", image: "img/movies/falling_down.webp", rank: "2" },
-    { mmr: "8", name: "Jackie Brown", image: "img/movies/jackie_brown.webp", rank: "2" },
-    { mmr: "6", name: "Paid in Full", image: "img/movies/paid_in_full.webp", rank: "2" },
-    { mmr: "3", name: "È già ieri", image: "img/movies/e_gia_ieri.webp", rank: "2" },
-    { mmr: "6", name: "Being John Malkovich", image: "img/movies/being_john_malkovich.webp", rank: "1" },
-    { mmr: "3", name: "Borat", image: "img/movies/borat.webp", rank: "3" },
-    { mmr: "70", name: "Seven", image: "img/movies/se7en.webp", rank: "3" },
-    { mmr: "1", name: "Shrek 3", image: "img/movies/shrek3.webp", rank: "3" },
-    { mmr: "1.5", name: "Shrek Forever After", image: "img/movies/shrek4.webp", rank: "3" },
-    { mmr: "109", name: "King of New York", image: "img/movies/king_of_new_york.webp", rank: "3" },
-    { mmr: "4.1 ", name: "Io sono leggenda", image: "img/movies/io_sono_leggenda.webp", rank: "3" },
-    { mmr: "1.51", name: "Ocean's Eleven", image: "img/movies/ocean_s_eleven.webp", rank: "2" },
-    { mmr: "8.51", name: "12 Angry Men", image: "img/movies/12_angry_men.webp", rank: "2" },
-    { mmr: "1.5", name: "Snatch", image: "img/movies/snatch.webp", rank: "2" }
-    ];
-    
+    { mmr: "0.75", name: "Deep Cover", image:"img/movies/deep_cover.webp", rank: "2", year: "1992"},
+    { mmr: "8.425", name: "Lemony Snicket's<br>A Series of Unfortunate Events", image: "img/movies/unf_events.webp", rank: "2", year: "2004"},
+    { mmr: "0.5", name: "Die Hard", image: "img/movies/die_hard.webp", rank: "2", year: "1988"},
+    { mmr: "6", name: "The Naked Gun 2½:<br>The Smell of Fear", image: "img/movies/naked_gun2.webp", rank: "3", year: "1991"},
+    { mmr: "2", name: "Mulholland Drive", image: "img/movies/mu_drive.webp", rank: "2", year: "2001"},
+    { mmr: "1.525", name: "Inception", image: "img/movies/inception.webp", rank: "3", year: "2010"},
+    { mmr: "8.45", name: "Joker", image: "img/movies/joker2019.webp", rank: "2", year: "2019"},
+    { mmr: "4", name: "American History X", image: "img/movies/amhx.webp", rank: "1", year: "1998"},
+    { mmr: "14.5", name: "Il Signor Diavolo", image: "img/movies/sig_diavolo.webp", rank: "2", year: "2019"},
+    { mmr: "16.5", name: "The Fly", image: "img/movies/the_fly.webp", rank: "2", year: "1986"},
+    { mmr: "2", name: "8 Mile", image: "img/movies/8mile.webp", rank: "1", year: "2002"},
+    { mmr: "8.4", name: "The Negotiator", image:"img/movies/the_negotiator.webp", rank:"2", year: "1998"},
+    { mmr: "8.3", name: "Devil's Advocate", image:"img/movies/devil_advocate.webp", rank:"2", year: "1997"},
+    { mmr: "5.25", name: "Gridlock'd", image:"img/movies/gridlockd.webp", rank:"2", year: "1997"},
+    { mmr: "1.52", name: "Moneyball", image: "img/movies/moneyball.webp", rank:"2", year: "2011"},
+    { mmr: "17", name: "Parasite", image: "img/movies/parasite.webp", rank: "2", year: "2019"},
+    { mmr: "75", name: "Men in Black II", image: "img/movies/men_in_black_ii.webp", rank: "3", year: "2002"},
+    { mmr: "14", name: "Men in Black", image: "img/movies/men_in_black.webp", rank: "2", year: "1997"},
+    { mmr: "108", name: "New Jack City", image: "img/movies/new_jack_city.webp", rank: "3", year: "1991"},
+    { mmr: "70", name: "L'inquilino del terzo piano", image: "img/movies/l_inquilino_del_terzo_piano.webp", rank: "1", year: "1976"},
+    { mmr: "12", name: "Dog Day Afternoon", image: "img/movies/dog_day_afternoon.webp", rank: "2", year: "1975"},
+    { mmr: "6.1", name: "Mean Streets", image: "img/movies/mean_streets.webp", rank: "1", year: "1973"},
+    { mmr: "80", name: "Smetto quando voglio", image: "img/movies/smetto_quando_voglio.webp", rank: "3", year: "2014"},
+    { mmr: "88", name: "Pulp Fiction", image: "img/movies/pulp_fiction.webp", rank: "1", year: "1994"},
+    { mmr: "1", name: "Shrek", image: "img/movies/shrek.webp", rank: "1", year: "2001"},
+    { mmr: "16", name: "Donnie Darko", image: "img/movies/donnie_darko.webp", rank: "2", year: "2001"},
+    { mmr: "100", name: "The Silence of the Lambs", image: "img/movies/the_silence_of_the_lambs.webp", rank: "3", year: "1991"},
+    { mmr: "4", name: "Fight Club", image: "img/movies/fight_club.webp", rank: "2", year: "1999"},
+    { mmr: "5.5", name: "Heat", image: "img/movies/heat.webp", rank: "2", year: "1995"},
+    { mmr: "10", name: "The Truman Show", image: "img/movies/the_truman_show.webp", rank: "2", year: "1998"},
+    { mmr: "4", name: "The Untouchables", image: "img/movies/the_untouchables.webp", rank: "3", year: "1987"},
+    { mmr: "10", name: "Donnie Brasco", image: "img/movies/donnie_brasco.webp", rank: "1", year: "1997"},
+    { mmr: "86", name: "Casino", image: "img/movies/casino.webp", rank: "1", year: "1995"},
+    { mmr: "87", name: "Goodfellas", image: "img/movies/goodfellas.webp", rank: "1", year: "1990"},
+    { mmr: "1.55", name: "Training Day", image: "img/movies/training_day.webp", rank: "3", year: "2001"},
+    { mmr: "9", name: "The Godfather", image: "img/movies/the_godfather.webp", rank: "1", year: "1972"},
+    { mmr: "85", name: "Scarface", image: "img/movies/scarface.webp", rank: "1", year: "1983"},
+    { mmr: "5.75", name: "The Matrix", image: "img/movies/the_matrix.webp", rank: "2", year: "1999"},
+    { mmr: "7", name: "Menace II Society", image: "img/movies/menace_ii_society.webp", rank: "2", year: "1993"},
+    { mmr: "100", name: "One Flew Over the Cuckoo's Nest", image: "img/movies/one_flew_over_the_cuckoo_s_nest.webp", rank: "1", year: "1975"},
+    { mmr: "8.5", name: "Fargo", image: "img/movies/fargo.webp", rank: "2", year: "1996"},
+    { mmr: "85", name: "Carlito's Way", image: "img/movies/carlito_s_way.webp", rank: "3", year: "1993"},
+    { mmr: "15", name: "Reservoir Dogs", image: "img/movies/reservoir_dogs.webp", rank: "2", year: "1992"},
+    { mmr: "76", name: "Boyz n the Hood", image: "img/movies/boyz_n_the_hood.webp", rank: "3", year: "1991"},
+    { mmr: "9", name: "Do the Right Thing", image: "img/movies/do_the_right_thing.webp", rank: "2", year: "1989"},
+    { mmr: "90", name: "American Gangster", image: "img/movies/american_gangster.webp", rank: "3", year: "2007"},
+    { mmr: "90", name: "Trainspotting", image: "img/movies/trainspotting.webp", rank: "1", year: "1996"},
+    { mmr: "85", name: "American Psycho", image: "img/movies/american_psycho.webp", rank: "1", year: "2000"},
+    { mmr: "7.1", name: "L.A. Confidential", image: "img/movies/l_a__confidential.webp", rank: "2", year: "1997"},
+    { mmr: "2", name: "The Big Lebowski", image: "img/movies/the_big_lebowski.webp", rank: "3", year: "1998"},
+    { mmr: "0", name: "American Pie", image: "img/movies/american_pie.webp", rank: "3", year: "1999"},
+    { mmr: "50", name: "V for Vendetta", image: "img/movies/v_for_vendetta.webp", rank: "3", year: "2005"},
+    { mmr: "1", name: "Galline in fuga", image: "img/movies/galline_in_fuga.webp", rank: "2", year: "2000"},
+    { mmr: "7", name: "Taxi Driver", image: "img/movies/taxi_driver.webp", rank: "1", year: "1976"},
+    { mmr: "1.25", name: "Shrek 2", image: "img/movies/shrek_2.webp", rank: "2", year: "2004"},
+    { mmr: "1", name: "La spada magica<br>Alla ricerca di Camelot", image: "img/movies/la_spada_magica_br_alla_ricerca_di_camelot.webp", rank: "3", year: "1998"},
+    { mmr: "110", name: "Apocalypse Now", image: "img/movies/apocalypse_now.webp", rank: "3", year: "1979"},
+    { mmr: "2", name: "La leggenda di<br>Al, John e Jack", image: "img/movies/la_leggenda_di_br_al__john_e_jack.webp", rank: "2", year: "2002"},
+    { mmr: "5", name: "Chiedimi se sono felice", image: "img/movies/chiedimi_se_sono_felice.webp", rank: "1", year: "2000"},
+    { mmr: "73", name: "Johnny English", image: "img/movies/johnny_english.webp", rank: "3", year: "2003"},
+    { mmr: "8", name: "The Usual Suspects", image: "img/movies/the_usual_suspects.webp", rank: "1", year: "1995"},
+    { mmr: "5", name: "Withnail and I", image: "img/movies/withnail_and_i.webp", rank: "2", year: "1987"},
+    { mmr: "4.05", name: "Enemy of the State", image: "img/movies/enemy_of_the_state.webp", rank: "3", year: "1998"},
+    { mmr: "5", name: "The Naked Gun:<br>From the Files of Police Squad!", image: "img/movies/the_naked_gun.webp", rank: "3", year: "1988"},
+    { mmr: "7", name: "Juice", image: "img/movies/juice.webp", rank: "2", year: "1992"},
+    { mmr: "11", name: "Falling Down", image: "img/movies/falling_down.webp", rank: "2", year: "1993"},
+    { mmr: "8", name: "Jackie Brown", image: "img/movies/jackie_brown.webp", rank: "2", year: "1997"},
+    { mmr: "6", name: "Paid in Full", image: "img/movies/paid_in_full.webp", rank: "2", year: "2002"},
+    { mmr: "3", name: "È già ieri", image: "img/movies/e_gia_ieri.webp", rank: "2", year: "2004"},
+    { mmr: "6", name: "Being John Malkovich", image: "img/movies/being_john_malkovich.webp", rank: "1", year: "1999"},
+    { mmr: "3", name: "Borat", image: "img/movies/borat.webp", rank: "3", year: "2006"},
+    { mmr: "70", name: "Seven", image: "img/movies/se7en.webp", rank: "3", year: "1995"},
+    { mmr: "1", name: "Shrek 3", image: "img/movies/shrek3.webp", rank: "3", year: "2007"},
+    { mmr: "1.5", name: "Shrek Forever After", image: "img/movies/shrek4.webp", rank: "3", year: "2010"},
+    { mmr: "109", name: "King of New York", image: "img/movies/king_of_new_york.webp", rank: "3", year: "1990"},
+    { mmr: "4.1", name: "Io sono leggenda", image: "img/movies/io_sono_leggenda.webp", rank: "3", year: "2007"},
+    { mmr: "1.51", name: "Ocean's Eleven", image: "img/movies/ocean_s_eleven.webp", rank: "2", year: "2001"},
+    { mmr: "8.51", name: "12 Angry Men", image: "img/movies/12_angry_men.webp", rank: "2", year: "1957"},
+    { mmr: "1.5", name: "Snatch", image: "img/movies/snatch.webp", rank: "2", year: "2000"}
+];
 </script>
 
 </body>
