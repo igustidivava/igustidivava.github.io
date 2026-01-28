@@ -244,10 +244,10 @@
     </style>
     
 </head>
-<body style="background-color:#242323;" onload="populate()"> 
+<body style="background-color:#242323;"> 
 
 <div class="select-left">
-  <select id="media-select" onchange="changeMedia()">
+  <select id="media-select">
     <option value="albums">Album</option>
     <option value="games">Giochi</option>
     <option value="movies">Film</option>
@@ -255,7 +255,7 @@
 </div>
 
 <div class="select-right">
-    <select id="filters" onchange="filtering()"> </select>
+    <select id="filters"> </select>
 </div>
 
 <div class="grid-wrapper" style="font-family: Arial">
@@ -265,9 +265,15 @@
 </div>
 
 <script>
+    const mediaSelect = document.getElementById('media-select');
+    const filtersSelect = document.getElementById('filters');
+    const gridContainer = document.getElementById('grid');
+
     document.addEventListener('DOMContentLoaded', () => {
         updateOptions();
         populate();
+        mediaSelect.addEventListener('change', changeMedia);
+        filtersSelect.addEventListener('change', filtering);
     });
 
     let counter = 0;
@@ -389,8 +395,8 @@ function sortYearAsc(a, b) {
     }
 
     function filtering() {
-        const filter = document.getElementById("filters").value;
-        const media = document.getElementById('media-select').value;
+         const filter = filtersSelect.value;  
+         const media = mediaSelect.value;  
 
         if (media === "albums") {
 			if (filter === "OriginalAlbums"){
@@ -436,8 +442,8 @@ function sortYearAsc(a, b) {
     }
 
     function populate() {
-        const media = document.getElementById("media-select").value;
-        const gridContainer = document.getElementById('grid');
+        const media = mediaSelect.value; 
+        // const gridContainer = document.getElementById('grid');
         gridContainer.innerHTML = '';
 
         if (media === "albums") {
