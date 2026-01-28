@@ -17,231 +17,232 @@
 			color: #e3e3e3;
 		}
         
-select {
-  appearance: none; /* Remove default OS styling */
-  -webkit-appearance: none; /* For Safari */
-  width: 100px; /* Adjust width as needed */
-  height: 40px;
-  padding: 10px 15px;
-  font-size: 14px;
-  color: #e3e3e3; /* Text color */
-  background-color: #2c2c2c; /* Background color */
-  border: 1px solid #383838;
-  border-radius: 4px;
-  cursor: pointer;
-  outline: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23e3e3e3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 12px;
-}
+        select {
+        appearance: none; /* Remove default OS styling */
+        -webkit-appearance: none; /* For Safari */
+        width: 100px; /* Adjust width as needed */
+        height: 40px;
+        padding: 10px 15px;
+        font-size: 14px;
+        color: #e3e3e3; /* Text color */
+        background-color: #2c2c2c; /* Background color */
+        border: 1px solid #383838;
+        border-radius: 4px;
+        cursor: pointer;
+        outline: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23e3e3e3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 12px;
+        }
 
-/* Hover/focus states 
-select:hover, select:focus {
-  border-color: #a7a7a7; 
-}
-*/
+        /* Hover/focus states 
+        select:hover, select:focus {
+        border-color: #a7a7a7; 
+        }
+        */
 
-/* Style options dropdown (limited customization) */
-select option {
-  background: #333; /* Match select background */
-  color: #e3e3e3;
-}
-
-
-.select-left, .select-right {
-  position: absolute;
-  top: 20px;
-}
-
-.select-left {
-  left: 27%;
-}
-
-.select-right {
-  right: 27%;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr); 
-    gap: 10px; /* Gap between grid items */
-}
-  
-.grid-wrapper {
-    display: flex;
-    justify-content: center; /* Center the grid horizontally */
-    margin-top: 80px; 
-}
-
-.album {
-    border: 1px solid #240b0b;  /*#240b0b*/
-    padding: 10px;
-    text-align: center;
-	font-size: 14px;
-	width: 150px;
-    overflow: hidden; /* Hide overflow content */
-}
+        /* Style options dropdown (limited customization) */
+        select option {
+        background: #333; /* Match select background */
+        color: #e3e3e3;
+        }
 
 
-.album img {
-    max-height: 140px; /* Limit the maximum height of the image */
-    border: 1px solid rgb(0, 0, 0);  
-  }
+        .select-left, .select-right {
+        position: absolute;
+        top: 20px;
+        }
+
+        .select-left {
+        left: 27%;
+        }
+
+        .select-right {
+        right: 27%;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 10px; /* Gap between grid items */
+        }
+        
+        .grid-wrapper {
+            display: flex;
+            justify-content: center; /* Center the grid horizontally */
+            margin-top: 80px; 
+        }
+
+        .album {
+            border: 1px solid #240b0b;  /*#240b0b*/
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            width: 150px;
+            overflow: hidden; /* Hide overflow content */
+        }
 
 
-.album, .game, .movie {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Horizontally centers content */
-  /* justify-content: center;  Vertically centers content (optional) */
-  text-align: center; /* Ensures text is centered */
-}
-
-/* Center text elements */
-.album h3, .album p, 
-.game h3, .movie h3 {
-  margin: 5px; /* Reduce default margins */
-  /* width: 100%; Ensures text doesn't overflow */
-}
-/* Rank-based backgrounds */
-.album.first_color, .game.first_color, .movie.first_color {
-    /* border-radius: 10px; */  
-    /* background-color: rgba(231, 183, 26, 0.993); */
-    /* background-image: linear-gradient(30deg, rgb(97, 77, 21) , rgb(233, 170, 34)); */
-    /* background-image: linear-gradient(30deg,rgba(202, 154, 21, 0.788),  rgb(255, 187, 0) , rgb(253, 227, 154)); */
-    /* border-color: #880000; */ 
-      background-image: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
-
-}
-.album.second_color, .game.second_color, .movie.second_color {
-    border-color: #969696; 
-    /* background-color: rgba(6, 106, 255, 0.507); */
-    background-image: linear-gradient(
-    45deg,
-    #999 3%,
-    #fff 10%,
-    #ccc 20%,
-    #ddd 50%,
-    #ccc 70%,
-    #fff 80%,
-    #999 95%
-  );
-}
-.album.third_color, .game.third_color, .movie.third_color { 
-    border: 1px solid rgba(255, 255, 255, 0.04); 
-}
-
-.album.second_color h3,.album.second_color p {
-    /*background: linear-gradient(30deg, rgb(255, 196, 0), rgb(255,235,0)); */
-  background: linear-gradient(30deg, rgb(0, 0, 0), rgb(141, 141, 141));  
-  /* background:#2c2c2c; */
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  display: inline-block; /* Required for gradients on text */
-}
-
-.album.first_color h3,.album.first_color p {
-    /*background: linear-gradient(30deg, rgb(255, 196, 0), rgb(255,235,0)); */  
-
-  background: white;
-   background: linear-gradient(30deg, rgb(255, 255, 255), rgb(241, 217, 76));  
-  /* background:#2c2c2c; */
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  display: inline-block; /* Required for gradients on text */
-}
+        .album img {
+            max-height: 140px; /* Limit the maximum height of the image */
+            border: 1px solid rgb(0, 0, 0);  
+        }
 
 
-@media (max-width: 767px) {
-    .grid-wrapper {
-        padding: 0 10px; /* Add some padding to prevent touching screen edges */
-        margin-top: 70px; /* Reduce top margin on mobile */
-    }
-    
-    .grid-container {
-        grid-template-columns: repeat(3, 1fr); /* Keep 2 columns but make them flexible */
-        gap: 8px; /* Reduce gap on smaller screens */
-        width: 100%; /* Ensure grid takes full width */
-    }
+        .album, .game, .movie {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Horizontally centers content */
+        /* justify-content: center;  Vertically centers content (optional) */
+        text-align: center; /* Ensures text is centered */
+        }
 
-    .album {
-        width: 100%; /* Make items responsive to container */
-        max-width: none; /* Remove any max-width constraints */
-        padding: 8px; /* Reduce padding on mobile */
-        font-size: 12px; /* Slightly smaller font on mobile */
-        box-sizing: border-box; /* Include padding in width calculation */
-    }
-
-     .album h3 {
-        font-size: 0.9em; /* Slightly smaller font */
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-    }
-    
-    /* For extremely long names */
-    .album h3.long-name {
-        font-size: 0.8em;
-    }
-    
-    .album img {
-        max-height: 120px; /* Slightly smaller images on mobile */
-        width: auto; /* Maintain aspect ratio */
-        max-width: 100%; /* Ensure images don't overflow */
-    }
-    
-    .select-left {
-        left: 10%;
-    }
-    
-    .select-right {
-        right: 10%;
-    }
-
+        /* Center text elements */
         .album h3, .album p, 
-    .game h3, .movie h3 {
-        margin: 4px 0; /* Reduced from 10px */
-        line-height: 1.2; /* Tighter line spacing */
-    }
-    
-    .album {
-        /* padding: 6px; */
-        font-size: 12px; /* Slightly smaller font */
-    }
-    
-    .album img {
-        max-height: 120px; /* Reduced from 140px */
-    }
-    
-    /* Adjust select elements for mobile */
-    select {
-        width: 90px;
-        height: 35px;
-        font-size: 12px;
-        padding: 8px 12px;
-    }
+        .game h3, .movie h3 {
+        margin: 5px; /* Reduce default margins */
+        /* width: 100%; Ensures text doesn't overflow */
+        }
+        /* Rank-based backgrounds */
+        .album.first_color, .game.first_color, .movie.first_color {
+            /* border-radius: 10px; */  
+            /* background-color: rgba(231, 183, 26, 0.993); */
+            /* background-image: linear-gradient(30deg, rgb(97, 77, 21) , rgb(233, 170, 34)); */
+            /* background-image: linear-gradient(30deg,rgba(202, 154, 21, 0.788),  rgb(255, 187, 0) , rgb(253, 227, 154)); */
+            /* border-color: #880000; */ 
+            background-image: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+                        radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
 
-}
+        }
+        .album.second_color, .game.second_color, .movie.second_color {
+            border-color: #969696; 
+            /* background-color: rgba(6, 106, 255, 0.507); */
+            background-image: linear-gradient(
+            45deg,
+            #999 3%,
+            #fff 10%,
+            #ccc 20%,
+            #ddd 50%,
+            #ccc 70%,
+            #fff 80%,
+            #999 95%
+        );
+        }
+        .album.third_color, .game.third_color, .movie.third_color { 
+            border: 1px solid rgba(255, 255, 255, 0.04); 
+        }
 
-:root {
-  color-scheme: light only; /* Blocks system dark mode */
-}
-body {
-  background-color: #242323 !important; /* Your dark background */
-  color: #e3e3e3 !important; /* Your text color */
-}
+        .album.second_color h3,.album.second_color p {
+            /*background: linear-gradient(30deg, rgb(255, 196, 0), rgb(255,235,0)); */
+        background: linear-gradient(30deg, rgb(0, 0, 0), rgb(141, 141, 141));  
+        /* background:#2c2c2c; */
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block; /* Required for gradients on text */
+        }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #242323 !important; 
-    filter: none !important; /* Disables Chrome's auto-dark filter */
-  }
-}
+        .album.first_color h3,.album.first_color p {
+            /*background: linear-gradient(30deg, rgb(255, 196, 0), rgb(255,235,0)); */  
+
+        background: white;
+        background: linear-gradient(30deg, rgb(255, 255, 255), rgb(241, 217, 76));  
+        /* background:#2c2c2c; */
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block; /* Required for gradients on text */
+        }
+
+
+        @media (max-width: 767px) {
+            .grid-wrapper {
+                padding: 0 10px; /* Add some padding to prevent touching screen edges */
+                margin-top: 70px; /* Reduce top margin on mobile */
+            }
+            
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr); /* Keep 2 columns but make them flexible */
+                gap: 8px; /* Reduce gap on smaller screens */
+                width: 100%; /* Ensure grid takes full width */
+            }
+
+            .album {
+                width: 100%; /* Make items responsive to container */
+                max-width: none; /* Remove any max-width constraints */
+                padding: 8px; /* Reduce padding on mobile */
+                font-size: 12px; /* Slightly smaller font on mobile */
+                box-sizing: border-box; /* Include padding in width calculation */
+            }
+
+            .album h3 {
+                font-size: 0.9em; /* Slightly smaller font */
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+            }
+            
+            /* For extremely long names */
+            .album h3.long-name {
+                font-size: 0.8em;
+            }
+            
+            .album img {
+                max-height: 120px; /* Slightly smaller images on mobile */
+                width: auto; /* Maintain aspect ratio */
+                max-width: 100%; /* Ensure images don't overflow */
+            }
+            
+            .select-left {
+                left: 10%;
+            }
+            
+            .select-right {
+                right: 10%;
+            }
+
+                .album h3, .album p, 
+            .game h3, .movie h3 {
+                margin: 4px 0; /* Reduced from 10px */
+                line-height: 1.2; /* Tighter line spacing */
+            }
+            
+            .album {
+                /* padding: 6px; */
+                font-size: 12px; /* Slightly smaller font */
+            }
+            
+            .album img {
+                max-height: 120px; /* Reduced from 140px */
+            }
+            
+            /* Adjust select elements for mobile */
+            select {
+                width: 90px;
+                height: 35px;
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+
+        }
+
+        :root {
+        color-scheme: light only; /* Blocks system dark mode */
+        }
+        body {
+        background-color: #242323 !important; /* Your dark background */
+        color: #e3e3e3 !important; /* Your text color */
+        }
+
+        @media (prefers-color-scheme: dark) {
+        body {
+            background-color: #242323 !important; 
+            filter: none !important; /* Disables Chrome's auto-dark filter */
+        }
+        }
     </style>
+    
 </head>
 <body style="background-color:#242323;" onload="populate()"> 
 
