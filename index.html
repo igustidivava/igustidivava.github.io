@@ -441,78 +441,63 @@ function sortYearAsc(a, b) {
         populate();
     }
 
+    function createMediaItem(item, type) {
+    const gridDiv = document.createElement('div');
+    gridDiv.classList.add('album', 'media-item');
+    
+    // Add rank class
+    if (item.rank === "3") gridDiv.classList.add('third_color');
+    if (item.rank === "2") gridDiv.classList.add('second_color');
+    if (item.rank === "1") gridDiv.classList.add('first_color');
+    
+    // Build HTML based on type
+    let html = `<img src="${item.image}" alt="${item.name}" loading="lazy" decoding="async">
+                <h3>${item.name}</h3>`;
+
+    if (type === 'albums') {
+        html += `<p>${item.artist}</p>`;
+    }
+
+    // Add year for ALL types (albums, games, movies)
+    if (item.year) {
+        html += `<p class="year">${item.year}</p>`;
+    }
+    gridDiv.innerHTML = html;
+    return gridDiv;
+    }
+
     function populate() {
-        const media = mediaSelect.value; 
-        // const gridContainer = document.getElementById('grid');
-        gridContainer.innerHTML = '';
-
-        if (media === "albums") {
-            albums.forEach(album => {
-                const gridDiv = document.createElement('div');
-                gridDiv.classList.add('album');
-				if (album.rank === "3") {
-                    gridDiv.classList.add('third_color');
-                }
-                if (album.rank === "2") {
-                    gridDiv.classList.add('second_color');
-                }
-                if (album.rank === "1") {
-                    gridDiv.classList.add('first_color');
-                }
-                gridDiv.innerHTML = `
-                    <img src="${album.image}" alt="${album.name}">
-                    <h3>${album.name}</h3>
-                    <p>${album.artist}</p>
-                    <p>${album.year}</p>`;
-                gridContainer.appendChild(gridDiv);
-            });
-        } else if (media === "games") {
-            games.forEach(game => {
-                const gridDiv = document.createElement('div');
-                gridDiv.classList.add('album');
-				if (game.rank === "3") {
-                    gridDiv.classList.add('third_color');
-                }
-                if (game.rank === "2") {
-                    gridDiv.classList.add('second_color');
-                }
-                if (game.rank === "1") {
-                    gridDiv.classList.add('first_color');
-                }
-                gridDiv.innerHTML = `
-                    <img src="${game.image}" alt="${game.name}">
-                    <h3>${game.name}</h3>
-                    <p>${game.year}</p>`;
-			
-                gridContainer.appendChild(gridDiv);
-            });
-        } else if (media === "movies") {
-            movies.forEach(movie => {
-                const gridDiv = document.createElement('div');
-                gridDiv.classList.add('album');
-				if (movie.rank === "3") {
-                    gridDiv.classList.add('third_color');
-                }
-                if (movie.rank === "2") {
-                    gridDiv.classList.add('second_color');
-                }
-                if (movie.rank === "1") {
-                    gridDiv.classList.add('first_color');
-                }
-                gridDiv.innerHTML = `
-                    <img src="${movie.image}" alt="${movie.name}">
-                    <h3>${movie.name}</h3>
-                    <p>${movie.year}</p>`;
-                gridContainer.appendChild(gridDiv);
-            });
-        }
-
-        if (counter === 0) {
-            originalAlbums = [...albums];
-            originalGames = [...games];
-            originalMovies = [...movies];
-            counter++;
-        }
+    const media = mediaSelect.value;
+    gridContainer.innerHTML = '';
+    
+    let items = [];
+    let type = '';
+    
+    // Determine which array to use
+    if (media === "albums") {
+        items = albums;
+        type = 'albums';
+    } else if (media === "games") {
+        items = games;
+        type = 'games';
+    } else if (media === "movies") {
+        items = movies;
+        type = 'movies';
+    }
+    
+    // Create and append all items
+    items.forEach(item => {
+        const gridItem = createMediaItem(item, type);
+        gridContainer.appendChild(gridItem);
+    });
+    
+    // Store originals on first load
+    if (counter === 0) {
+        originalAlbums = [...albums];
+        originalGames = [...games];
+        originalMovies = [...movies];
+        counter++;
+    }
     }
 	
 let albums = [
