@@ -6,6 +6,7 @@
     <meta name="color-scheme" content="light only">
     <title>I gusti di vava</title>
     <style>
+
         .first_color {
             color: black;
         }
@@ -27,23 +28,12 @@
             color: #e3e3e3; /* text color */
             background-color: #2c2c2c;
             border: 1px solid #383838; 
-            cursor: pointer; /* cursor changes to an hand on buttons */
-            /* outline: none;  */
+            cursor: pointer; /* cursor changes to hand on buttons hover */
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23e3e3e3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 10px center;
             background-size: 12px;
         }
-
-    
-      /*   select:hover, select:focus {
-        border-color: #a7a7a7; 
-        }
-        
-        select option {
-            background: #333; 
-            color: #e3e3e3;
-        } */
 
         .select-left, .select-right {
             position: absolute;
@@ -61,7 +51,8 @@
         .grid-container {
             display: grid;
             grid-template-columns: repeat(5, 1fr); 
-            gap: 10px; /* gap between grid items */
+            row-gap: 2px; 
+            column-gap: 2px;
         }
         
         .grid-wrapper {
@@ -71,7 +62,7 @@
         }
 
         .album {
-            border: 1px solid #240b0b; 
+            /* border: 1px solid #240b0b;  */
             padding: 10px; /* padding in all directions */
             text-align: center; 
             font-size: 14px;
@@ -81,7 +72,7 @@
 
         .album img {
             max-height: 140px; /* Limit the maximum height of the image */
-            border: 1px solid rgb(0, 0, 0);  
+            border: 1px solid black;
         }
 
         .album, .game, .movie {
@@ -92,7 +83,6 @@
             text-align: center; /* Ensures text is centered */
         }
 
-
         .album h3, .album p, 
         .game h3, .movie h3 {
             margin: 5px; /* Reduce margins between image, h3 and p */
@@ -100,55 +90,51 @@
 
         /* Rank-based backgrounds */
         .album.first_color, .game.first_color, .movie.first_color {
-            background-image: linear-gradient(
-                105deg, 
+            /* old standard gold */
+            /* background-image: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+                radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #b38f3d 100%); */
+                background-image: linear-gradient(
+                170deg, 
                 #fde59c 16.69%, 
-                #b6a05f 37.51%, 
-                #925829 61.36%,
-                #fedc45 83.87%
+                #b6a05f 47.51%, 
+                #af9231 71.36%,
+                #fedc45 98.87%
                 );
         }
 
         .album.second_color, .game.second_color, .movie.second_color {
-            border-color: #969696; 
-            /* background-color: rgba(6, 106, 255, 0.507); */
-            background-image: linear-gradient(
-                120deg,
-                #999 3%,
-                #fff 10%,
-                #ccc 20%,
-                #ddd 50%,
-                #ccc 70%,
-                #fff 80%,
-                #999 95%
-                );
+            background: linear-gradient(
+            175deg,
+            #8e8e8e 0%,
+            #cfcfcf 20%,
+            #f5f5f5 40%,
+            #bdbdbd 60%,
+            #e6e6e6 80%,
+            #8e8e8e 100%
+            );
         }
 
         .album.first_color h3,.album.first_color p {
-            background: white;
             background: linear-gradient(
                 30deg,
-                rgb(255, 255, 255),
-                rgb(241, 217, 76)
+                rgb(0, 0, 0),
+                rgb(32, 68, 25)
                 ); 
             -webkit-background-clip: text;
-            background-clip: text;
+            background-clip: text; 
             color: transparent;
-            display: inline-block; /* Required for gradients on text */
-        }
+            display: inline-block; 
+        } 
 
         .album.second_color h3,.album.second_color p {
-            background: linear-gradient(30deg, rgb(0, 0, 0), rgb(141, 141, 141));  
+            background: linear-gradient(45deg, rgb(0, 0, 0), rgb(141, 141, 141));  
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             display: inline-block; /* Required for gradients on text */
         }
 
-        .album.third_color, .game.third_color, .movie.third_color { 
-            border: 1px solid rgba(255, 255, 255, 0.04); 
-        }
-
+        /* responsive layout */
         @media (max-width: 767px) {
 
             .grid-wrapper {
@@ -297,14 +283,13 @@
     function sortYearDesc(a, b) {
     const yearA = parseInt(a.year);
     const yearB = parseInt(b.year);
-    // For oldest to newest, use: return yearA - yearB;
     return yearB - yearA;
     }
 
     function sortYearAsc(a, b) {
         const yearA = parseInt(a.year);
         const yearB = parseInt(b.year);
-        return yearA - yearB; // Oldest first
+        return yearA - yearB; 
     }
 	
     function changeMedia() {
@@ -568,6 +553,7 @@ let albums = [
     { mmr: "4.8", name: "One Fierce<br>Beer Coaster", artist: "Bloodhound Gang", image: "img/album/one_fierce_br_beer_coaster.webp", rank: "1", year: "1996"},
     { mmr: "90", name: "Hyper 2", artist: "Nerone", image: "img/album/hyper_2.webp", rank: "3", year: "2019"},
     { mmr: "25.6", name: "Relapse", artist: "Eminem", image: "img/album/relapse.webp", rank: "3", year: "2009"},
+    { mmr: "24", name: "Mr. Simpatia", artist: "Fabri Fibra", image:"img/album/mrsimpatia.webp", rank: "3", year:"2004"},
     { mmr: "80", name: "1979", artist: "Casa del Mirto", image: "img/album/1979.webp", rank: "2", year: "2011"},
     { mmr: "134", name: "Madvillainy", artist: "MF DOOM", image: "img/album/madvillainy.webp", rank: "2", year: "2004"},
     { mmr: "191", name: "The Wall", artist: "Pink Floyd", image: "img/album/the_wall.webp", rank: "2", year: "1979"},
