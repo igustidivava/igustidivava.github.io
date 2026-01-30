@@ -8,10 +8,10 @@
     <style>
 
         .first_color {
-            color: black;
+            color: white;
         }
         .second_color {
-            color: #444444;
+            color: #223838;
         }
 		.third_color {
 			color: #e3e3e3;
@@ -62,7 +62,6 @@
         }
 
         .album {
-            /* border: 1px solid #240b0b;  */
             padding: 10px; /* padding in all directions */
             text-align: center; 
             font-size: 14px;
@@ -78,9 +77,8 @@
         .album, .game, .movie {
             display: flex;
             flex-direction: column;
-            align-items: center; /* Horizontally centers content */
-            /* justify-content: center;  Vertically centers content (optional) */
-            text-align: center; /* Ensures text is centered */
+            align-items: center; 
+            text-align: center; 
         }
 
         .album h3, .album p, 
@@ -88,12 +86,12 @@
             margin: 5px; /* Reduce margins between image, h3 and p */
         }
 
-        /* Rank-based backgrounds */
+        /* rank-based backgrounds */
         .album.first_color, .game.first_color, .movie.first_color {
-            /* old standard gold */
-            /* background-image: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+            /* old standard gold 
+                background-image: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
                 radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #b38f3d 100%); */
-                background-image: linear-gradient(
+                background: linear-gradient(
                 170deg, 
                 #fde59c 16.69%, 
                 #b6a05f 47.51%, 
@@ -127,7 +125,11 @@
         } 
 
         .album.second_color h3,.album.second_color p {
-            background: linear-gradient(45deg, rgb(0, 0, 0), rgb(141, 141, 141));  
+            background: linear-gradient(
+                45deg, 
+                rgb(0, 0, 0),
+                rgb(78, 78, 78)
+                );  
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -195,8 +197,8 @@
             color-scheme: light only; /* Blocks system dark mode */
         }
         body {
-            background-color: #242323 !important; /* Your dark background */
-            color: #e3e3e3 !important; /* Your text color */
+            background-color: #242323 !important; 
+            color: #e3e3e3 !important; 
         }
 
         @media (prefers-color-scheme: dark) {
