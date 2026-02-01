@@ -87,13 +87,21 @@
 
         /* rank-based backgrounds */
         .album.first_color, .game.first_color, .movie.first_color {
-            background: radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%);
+            background: radial-gradient(
+                circle at 48.7% 44.3%, 
+                rgb(30, 144, 231) 0%,
+                rgb(56, 113, 209) 22.9%,
+                rgb(38, 76, 140) 76.7%, 
+                rgb(31, 63, 116) 100.2%
+                );
         }
         
         .album.second_color, .game.second_color, .movie.second_color {
-            background: #4b6cb7;  /* fallback for old browsers */
-            background-color: #af8c9d;
-            background-image: linear-gradient(315deg, #af8c9d 0%, #8cacac 74%);
+            background-image: linear-gradient(
+                315deg,
+                #b4a4ac 0%,
+                #8cacac 74%
+                );
         }
         
       /*   .album.third_color, .game.third_color, .movie.third_color {
