@@ -150,12 +150,12 @@
                 width: 100%; 
                 max-width: none; 
                 padding: 8px; /* Reduce padding on mobile */
-                font-size: 12px; 
+                font-size: 13px; 
                 box-sizing: border-box; /* Include padding in width calculation */
             }
 
             .album h3 {
-                font-size: 0.9em; /* slightly smaller font */
+                font-size: 1.1em; /* slightly bigger font */
                 overflow: hidden;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
@@ -172,6 +172,11 @@
                 max-width: 100%; 
             }
                         
+             .album h3, .album p, 
+        .game h3, .movie h3 {
+            margin: 3px; /* Margins between image, h3 and p */
+        }
+
             .select-left {
                 left: 10%;
             }
